@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Axon.Business.Abstractions\Axon.Business.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EasyCaching.Core" Version="0.8.3" />
+    <PackageReference Include="EasyCaching.InMemory" Version="0.8.4" />
+  </ItemGroup>
+
+</Project>

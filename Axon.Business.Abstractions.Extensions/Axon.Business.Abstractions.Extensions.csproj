@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Axon.Business.Abstractions\Axon.Business.Abstractions.csproj" />
+    <ProjectReference Include="..\Axon.Business\Axon.Business.csproj" />
+    <ProjectReference Include="..\Axon.Data.Abstractions.Extensions\Axon.Data.Abstractions.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>
