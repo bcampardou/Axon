@@ -17,6 +17,11 @@ namespace Axon.Data.Abstractions.Extensions
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             services.AddScoped<AxonDbContext>(provider => provider.GetRequiredService<DbContext>() as AxonDbContext);
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
+            services.AddScoped<IServersRepository, ServersRepository>();
+            services.AddScoped<ITechnologiesRepository, TechnologiesRepository>();
+            services.AddScoped<INetworksRepository, NetworksRepository>();
+            services.AddScoped<IProjectEnvironmentsRepository, ProjectEnvironmentsRepository>();
+            services.AddScoped<IProjectTechnologiesRepository, ProjectTechnologiesRepository>();
             return services;
         }
     }

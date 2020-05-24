@@ -15,8 +15,16 @@ namespace Axon.Business.Abstractions.Extensions
             services.RegisterDataLayerServices(configuration);
 
             services.AddSingleton<ProjectAdapter>();
+            services.AddSingleton<NetworkAdapter>();
+            services.AddSingleton<ServerAdapter>();
+            services.AddSingleton<ProjectEnvironmentAdapter>();
+            services.AddSingleton<ProjectTechnologyAdapter>();
+            services.AddSingleton<TechnologyAdapter>();
 
             services.AddScoped<IProjectsService, ProjectsService>();
+            services.AddScoped<INetworksService, NetworksService>();
+            services.AddScoped<IServersService, ServersService>();
+            services.AddScoped<ITechnologiesService, TechnologiesService>();
             return services;
         }
     }

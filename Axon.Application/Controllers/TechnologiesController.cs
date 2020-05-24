@@ -12,30 +12,30 @@ namespace Axon.Application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectsController : ControllerBase
+    public class TechnologiesController : ControllerBase
     {
         [HttpGet]
-        public async Task<IEnumerable<ProjectDTO>> Get([FromServices]IProjectsService service)
+        public async Task<IEnumerable<TechnologyDTO>> Get([FromServices]ITechnologiesService service)
         {
             return await service.FindAllAsync();
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<ProjectDTO> Get(string id, [FromServices]IProjectsService service)
+        public async Task<TechnologyDTO> Get(string id, [FromServices]ITechnologiesService service)
         {
             return await service.FindAsync(id);
         }
 
         [HttpPost]
-        public async Task<object> Post([FromBody]ProjectDTO project, [FromServices]IProjectsService service)
+        public async Task<object> Post([FromBody]TechnologyDTO Technology, [FromServices]ITechnologiesService service)
         {
-            return await service.CreateOrUpdateAsync(project);
+            return await service.CreateOrUpdateAsync(Technology);
         }
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<object> Delete(string id, [FromServices]IProjectsService service)
+        public async Task<object> Delete(string id, [FromServices]ITechnologiesService service)
         {
             Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
 

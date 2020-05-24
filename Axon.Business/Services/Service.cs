@@ -68,7 +68,7 @@ namespace Axon.Business.Services
         where ENTITY : IdentifiedEntity, new()
         where DTO : IdentifiedEntityDTO<ENTITY>, new()
         where ADAPTER : IdentifiedEntityAdapter<ENTITY, DTO>, new()
-        where IREPO : IRepository<ENTITY>
+        where IREPO : IRepositoryWithIdentifier<ENTITY>
     {
         private readonly ADAPTER adapter;
         private Lazy<IREPO> _repository;

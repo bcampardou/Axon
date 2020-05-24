@@ -8,13 +8,13 @@ using Axon.Data.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 namespace Axon.Data.Repositories
 {
-    public class ProjectsRepository : RepositoryWithIdentifier<Project>, IProjectsRepository
+    public class ServersRepository : RepositoryWithIdentifier<Server>, IServersRepository
     {
-        public ProjectsRepository(AxonDbContext context, IServiceProvider serviceProvider) : base(context, serviceProvider)
+        public ServersRepository(AxonDbContext context, IServiceProvider serviceProvider) : base(context, serviceProvider)
         {
         }
 
-        protected override IQueryable<Project> _loadProperties(IQueryable<Project> entities)
+        protected override IQueryable<Server> _loadProperties(IQueryable<Server> entities)
         {
             return entities;
         }

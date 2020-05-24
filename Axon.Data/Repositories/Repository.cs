@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 namespace Axon.Data.Repositories
 {
     public abstract class Repository<ENTITY> : IRepository<ENTITY>
-        where ENTITY : IdentifiedEntity, new()
+        where ENTITY : Entity, new()
     {
         protected IServiceProvider _serviceProvider;
         protected DbSet<ENTITY> _dbSet => _context.Set<ENTITY>();
@@ -72,11 +72,6 @@ namespace Axon.Data.Repositories
             }
         }
 
-        public void Delete(string id)
-        {
-            Delete(_dbSet.Find(id));
-        }
-
         public void Delete(IEnumerable<ENTITY> entitiesToRemove)
         {
             try
@@ -107,23 +102,6 @@ namespace Axon.Data.Repositories
             {
                 results = results.Take(maximumRows.Value);
             }
-
-            return await results.ToListAsync();
-        }
-
-        public virtual async Task<ENTITY> FindAsync(string id, bool preloadProperties = true)
-        {
-            Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
-
-            var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
-
-            return await set.SingleOrDefaultAsync(e => e.Id == id);
-        }
-
-        public virtual async Task<List<ENTITY>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true)
-        {
-            var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
-            IQueryable<ENTITY> results = set.Where(e => ids.Contains(e.Id));
 
             return await results.ToListAsync();
         }
@@ -203,6 +181,39 @@ namespace Axon.Data.Repositories
         ~Repository()
         {
 
+        }
+    }
+
+    public abstract class RepositoryWithIdentifier<ENTITY> : Repository<ENTITY>, IRepositoryWithIdentifier<ENTITY>
+        where ENTITY : IdentifiedEntity, new()
+    {
+
+        public RepositoryWithIdentifier(AxonDbContext context, IServiceProvider serviceProvider) : base(context, serviceProvider)
+        {
+        }
+
+        public void Delete(string id)
+        {
+            Delete(_dbSet.Find(id));
+        }
+
+
+
+        public virtual async Task<ENTITY> FindAsync(string id, bool preloadProperties = true)
+        {
+            Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
+
+            var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
+
+            return await set.SingleOrDefaultAsync(e => e.Id == id);
+        }
+
+        public virtual async Task<List<ENTITY>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true)
+        {
+            var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
+            IQueryable<ENTITY> results = set.Where(e => ids.Contains(e.Id));
+
+            return await results.ToListAsync();
         }
 
 

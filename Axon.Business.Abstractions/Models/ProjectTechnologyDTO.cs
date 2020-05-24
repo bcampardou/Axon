@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Axon.Data.Abstractions.Entities;
 
-namespace Axon.Data.Abstractions.Repositories
+namespace Axon.Business.Abstractions.Models
 {
-    public interface IProjectsRepository : IRepositoryWithIdentifier<Project>
+    public class ProjectTechnologyDTO : EntityDTO<ProjectTechnology>
     {
     }
 }

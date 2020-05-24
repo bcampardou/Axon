@@ -5,7 +5,7 @@ using System.Text;
 using Axon.Data.Abstractions.Entities;
 using Axon.Data.Abstractions.Entities.Base;
 
-namespace Axon.Data
+namespace Axon.Data.Abstractions.Entities
 {
     public class ProjectEnvironment : Entity
     {

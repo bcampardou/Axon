@@ -8,7 +8,7 @@ using Axon.Data.Abstractions.Entities.Base;
 namespace Axon.Data.Abstractions.Repositories
 {
     public interface IRepository<ENTITY> : IDisposable
-        where ENTITY : IdentifiedEntity, new()
+        where ENTITY : Entity, new()
     {
         ENTITY GetNew();
         /// <summary>
@@ -16,15 +16,6 @@ namespace Axon.Data.Abstractions.Repositories
         /// </summary>
         /// <returns></returns>
         Task<List<ENTITY>> FindAllAsync(int? maximumRows = null, int skipRows = 0, bool preloadProperties = true);
-
-        /// <summary>
-        /// Return the entity with the given primary key
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<ENTITY> FindAsync(string id, bool preloadProperties = true);
-
-        Task<List<ENTITY>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true);
 
         Task<ENTITY> FindOneByPredicateAsync(Expression<Func<ENTITY, bool>> predicate, bool preloadProperties = true);
         Task<List<ENTITY>> FindByPredicateAsync(Expression<Func<ENTITY, bool>> predicate, bool preloadProperties = true);
@@ -67,14 +58,28 @@ namespace Axon.Data.Abstractions.Repositories
         /// <param name="entity"></param>
         /// <returns></returns>
         void Delete(ENTITY entity);
+
+        bool SaveChanges();
+        Task<bool> SaveChangesAsync();
+    }
+
+    public interface IRepositoryWithIdentifier<ENTITY> : IRepository<ENTITY>, IDisposable
+        where ENTITY : IdentifiedEntity, new()
+    {
+
+        /// <summary>
+        /// Return the entity with the given primary key
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<ENTITY> FindAsync(string id, bool preloadProperties = true);
+
+        Task<List<ENTITY>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true);
         /// <summary>
         /// Async: delete the entity with the given id from the database
         /// </summary>
         /// <param name="id">the id of the entity</param>
         /// <returns></returns>
         void Delete(string id);
-
-        bool SaveChanges();
-        Task<bool> SaveChangesAsync();
     }
 }

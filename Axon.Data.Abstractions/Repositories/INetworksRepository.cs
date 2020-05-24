@@ -5,7 +5,7 @@ using Axon.Data.Abstractions.Entities;
 
 namespace Axon.Data.Abstractions.Repositories
 {
-    public interface IProjectsRepository : IRepositoryWithIdentifier<Project>
+    public interface INetworksRepository : IRepositoryWithIdentifier<Network>
     {
     }
 }
