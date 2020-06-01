@@ -16,5 +16,8 @@ namespace Axon.Data.Abstractions.Entities
 
         [InverseProperty("Project")]
         public virtual Collection<ProjectTechnology> ProjectTechnologies { get; set; }
+
+        [InverseProperty("Project")]
+        public virtual Collection<ProjectEnvironment> ProjectEnvironments { get; set; }
     }
 }

@@ -11,6 +11,9 @@ namespace Axon.Business.Abstractions.Adapters
         public override ProjectEnvironmentDTO Convert(ProjectEnvironment entity, ProjectEnvironmentDTO dto)
         {
             dto = base.Convert(entity, dto);
+            dto.ProjectId = entity.ProjectId;
+            dto.ServerId = entity.ServerId;
+            dto.URL = entity.URL;
 
             return dto;
         }
@@ -18,6 +21,11 @@ namespace Axon.Business.Abstractions.Adapters
         public override ProjectEnvironment Bind(ProjectEnvironment entity, ProjectEnvironmentDTO dto)
         {
             entity = base.Bind(entity, dto);
+
+            entity.ProjectId = dto.ProjectId;
+            entity.ServerId = dto.ServerId;
+            entity.URL = dto.URL;
+
             return entity;
         }
     }

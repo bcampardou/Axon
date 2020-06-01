@@ -10,6 +10,11 @@ namespace Axon.Business.Rules
     {
         public static IConfiguration Configuration;
         public const int SRID = 4326;
+
+        public static string GenerateIdentifier()
+        {
+            return Guid.NewGuid().ToString();
+        }
         public static string CacheObjectKey(IdentifiedEntity obj)
         {
             return CacheObjectKey(obj.GetType(), obj.Id);

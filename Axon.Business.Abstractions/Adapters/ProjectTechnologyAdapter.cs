@@ -12,12 +12,19 @@ namespace Axon.Business.Abstractions.Adapters
         {
             dto = base.Convert(entity, dto);
 
+            dto.TechnologyId = entity.TechnologyId;
+            dto.ProjectId = entity.ProjectId;
+
             return dto;
         }
 
         public override ProjectTechnology Bind(ProjectTechnology entity, ProjectTechnologyDTO dto)
         {
             entity = base.Bind(entity, dto);
+
+            entity.TechnologyId = dto.TechnologyId;
+            entity.ProjectId = dto.ProjectId;
+
             return entity;
         }
     }

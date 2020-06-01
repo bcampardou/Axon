@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Axon.Data.Abstractions.Entities.Base;
 
@@ -12,5 +14,8 @@ namespace Axon.Data.Abstractions.Entities
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        [InverseProperty("Network")]
+        public virtual Collection<Server> Servers { get; set; }
     }
 }

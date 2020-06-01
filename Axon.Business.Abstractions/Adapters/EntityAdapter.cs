@@ -13,6 +13,7 @@ namespace Axon.Business.Abstractions.Adapters
     {
         public virtual DTO Convert(T entity, DTO dto = null)
         {
+            Ensure.Arguments.ThrowIfNull(entity, nameof(entity));
             dto = dto != null ? dto : new DTO();
             dto.CreatedAt = entity.CreatedAt;
             dto.EditedAt = entity.EditedAt;

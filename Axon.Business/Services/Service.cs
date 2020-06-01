@@ -107,7 +107,7 @@ namespace Axon.Business.Services
 
         public virtual async Task<DTO> CreateAsync(DTO dto)
         {
-            var entity = _ApplyChanges(dto, new ENTITY());
+            var entity = _ApplyChanges(dto, Repository.GetNew());
 
             return await _createAsync(entity);
         }
@@ -371,6 +371,10 @@ namespace Axon.Business.Services
         /// <returns></returns>
         protected virtual bool _onBeforeCreateOrUpdate(ENTITY entity, ENTITY savedEntity)
         {
+            if(savedEntity == null && !Ensure.Arguments.IsValidGuid(entity.Id))
+            {
+                entity.Id = BusinessRules.GenerateIdentifier();
+            }
             return true;
         }
 
