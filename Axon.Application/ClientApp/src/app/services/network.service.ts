@@ -26,9 +26,15 @@ export class NetworkService {
       );
     }
 
-    public getAll() {
+    public getAll(force: boolean) {
+      if(force || this.networks$.getValue().length == 0) {
         return this.http.get<Array<Network>>(`${this.url}`).pipe(
-            map(res => this.networks$.next(res))
+            map(res => {
+              this.networks$.next(res);
+              return res;
+            })
         );
+      }
+      return this.networks$.asObservable();
     }
 }

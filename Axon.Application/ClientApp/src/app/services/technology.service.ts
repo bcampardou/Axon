@@ -26,9 +26,15 @@ export class TechnologyService {
       );
     }
 
-    public getAll() {
+    public getAll(force: boolean) {
+      if(force || this.technologies$.getValue().length == 0) {
         return this.http.get<Array<Technology>>(`${this.url}`).pipe(
-            map(res => this.technologies$.next(res))
+            map(res => {
+              this.technologies$.next(res);
+              return res;
+            })
         );
+      }
+      return this.technologies$.asObservable();
     }
 }

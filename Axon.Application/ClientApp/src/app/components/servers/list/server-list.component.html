@@ -1,30 +1,34 @@
 <div class="col">
     <div class="card shadow">
       <div class="card-header border-0">
-        <h3 class="mb-0">Networks</h3>
+        <h3 class="mb-0">Servers</h3>
       </div>
       <div class="table-responsive">
         <table class="table align-items-center table-flush table-hover">
           <thead class="thead-light">
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Description</th>
+              <th scope="col">Operating System</th>
+              <th scope="col">Network</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let network of networks" (click)="select(network)">
+            <tr *ngFor="let server of servers" (click)="select(server)">
               <th scope="row">
                 <div class="media align-items-center">
                   <!-- <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
                     <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
                   </a> -->
                   <div class="media-body">
-                    <span class="mb-0 text-sm">{{network.name}}</span>
+                    <span class="mb-0 text-sm">{{server.name}}</span>
                   </div>
                 </div>
               </th>
               <td>
-                {{network.description}}
+                {{getOSName(server.os)}} ({{server.version}})
+              </td>
+              <td>
+                {{server.network.name}}
               </td>
             </tr>
           </tbody>
@@ -38,7 +42,7 @@
             <option [ngValue]="50">50 items per page</option>
           </select>
 
-          <ngb-pagination [collectionSize]="networks.length" [(page)]="page" [pageSize]="pageSize">
+          <ngb-pagination [collectionSize]="servers.length" [(page)]="page" [pageSize]="pageSize">
           </ngb-pagination>
         </div>
       </div>

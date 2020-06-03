@@ -10,7 +10,7 @@ namespace Axon.Business.Abstractions.Models
     {
         public string Name { get; set; }
 
-        public OperatingSystems OS { get; set; }
+        public OperatingSystems Os { get; set; }
         public string Version { get; set; }
         public string NetworkId { get; set; }
     }

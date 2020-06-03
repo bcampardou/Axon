@@ -14,7 +14,7 @@ namespace Axon.Business.Abstractions.Adapters
             dto = base.Convert(entity, dto);
             dto.Name = entity.Name;
             var technologyAdapter = new TechnologyAdapter();
-            dto.Technologies = entity.ProjectTechnologies?.Select(t => technologyAdapter.Convert(t.Technology, null)).ToList();
+            dto.Technologies = entity.ProjectTechnologies?.Select(t => technologyAdapter.Convert(t.Technology, null)).ToList() ?? new List<TechnologyDTO>();
 
             return dto;
         }
@@ -36,7 +36,7 @@ namespace Axon.Business.Abstractions.Adapters
                 dto = new ProjectDTO();
             dto = new ProjectLightAdapter().Convert(entity, dto) as ProjectDTO;
             var environmentAdapter = new ProjectEnvironmentAdapter();
-            dto.Environments = entity.ProjectEnvironments?.Select(pe => environmentAdapter.Convert(pe, null)).ToList();
+            dto.Environments = entity.ProjectEnvironments?.Select(pe => environmentAdapter.Convert(pe, null)).ToList() ?? new List<ProjectEnvironmentDTO>();
 
             return dto;
         }

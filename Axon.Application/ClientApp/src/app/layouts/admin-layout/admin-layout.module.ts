@@ -11,9 +11,11 @@ import { IconsComponent } from '../../pages/icons/icons.component';
 import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NetworksComponent } from 'src/app/pages/networks/networks.component';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ServersComponent } from 'src/app/pages/servers/servers.component';
+import { ProjectsComponent } from 'src/app/pages/projects/projects.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -23,6 +25,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     HttpClientModule,
     NgbModule,
+    NgbModalModule,
     ComponentsModule,
     ClipboardModule
   ],
@@ -32,7 +35,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     TablesComponent,
     IconsComponent,
     MapsComponent,
-    NetworksComponent
+    NetworksComponent,
+    ServersComponent,
+    ProjectsComponent
   ]
 })
 

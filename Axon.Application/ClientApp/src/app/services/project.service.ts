@@ -26,9 +26,15 @@ export class ProjectService {
       );
     }
 
-    public getAll() {
+    public getAll(force: boolean) {
+      if(force || this.projects$.getValue().length == 0) {
         return this.http.get<Array<Project>>(`${this.url}`).pipe(
-            map(res => this.projects$.next(res))
+            map(res => {
+              this.projects$.next(res);
+              return res;
+            })
         );
+      }
+      return this.projects$.asObservable();
     }
 }

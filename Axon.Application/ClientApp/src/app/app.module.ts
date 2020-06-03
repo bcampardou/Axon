@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -23,6 +23,7 @@ import { ProjectService, EnvironmentService, TechnologyService, ServerService, N
     HttpClientModule,
     ComponentsModule,
     NgbModule,
+    NgbModalModule,
     RouterModule,
     AppRoutingModule
   ],

@@ -5,7 +5,9 @@ import { IconsComponent } from '../../pages/icons/icons.component';
 import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
-import { NetworksComponent } from 'src/app/pages/networks/networks.component';
+import { NetworksComponent } from '../../pages/networks/networks.component';
+import { ServersComponent } from '../../pages/servers/servers.component';
+import { ProjectsComponent } from 'src/app/pages/projects/projects.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -13,5 +15,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'tables',         component: TablesComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
-    { path: 'networks',       component: NetworksComponent }
+    { path: 'networks',       component: NetworksComponent },
+    { path: 'servers',       component: ServersComponent },
+    { path: 'projects',       component: ProjectsComponent }
 ];

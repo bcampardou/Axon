@@ -4,7 +4,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-9">
-                    <h1>Networks</h1>
+                    <h1>Projects</h1>
                 </div>
                 <div class="col-3 text-right">
                     <a class="btn btn-sm btn-outline-info" (click)="create()">
@@ -23,9 +23,9 @@
 </div>
 <div class="container-fluid mt--7">
     <div class="row justify-content-md-center" *ngIf="mode === 'list'">
-        <app-network-list [networks]="networks$|async" (networkSelected)="show($event)" style="width:100%;"></app-network-list>
+        <app-project-list [projects]="projects$|async" (projectSelected)="show($event)" style="width:100%;"></app-project-list>
     </div>
     <div class="row justify-content-md-center" *ngIf="mode === 'creation' || mode === 'edition'">
-        <app-network-editor (canceled)="cancelEdition($event)" style="width:100%;"></app-network-editor>
+        <app-project-editor (canceled)="cancelEdition($event)" style="width:100%;"></app-project-editor>
     </div>
 </div>

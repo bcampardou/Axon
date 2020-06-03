@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NetworkService } from 'src/app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { Network } from 'src/app/models';
 export class NetworkEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     @Input() public networkId: string;
+    @Output() public canceled = new EventEmitter<boolean>();
     public network = new Network();
     private subscriptions = new Array<Subscription>();
 
@@ -31,5 +32,9 @@ export class NetworkEditorComponent implements OnInit, OnDestroy {
 
     public save() {
         this.networkService.post(this.network).subscribe(res => this.network = res);
+    }
+
+    public cancel() {
+        this.canceled.next(true);
     }
 }

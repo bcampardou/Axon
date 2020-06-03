@@ -11,6 +11,8 @@ import { Network } from 'src/app/models';
 })
 export class NetworkListComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
+    public page: number = 0;
+    public pageSize: number = 10;
     @Input() public networks: Array<Network>;
     @Output() public networkSelected = new EventEmitter<string>();
     private subscriptions = new Array<Subscription>();

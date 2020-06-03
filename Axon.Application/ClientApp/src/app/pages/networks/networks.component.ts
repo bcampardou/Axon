@@ -17,7 +17,7 @@ export class NetworksComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
     private networkService: NetworkService) { 
       this.networks$ = this.networkService.networks$;
-      this.networkService.getAll().subscribe();
+      this.networkService.getAll(true).subscribe();
     }
 
   ngOnInit() {
@@ -34,5 +34,12 @@ export class NetworksComponent implements OnInit, OnDestroy {
   public show(id: string) {
     this.networkService.get(id).subscribe();
     this.mode = 'edition';
+  }
+
+  public cancelEdition(event: boolean) {
+    if(event) {
+      this.networkService.currentNetwork$.next(null);
+      this.mode = 'list';
+    }
   }
 }

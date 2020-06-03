@@ -26,9 +26,15 @@ export class EnvironmentService {
       );
     }
 
-    public getAll() {
+    public getAll(force: boolean) {
+      if(force || this.environments$.getValue().length == 0) {
         return this.http.get<Array<Environment>>(`${this.url}`).pipe(
-            map(res => this.environments$.next(res))
+            map(res => {
+              this.environments$.next(res);
+              return res;
+            })
         );
+      }
+      return this.environments$.asObservable();
     }
 }

@@ -14,7 +14,7 @@ namespace Axon.Business.Abstractions.Adapters
             dto = base.Convert(entity, dto);
 
             dto.Name = entity.Name;
-            dto.OS = entity.OS;
+            dto.Os = entity.OS;
             dto.Version = entity.Version;
             dto.NetworkId = entity.NetworkId;
 
@@ -26,7 +26,7 @@ namespace Axon.Business.Abstractions.Adapters
             entity = base.Bind(entity, dto);
 
             entity.Name = dto.Name.Trim();
-            entity.OS = dto.OS;
+            entity.OS = dto.Os;
             entity.Version = dto.Version;
             entity.NetworkId = dto.NetworkId;
 

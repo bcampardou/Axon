@@ -26,9 +26,15 @@ export class ServerService {
       );
     }
 
-    public getAll() {
+    public getAll(force: boolean) {
+      if(force || this.servers$.getValue().length == 0) {
         return this.http.get<Array<Server>>(`${this.url}`).pipe(
-            map(res => this.servers$.next(res))
+            map(res => {
+              this.servers$.next(res);
+              return res;
+            })
         );
+      }
+      return this.servers$.asObservable();
     }
 }
