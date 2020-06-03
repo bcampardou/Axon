@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProjectService, EnvironmentService } from 'src/app/services';
+import { ProjectService, EnvironmentService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Project, Environment } from 'src/app/models';
+import { Project, Environment } from '@app/models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-project-editor',
@@ -20,10 +22,14 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
+        private translateService: TranslateService,
         private modalService: NgbModal,
         private projectService: ProjectService,
         private environmentService: EnvironmentService) {
-            this.subscriptions.push(this.projectService.currentProject$.subscribe(net => this.project = net));
+            this.subscriptions.push(this.projectService.currentProject$.subscribe(net => {
+                this.project = net;
+            }));
     }
 
     ngOnInit() {
@@ -34,7 +40,10 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     }
 
     public save() {
-        this.projectService.post(this.project).subscribe(res => this.project = res);
+        this.projectService.post(this.project).subscribe(res => {
+            this.project = res;
+            this.toastr.success(this.translateService.instant('Successfully saved', 'Success'));
+        });
     }
 
     public createEnvironment() {

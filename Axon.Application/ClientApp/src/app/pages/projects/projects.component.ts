@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProjectService } from 'src/app/services';
+import { ProjectService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
-import { Project } from 'src/app/models';
+import { Project } from '@app/models';
 
 @Component({
   selector: 'app-projects',
@@ -32,8 +32,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   public show(id: string) {
-    this.projectService.get(id).subscribe();
-    this.mode = 'edition';
+    this.projectService.get(id).subscribe(res => this.mode = 'edition');
   }
 
   public cancelEdition(event: boolean) {

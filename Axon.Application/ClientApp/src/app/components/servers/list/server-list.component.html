@@ -1,15 +1,15 @@
 <div class="col">
     <div class="card shadow">
       <div class="card-header border-0">
-        <h3 class="mb-0">Servers</h3>
+        <h3 class="mb-0" translate>Servers</h3>
       </div>
       <div class="table-responsive">
         <table class="table align-items-center table-flush table-hover">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Operating System</th>
-              <th scope="col">Network</th>
+              <th scope="col" translate>Name</th>
+              <th scope="col" translate>Operating System</th>
+              <th scope="col" translate>Network</th>
             </tr>
           </thead>
           <tbody>
@@ -37,9 +37,9 @@
       <div class="card-footer py-4">
         <div class="d-flex justify-content-between p-2">
           <select class="form-control" style="width: auto" [(ngModel)]="pageSize">
-            <option [ngValue]="10">10 items per page</option>
-            <option [ngValue]="25">25 items per page</option>
-            <option [ngValue]="50">50 items per page</option>
+            <option [ngValue]="10" translate>10 items per page</option>
+            <option [ngValue]="25" translate>25 items per page</option>
+            <option [ngValue]="50" translate>50 items per page</option>
           </select>
 
           <ngb-pagination [collectionSize]="servers.length" [(page)]="page" [pageSize]="pageSize">

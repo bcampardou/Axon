@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { NetworkService } from 'src/app/services';
+import { NetworkService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
-import { Network } from 'src/app/models';
+import { Network } from '@app/models';
 
 @Component({
   selector: 'app-networks',
@@ -32,8 +32,7 @@ export class NetworksComponent implements OnInit, OnDestroy {
   }
 
   public show(id: string) {
-    this.networkService.get(id).subscribe();
-    this.mode = 'edition';
+    this.networkService.get(id).subscribe(res => this.mode = 'edition');
   }
 
   public cancelEdition(event: boolean) {

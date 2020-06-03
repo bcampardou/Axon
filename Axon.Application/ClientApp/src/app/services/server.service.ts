@@ -10,13 +10,23 @@ import { map } from 'rxjs/operators';
 export class ServerService {
     public currentServer$: BehaviorSubject<Server> = new BehaviorSubject<Server>(null);
     public servers$ = new BehaviorSubject<Array<Server>>([]);
-    private url: string = '/api/servers';
+    private url: string = '/servers';
 
     constructor(private http: HttpClient) { }
   
     public post(server: Server) : Observable<Server> {
       return this.http.post<Server>(`${this.url}`, server).pipe(
-        map(res => { this.currentServer$.next(res); return res; })
+        map(res => { 
+          let servers = this.servers$.getValue();
+          let index = servers.findIndex(s => s.id === res.id);
+          if(index > -1) {
+            servers[index] = res;
+          } else {
+            servers.push(res);
+          }
+          this.servers$.next(servers);
+          this.currentServer$.next(res); 
+          return res; })
       );
     }
   
@@ -36,5 +46,15 @@ export class ServerService {
         );
       }
       return this.servers$.asObservable();
+    }
+
+    public delete(payload: string) {
+      return this.http.delete(`${this.url}/${payload}`).pipe(
+        map(res => {
+          let values = this.servers$.getValue();
+          values.splice(values.findIndex(v => v.id === payload), 1);
+          this.servers$.next(values);
+        })
+      );
     }
 }

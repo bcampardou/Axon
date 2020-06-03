@@ -10,13 +10,24 @@ import { Project } from '../models';
 export class ProjectService {
     public currentProject$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
     public projects$ = new BehaviorSubject<Array<Project>>([]);
-    private url: string = '/api/projects';
+    private url: string = '/projects';
 
     constructor(private http: HttpClient) { }
   
     public post(project: Project) : Observable<Project> {
       return this.http.post<Project>(`${this.url}`, project).pipe(
-        map(res => { this.currentProject$.next(res); return res; })
+        map(res => { 
+          let values = this.projects$.getValue();
+          let index = values.findIndex(s => s.id === res.id);
+          if(index > -1) {
+            values[index] = res;
+          } else {
+            values.push(res);
+          }
+          this.projects$.next(values);
+          this.currentProject$.next(res); 
+          return res; 
+        })
       );
     }
   
@@ -36,5 +47,15 @@ export class ProjectService {
         );
       }
       return this.projects$.asObservable();
+    }
+
+    public delete(payload: string) {
+      return this.http.delete(`${this.url}/${payload}`).pipe(
+        map(res => {
+          let values = this.projects$.getValue();
+          values.splice(values.findIndex(v => v.id === payload), 1);
+          this.projects$.next(values);
+        })
+      );
     }
 }

@@ -17,7 +17,8 @@ namespace Axon.Data.Repositories
         protected override IQueryable<Server> _loadProperties(IQueryable<Server> entities)
         {
             return entities.Include(s => s.Network)
-                            .Include(s => s.ProjectEnvironments);
+                            .Include(s => s.ProjectEnvironments)
+                            .ThenInclude(pe => pe.Project);
         }
     }
 }

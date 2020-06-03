@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/services';
+import { ProjectService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Project } from 'src/app/models';
+import { Project } from '@app/models';
 
 @Component({
     selector: 'app-project-list',

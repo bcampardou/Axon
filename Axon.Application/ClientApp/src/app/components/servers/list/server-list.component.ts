@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ServerService } from 'src/app/services';
+import { ServerService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Server } from 'src/app/models';
-import { OperatingSystems } from 'src/app/models/operating-systems.model';
+import { Server } from '@app/models';
+import { OperatingSystems } from '@app/models/operating-systems.model';
 
 @Component({
     selector: 'app-server-list',

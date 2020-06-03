@@ -76,6 +76,23 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <!-- <select class="form-control" [(ngModel)]="language">
+            <option value="fr">fr</option>
+            <option value="en">en</option>
+          </select> -->
+        <div class="btn-group btn-group-sm btn-group-toggle" ngbRadioGroup name="language"
+          [(ngModel)]="language">
+          <label ngbButtonLabel class="btn-outline-dark">
+            <input ngbButton type="radio" [value]="'fr'"> Fr
+          </label>
+          <label ngbButtonLabel class="btn-outline-dark">
+            <input ngbButton type="radio" [value]="'en'"> En
+          </label>
+        </div>
+      </div>
+      </div>
       <!-- Form -->
       <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
@@ -88,15 +105,16 @@
           </div>
         </div>
       </form>
+
       <!-- Navigation -->
       <!-- Divider -->
       <hr class="my-3">
       <!-- Heading -->
-      <h6 class="navbar-heading text-muted">Administration</h6>
+      <h6 class="navbar-heading text-muted" translate>Administration</h6>
       <!-- Navigation -->
       <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/networks'">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="'/networks'" translate>
             <svg class="bi bi-bullseye mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -107,7 +125,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/servers'">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="'/servers'" translate>
             <svg class="bi bi-server mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path d="M13 2c0-1.105-2.239-2-5-2S3 .895 3 2s2.239 2 5 2 5-.895 5-2z" />
@@ -121,7 +139,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/projects'">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="'/projects'" translate>
             <svg class="bi bi-box-seam mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -136,28 +154,6 @@
           <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
             <i class="ni {{menuItem.icon}}"></i>
             {{menuItem.title}}
-          </a>
-        </li>
-      </ul>
-      <!-- Divider -->
-      <hr class="my-3">
-      <!-- Heading -->
-      <h6 class="navbar-heading text-muted">Documentation</h6>
-      <!-- Navigation -->
-      <ul class="navbar-nav mb-md-3">
-        <li class="nav-item">
-          <a class="nav-link" href="https://demos.creative-tim.com/axon/documentation/tutorial">
-            <i class="ni ni-spaceship"></i> Getting started
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://demos.creative-tim.com/axon/documentation/colors">
-            <i class="ni ni-palette"></i> Foundation
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://demos.creative-tim.com/axon/documentation/alerts">
-            <i class="ni ni-ui-04"></i> Components
           </a>
         </li>
       </ul>

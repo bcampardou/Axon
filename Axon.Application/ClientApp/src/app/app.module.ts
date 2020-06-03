@@ -9,10 +9,13 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import { ProjectService, EnvironmentService, TechnologyService, ServerService, NetworkService } from './services';
+import { CoreModule } from './services';
+import { CustomTranslateLoader } from './services/custom-translate-loader.service';
 
 
 @NgModule({
@@ -21,10 +24,18 @@ import { ProjectService, EnvironmentService, TechnologyService, ServerService, N
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: CustomTranslateLoader
+      }
+    }),
     ComponentsModule,
     NgbModule,
     NgbModalModule,
+    ToastrModule.forRoot(),
     RouterModule,
+    CoreModule,
     AppRoutingModule
   ],
   declarations: [
@@ -33,11 +44,6 @@ import { ProjectService, EnvironmentService, TechnologyService, ServerService, N
     AuthLayoutComponent
   ],
   providers: [
-    ProjectService,
-    EnvironmentService,
-    TechnologyService,
-    ServerService,
-    NetworkService
   ],
   bootstrap: [AppComponent]
 })

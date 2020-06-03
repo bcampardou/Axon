@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkService } from 'src/app/services';
+import { NetworkService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Network } from 'src/app/models';
+import { Network } from '@app/models';
 
 @Component({
     selector: 'app-network-list',

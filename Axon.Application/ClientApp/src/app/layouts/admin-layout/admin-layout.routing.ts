@@ -7,7 +7,7 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NetworksComponent } from '../../pages/networks/networks.component';
 import { ServersComponent } from '../../pages/servers/servers.component';
-import { ProjectsComponent } from 'src/app/pages/projects/projects.component';
+import { ProjectsComponent } from '@app/pages/projects/projects.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },

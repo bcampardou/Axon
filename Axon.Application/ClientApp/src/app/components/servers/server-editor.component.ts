@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ServerService, NetworkService } from 'src/app/services';
+import { ServerService, NetworkService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators'
-import { Server, Network } from 'src/app/models';
-import { OperatingSystems } from 'src/app/models/operating-systems.model';
+import { Server, Network } from '@app/models';
+import { OperatingSystems } from '@app/models/operating-systems.model';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-server-editor',
@@ -22,6 +24,8 @@ export class ServerEditorComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
+        private translateService: TranslateService,
         private serverService: ServerService,
         private networkService: NetworkService) {
             this.subscriptions.push(this.serverService.currentServer$.subscribe(ser => this.server = ser));
@@ -36,7 +40,11 @@ export class ServerEditorComponent implements OnInit, OnDestroy {
     }
 
     public save() {
-        this.serverService.post(this.server).subscribe(res => this.server = res);
+        this.serverService.post(this.server).subscribe(res => 
+            {
+                this.server = res;
+                this.toastr.success(this.translateService.instant('Successfully saved', 'Success'));
+            });
     }
 
     public cancel() {

@@ -10,13 +10,24 @@ import { map } from 'rxjs/operators';
 export class EnvironmentService {
     public currentEnvironment$: BehaviorSubject<Environment> = new BehaviorSubject<Environment>(null);
     public environments$ = new BehaviorSubject<Array<Environment>>([]);
-    private url: string = '/api/environments';
+    private url: string = '/environments';
 
     constructor(private http: HttpClient) { }
   
     public post(environment: Environment) : Observable<Environment> {
       return this.http.post<Environment>(`${this.url}`, environment).pipe(
-        map(res => { this.currentEnvironment$.next(res); return res; })
+        map(res => { 
+          let values = this.environments$.getValue();
+          let index = values.findIndex(s => s.name === res.name && s.projectId === s.projectId);
+          if(index > -1) {
+            values[index] = res;
+          } else {
+            values.push(res);
+          }
+          this.environments$.next(values);
+          this.currentEnvironment$.next(res); 
+          return res; 
+        })
       );
     }
   

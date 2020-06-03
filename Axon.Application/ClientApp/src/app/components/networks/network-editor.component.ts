@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkService } from 'src/app/services';
+import { NetworkService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators'
-import { Network } from 'src/app/models';
+import { Network } from '@app/models';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-network-editor',
@@ -19,6 +21,8 @@ export class NetworkEditorComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
+        private translateService: TranslateService,
         private networkService: NetworkService) {
             this.subscriptions.push(this.networkService.currentNetwork$.subscribe(net => this.network = net));
     }
@@ -31,7 +35,10 @@ export class NetworkEditorComponent implements OnInit, OnDestroy {
     }
 
     public save() {
-        this.networkService.post(this.network).subscribe(res => this.network = res);
+        this.networkService.post(this.network).subscribe(res => {
+            this.network = res;
+            this.toastr.success(this.translateService.instant('Successfully saved', 'Success'));
+        });
     }
 
     public cancel() {

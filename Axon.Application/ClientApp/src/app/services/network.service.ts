@@ -10,13 +10,24 @@ import { map } from 'rxjs/operators';
 export class NetworkService {
     public currentNetwork$: BehaviorSubject<Network> = new BehaviorSubject<Network>(null);
     public networks$ = new BehaviorSubject<Array<Network>>([]);
-    private url: string = '/api/networks';
+    private url: string = '/networks';
 
     constructor(private http: HttpClient) { }
   
     public post(network: Network) : Observable<Network> {
       return this.http.post<Network>(`${this.url}`, network).pipe(
-        map(res => { this.currentNetwork$.next(res); return res; })
+        map(res => { 
+          let values = this.networks$.getValue();
+          let index = values.findIndex(s => s.id === res.id);
+          if(index > -1) {
+            values[index] = res;
+          } else {
+            values.push(res);
+          }
+          this.networks$.next(values);
+          this.currentNetwork$.next(res); 
+          return res; 
+        })
       );
     }
   
@@ -36,5 +47,15 @@ export class NetworkService {
         );
       }
       return this.networks$.asObservable();
+    }
+
+    public delete(payload: string) {
+      return this.http.delete(`${this.url}/${payload}`).pipe(
+        map(res => {
+          let values = this.networks$.getValue();
+          values.splice(values.findIndex(v => v.id === payload), 1);
+          this.networks$.next(values);
+        })
+      );
     }
 }

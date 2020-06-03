@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { I18nService } from '@app/services/i18n.service';
 
 declare interface RouteInfo {
     path: string;
@@ -27,12 +28,27 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
-  constructor(private router: Router) { }
+  public get language() {
+    return this.i18nService.language;
+  }
+
+  public set language(value: string) {
+    this.i18nService.language = value;
+  }
+
+  constructor(private router: Router,
+    public i18nService: I18nService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+  }
+  
+
+  setLanguage(language: string) {
+    debugger;
+    this.i18nService.language = language;
   }
 }

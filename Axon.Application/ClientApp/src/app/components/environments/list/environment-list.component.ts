@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EnvironmentService } from 'src/app/services';
+import { EnvironmentService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Environment } from 'src/app/models';
+import { Environment } from '@app/models';
 
 @Component({
     selector: 'app-environment-list',

@@ -14,6 +14,7 @@ import { ProjectEditorComponent } from './projects/project-editor.component';
 import { ProjectListComponent } from './projects/list/project-list.component';
 import { EnvironmentEditorComponent } from './environments/environment-editor.component';
 import { EnvironmentListComponent } from './environments/list/environment-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { EnvironmentListComponent } from './environments/list/environment-list.c
     NgbModalModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule
   ],
   declarations: [
     FooterComponent,

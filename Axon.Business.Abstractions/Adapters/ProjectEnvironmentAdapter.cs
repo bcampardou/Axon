@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Axon.Business.Abstractions.Models;
+using Axon.Core.Guards;
 using Axon.Data.Abstractions.Entities;
 
 namespace Axon.Business.Abstractions.Adapters
@@ -13,6 +14,7 @@ namespace Axon.Business.Abstractions.Adapters
             dto = base.Convert(entity, dto);
             dto.ProjectId = entity.ProjectId;
             dto.ServerId = entity.ServerId;
+            dto.Name = entity.Name;
             dto.URL = entity.URL;
 
             return dto;
@@ -22,8 +24,9 @@ namespace Axon.Business.Abstractions.Adapters
         {
             entity = base.Bind(entity, dto);
 
-            entity.ProjectId = dto.ProjectId;
+            entity.ProjectId = Ensure.Arguments.IsValidGuid(dto.ProjectId) ? dto.ProjectId : entity.ProjectId;
             entity.ServerId = dto.ServerId;
+            entity.Name = dto.Name;
             entity.URL = dto.URL;
 
             return entity;

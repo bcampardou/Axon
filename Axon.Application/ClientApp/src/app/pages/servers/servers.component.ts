@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServerService } from 'src/app/services';
+import { ServerService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
-import { Server } from 'src/app/models';
+import { Server } from '@app/models';
 
 @Component({
   selector: 'app-servers',
@@ -32,8 +32,7 @@ export class ServersComponent implements OnInit, OnDestroy {
   }
 
   public show(id: string) {
-    this.serverService.get(id).subscribe();
-    this.mode = 'edition';
+    this.serverService.get(id).subscribe(res => this.mode = 'edition');
   }
 
   public cancelEdition(event: boolean) {
