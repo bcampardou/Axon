@@ -24,5 +24,9 @@
 	"New environment": "Nouvel environment",
 	"New server": "Nouveau serveur",
 	"New network": "Nouveau réseau",
-	"New project": "Nouveau projet"
+	"New project": "Nouveau projet",
+	"Project": "Projet",
+	"Search": "Rechercher",
+	"Dashboard": "Bureau",
+	"User": "Utilisateur"
 }

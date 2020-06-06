@@ -8,15 +8,16 @@
       <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
         <div class="input-group input-group-alternative">
           <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <div class="input-group-text">{{ search.label }}</div>
           </div>
-          <input class="form-control" placeholder="Search" type="text" (focus)="focus = true" (blur)="focus = false">
+          <input class="form-control" name="search" type="text" [(ngModel)]="search.term" (focus)="focus = true"
+            (blur)="focus = false">
         </div>
       </div>
     </form>
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
-      <li class="nav-item" ngbDropdown placement="bottom-right">
+      <li class="nav-item" ngbDropdown placement="bottom-right" *ngIf="currentUser">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
             <!-- <span class="avatar avatar-sm rounded-circle">
@@ -30,7 +31,7 @@
               <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
             </svg>
             <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+              <span class="mb-0 text-sm  font-weight-bold">{{currentUser.userName}}</span>
             </div>
           </div>
         </a>
@@ -55,9 +56,9 @@
             <span>Support</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#!" class="dropdown-item">
+          <a href="#!" class="dropdown-item" (click)="logout()">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span translate>Logout</span>
           </a>
         </div>
       </li>

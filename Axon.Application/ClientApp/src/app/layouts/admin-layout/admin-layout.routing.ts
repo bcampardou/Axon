@@ -1,13 +1,15 @@
 import { Routes } from '@angular/router';
 
-import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
-import { IconsComponent } from '../../pages/icons/icons.component';
-import { MapsComponent } from '../../pages/maps/maps.component';
-import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
-import { TablesComponent } from '../../pages/tables/tables.component';
-import { NetworksComponent } from '../../pages/networks/networks.component';
-import { ServersComponent } from '../../pages/servers/servers.component';
+import { DashboardComponent } from '@app/pages/dashboard/dashboard.component';
+import { IconsComponent } from '@app/pages/icons/icons.component';
+import { MapsComponent } from '@app/pages/maps/maps.component';
+import { UserProfileComponent } from '@app/pages/user-profile/user-profile.component';
+import { TablesComponent } from '@app/pages/tables/tables.component';
+import { NetworksComponent } from '@app/pages/networks/networks.component';
+import { ServersComponent } from '@app/pages/servers/servers.component';
 import { ProjectsComponent } from '@app/pages/projects/projects.component';
+import { UsersComponent } from '@app/pages/users/users.component';
+import { TenantsComponent } from '@app/pages/tenants/tenants.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -17,5 +19,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'networks',       component: NetworksComponent },
     { path: 'servers',       component: ServersComponent },
-    { path: 'projects',       component: ProjectsComponent }
+    { path: 'projects',       component: ProjectsComponent },
+    { path: 'users',       component: UsersComponent },
+    { path: 'tenants',       component: TenantsComponent }
 ];

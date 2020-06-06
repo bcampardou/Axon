@@ -15,7 +15,7 @@ namespace Axon.Business.Services
 {
     public class TechnologiesService : Service<Technology, TechnologyDTO, TechnologyAdapter, ITechnologiesRepository>, ITechnologiesService
     {
-        public TechnologiesService(ILoggerFactory loggerFactory, IConfiguration configuration, IEasyCachingProvider cachingProvider, ClaimsPrincipal currentUser, IServiceProvider serviceProvider, TechnologyAdapter adapter, Lazy<ITechnologiesRepository> repository) : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider, adapter, repository)
+        public TechnologiesService(ILoggerFactory loggerFactory, IConfiguration configuration, IEasyCachingProvider cachingProvider, ClaimsPrincipal currentUser, IServiceProvider serviceProvider, Lazy<ITechnologiesRepository> repository) : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider, repository)
         {
         }
     }

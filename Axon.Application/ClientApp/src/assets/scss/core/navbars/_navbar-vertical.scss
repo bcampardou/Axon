@@ -80,6 +80,10 @@
                     bottom: $nav-link-padding-y;
                     border-left: 2px solid $primary;
                 }
+                
+                svg {
+                    color: $primary;
+                }
             }
 
 

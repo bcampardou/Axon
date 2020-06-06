@@ -3,7 +3,8 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { map } from 'rxjs/operators';
-import { User } from '@app/models';
+import { Tenant } from '@app/models';
+import { User } from '@app/models/user.model';
 
 export interface Credentials {
   // Customize received credentials here
@@ -12,12 +13,14 @@ export interface Credentials {
 }
 
 export interface LoginContext {
+  tenant: string;
   login: string;
   password: string;
   remember?: boolean;
 }
 
 export interface RegisterContext {
+  tenant: string;
   userName: string;
   email: string;
   password: string;
@@ -33,7 +36,17 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class AuthenticationService {
+  private url = '/users';
+
+  public authenticatedUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  public tenant$: BehaviorSubject<Tenant> = new BehaviorSubject<Tenant>(null);
+
   public currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  public users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
+
+  public get tenant() {
+    return this.tenant$.getValue();
+  }
 
   public get isCookiesEnabled() {
     const isCookiesEnabled = localStorage.getItem('cookies_enabled');
@@ -50,7 +63,8 @@ export class AuthenticationService {
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
       this.getUser(this._credentials.user.id).subscribe((res: User) => {
-        this.currentUser$.next(res);
+        this.authenticatedUser$.next(res);
+        this.tenant$.next(res.tenant);
         this._credentials.user = res;
         this.setCredentials(this._credentials);
       });
@@ -65,30 +79,6 @@ export class AuthenticationService {
     return this.http.post<User>(`/users`, user);
   }
 
-  addBandToFavorite(bandId: string) {
-    if (!this.isAuthenticated) return;
-    return this.http.get<User>(`/users/${this._credentials.user.id}/favorites/${bandId}/create`).pipe(
-      map((user: User) => {
-        this.currentUser$.next(user);
-        this._credentials.user = user;
-        this.setCredentials(this._credentials);
-        return user;
-      })
-    );
-  }
-
-  deleteBandFromFavorite(bandId: string) {
-    if (!this.isAuthenticated) return;
-    return this.http.get<User>(`/users/${this._credentials.user.id}/favorites/${bandId}/delete`).pipe(
-      map((user: User) => {
-        this.currentUser$.next(user);
-        this._credentials.user = user;
-        this.setCredentials(this._credentials);
-        return user;
-      })
-    );
-  }
-
   /**
    * Authenticates the user.
    * @param {LoginContext} context The login parameters.
@@ -98,7 +88,7 @@ export class AuthenticationService {
     return this.http.post<Credentials>(`/users/signin`, context)
       .pipe(map(credentials => {
         // login successful if there's a jwt token in the response
-        this.currentUser$.next(credentials.user);
+        this.authenticatedUser$.next(credentials.user);
         this.setCredentials(credentials, context.remember);
         return credentials;
       }));
@@ -126,16 +116,6 @@ export class AuthenticationService {
       .pipe(map(res => {
         return res;
       }));
-  }
-
-  facebookLogin(accessToken: string) {
-    return this.http.post<Credentials>('/users/facebook', { accessToken })
-      .pipe(
-        map(user => {
-          // login successful if there's a jwt token in the responsez
-          this.setCredentials(user, true);
-          return user;
-        }));
   }
 
   clearCredentials() {
@@ -176,7 +156,7 @@ export class AuthenticationService {
    */
   private setCredentials(credentials?: Credentials, remember?: boolean) {
     this._credentials = credentials || null;
-    this.currentUser$.next(credentials ? credentials.user : null);
+    this.authenticatedUser$.next(credentials ? credentials.user : null);
 
     if (!!credentials) {
       const storage = remember ? localStorage : sessionStorage;
@@ -185,6 +165,35 @@ export class AuthenticationService {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
     }
+  }
+
+  
+  public get(payload: string) {
+    return this.http.get<User>(`${this.url}/${payload}`).pipe(
+      map(res => this.currentUser$.next(res))
+    );
+  }
+
+  public getAll(force: boolean) {
+    if(force || this.users$.getValue().length == 0) {
+      return this.http.get<Array<User>>(`${this.url}`).pipe(
+          map(res => {
+            this.users$.next(res);
+            return res;
+          })
+      );
+    }
+    return this.users$.asObservable();
+  }
+
+  public delete(payload: string) {
+    return this.http.delete(`${this.url}/${payload}`).pipe(
+      map(res => {
+        let values = this.users$.getValue();
+        values.splice(values.findIndex(v => v.id === payload), 1);
+        this.users$.next(values);
+      })
+    );
   }
 
 

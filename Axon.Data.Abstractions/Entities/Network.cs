@@ -15,6 +15,9 @@ namespace Axon.Data.Abstractions.Entities
 
         public string Description { get; set; }
 
+        public string TenantId { get; set; }
+        public virtual Tenant Tenant { get; set; }
+
         [InverseProperty("Network")]
         public virtual Collection<Server> Servers { get; set; }
     }

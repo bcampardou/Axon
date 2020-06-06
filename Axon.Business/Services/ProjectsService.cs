@@ -17,7 +17,7 @@ namespace Axon.Business.Services
 {
     public class ProjectsService : Service<Project, ProjectDTO, ProjectAdapter, IProjectsRepository>, IProjectsService
     {
-        public ProjectsService(ILoggerFactory loggerFactory, IConfiguration configuration, IEasyCachingProvider cachingProvider, ClaimsPrincipal currentUser, IServiceProvider serviceProvider, ProjectAdapter adapter, Lazy<IProjectsRepository> repository) : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider, adapter, repository)
+        public ProjectsService(ILoggerFactory loggerFactory, IConfiguration configuration, IEasyCachingProvider cachingProvider, ClaimsPrincipal currentUser, IServiceProvider serviceProvider, Lazy<IProjectsRepository> repository) : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider, repository)
         {
         }
 

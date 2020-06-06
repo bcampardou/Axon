@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { NetworkService } from '@app/services';
+import { NetworkService, AuthenticationService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '@app/models';
 
@@ -15,7 +15,8 @@ export class NetworksComponent implements OnInit, OnDestroy {
   public mode: string = 'list';
 
   constructor(private router: Router,
-    private networkService: NetworkService) { 
+    private networkService: NetworkService,
+    private authService: AuthenticationService) { 
       this.networks$ = this.networkService.networks$;
       this.networkService.getAll(true).subscribe();
     }
@@ -27,7 +28,9 @@ export class NetworksComponent implements OnInit, OnDestroy {
   }
 
   public create() {
-    this.networkService.currentNetwork$.next(new Network());
+    const network = new Network();
+    network.tenantId = this.authService.tenant.id;
+    this.networkService.currentNetwork$.next(network);
     this.mode = 'creation';
   }
 

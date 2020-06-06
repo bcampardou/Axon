@@ -1,0 +1,53 @@
+<div class="col">
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <h3 class="mb-0" translate>Users</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" translate>Activated</th>
+              <th scope="col" translate>Name</th>
+              <th scope="col" translate>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users" (click)="select(user)">
+              <td class="text-success">
+                <svg class="bi bi-check2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                  *ngIf="user.isActive">
+                  <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+              </td>
+              <th scope="row">
+                <div class="media align-items-center">
+                  <!-- <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                  </a> -->
+                  <div class="media-body">
+                    <span class="mb-0 text-sm">{{user.userName}}</span>
+                  </div>
+                </div>
+              </th>
+              <td>
+                {{user.email}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer py-4">
+        <div class="d-flex justify-content-between p-2">
+          <select class="form-control" style="width: auto" [(ngModel)]="pageSize">
+            <option [ngValue]="10" translate>10 items per page</option>
+            <option [ngValue]="25" translate>25 items per page</option>
+            <option [ngValue]="50" translate>50 items per page</option>
+          </select>
+
+          <ngb-pagination [collectionSize]="users.length" [(page)]="page" [pageSize]="pageSize">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>

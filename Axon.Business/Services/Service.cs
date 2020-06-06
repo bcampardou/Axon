@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Axon.Business.Abstractions.Adapters;
+using Axon.Business.Abstractions.Adapters.Factory;
 using Axon.Business.Abstractions.Models;
 using Axon.Business.Abstractions.Services;
 using Axon.Business.Rules;
@@ -80,11 +81,10 @@ namespace Axon.Business.Services
             IEasyCachingProvider cachingProvider,
             ClaimsPrincipal currentUser,
             IServiceProvider serviceProvider,
-            ADAPTER adapter,
             Lazy<IREPO> repository)
             : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider)
         {
-            this.adapter = adapter;
+            this.adapter = AdapterFactory.Get<ADAPTER>();
             _repository = repository;
         }
 

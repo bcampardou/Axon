@@ -15,7 +15,7 @@ namespace Axon.Business.Services
 {
     public class NetworksService : Service<Network, NetworkDTO, NetworkAdapter, INetworksRepository>, INetworksService
     {
-        public NetworksService(ILoggerFactory loggerFactory, IConfiguration configuration, IEasyCachingProvider cachingProvider, ClaimsPrincipal currentUser, IServiceProvider serviceProvider, NetworkAdapter adapter, Lazy<INetworksRepository> repository) : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider, adapter, repository)
+        public NetworksService(ILoggerFactory loggerFactory, IConfiguration configuration, IEasyCachingProvider cachingProvider, ClaimsPrincipal currentUser, IServiceProvider serviceProvider, Lazy<INetworksRepository> repository) : base(loggerFactory, configuration, cachingProvider, currentUser, serviceProvider, repository)
         {
         }
     }

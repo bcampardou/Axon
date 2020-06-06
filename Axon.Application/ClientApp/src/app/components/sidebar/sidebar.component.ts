@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/services/i18n.service';
+import { SearchService } from '@app/services';
 
 declare interface RouteInfo {
     path: string;
@@ -37,7 +38,8 @@ export class SidebarComponent implements OnInit {
   }
 
   constructor(private router: Router,
-    public i18nService: I18nService) { }
+    public i18nService: I18nService,
+    public search: SearchService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -48,7 +50,6 @@ export class SidebarComponent implements OnInit {
   
 
   setLanguage(language: string) {
-    debugger;
     this.i18nService.language = language;
   }
 }

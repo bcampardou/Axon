@@ -1,0 +1,42 @@
+<div class="col">
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <h3 class="mb-0" translate>Tenants</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" translate>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tenant of tenants" (click)="select(tenant)">
+              <th scope="row">
+                <div class="media align-items-center">
+                  <!-- <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                  </a> -->
+                  <div class="media-body">
+                    <span class="mb-0 text-sm">{{tenant.name}}</span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer py-4">
+        <div class="d-flex justify-content-between p-2">
+          <select class="form-control" style="width: auto" [(ngModel)]="pageSize">
+            <option [ngValue]="10" translate>10 items per page</option>
+            <option [ngValue]="25" translate>25 items per page</option>
+            <option [ngValue]="50" translate>50 items per page</option>
+          </select>
+
+          <ngb-pagination [collectionSize]="tenants.length" [(page)]="page" [pageSize]="pageSize">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>

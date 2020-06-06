@@ -17,6 +17,8 @@ import { ComponentsModule } from '@app/components/components.module';
 import { ServersComponent } from '@app/pages/servers/servers.component';
 import { ProjectsComponent } from '@app/pages/projects/projects.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { UsersComponent } from '@app/pages/users/users.component';
+import { TenantsComponent } from '@app/pages/tenants/tenants.component';
 
 @NgModule({
   imports: [
@@ -38,7 +40,9 @@ import { TranslateModule } from '@ngx-translate/core';
     MapsComponent,
     NetworksComponent,
     ServersComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    UsersComponent,
+    TenantsComponent
   ]
 })
 

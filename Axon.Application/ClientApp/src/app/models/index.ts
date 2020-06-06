@@ -6,3 +6,5 @@ export * from './environment.model';
 export * from './network.model';
 export * from './server.model';
 export * from './user.model';
+export * from './tenant.model';
+export * from './license.model';

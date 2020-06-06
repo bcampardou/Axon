@@ -15,6 +15,7 @@ import { CacheInterceptor } from './http/cache.interceptor';
 import { JwtInterceptor } from './http/jwt.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler } from './error-handler.service';
+import { SearchService } from './search.service';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { ErrorHandler } from './error-handler.service';
     ApiPrefixInterceptor,
     JwtInterceptor,
     ErrorHandlerInterceptor,
+    SearchService,
     CacheInterceptor,
     {
       provide: HttpClient,

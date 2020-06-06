@@ -13,6 +13,10 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Axon.Application.Middlewares;
 
 namespace Axon.Application
 {
@@ -40,38 +44,43 @@ namespace Axon.Application
             });
             services.RegisterBusinessServices(Configuration);
 
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // Password settings.
-            //    options.Password.RequireDigit = true;
-            //    options.Password.RequireLowercase = true;
-            //    options.Password.RequireNonAlphanumeric = true;
-            //    options.Password.RequireUppercase = true;
-            //    options.Password.RequiredLength = 6;
-            //    options.Password.RequiredUniqueChars = 1;
-
-            //    // Lockout settings.
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            //    options.Lockout.MaxFailedAccessAttempts = 5;
-            //    options.Lockout.AllowedForNewUsers = true;
-
-            //    // User settings.
-            //    options.User.AllowedUserNameCharacters =
-            //    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-            //    options.User.RequireUniqueEmail = false;
-            //});
-            
-
-            services.ConfigureApplicationCookie(options =>
+            #region Add Authentication  
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]));
+            services.AddAuthentication(options =>
             {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = signingKey,
+                    ValidateAudience = true,
+                    ValidAudience = this.Configuration["Tokens:Audience"],
+                    ValidateIssuer = true,
+                    ValidIssuer = this.Configuration["Tokens:Issuer"],
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true
+                };
             });
+            #endregion
+            services.AddAntiforgery();
+
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+            //    options.LoginPath = "/login";
+            //    options.AccessDeniedPath = "/unauthorized";
+            //    options.SlidingExpiration = true;
+            //});
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -86,11 +95,9 @@ namespace Axon.Application
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
                 //app.UseXContentTypeOptions();
@@ -98,6 +105,7 @@ namespace Axon.Application
                 //app.UseXXssProtection(options => options.EnabledWithBlockMode());
                 //app.UseXfo(options => options.Deny());
             }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -107,6 +115,8 @@ namespace Axon.Application
             }
 
             app.UseRouting();
+
+            app.UseAuthentication().UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,16 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Axon.Business.Abstractions\Axon.Business.Abstractions.csproj" />
+    <ProjectReference Include="..\Axon.Core\Axon.Core.csproj" />
+    <ProjectReference Include="..\Axon.Data.Abstractions\Axon.Data.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EasyCaching.Core" Version="0.8.3" />
-    <PackageReference Include="EasyCaching.InMemory" Version="0.8.4" />
+    <PackageReference Include="EasyCaching.Core" Version="0.8.9" />
+    <PackageReference Include="EasyCaching.InMemory" Version="0.8.9" />
+    <PackageReference Include="MailKit" Version="2.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Antiforgery" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="MimeKit" Version="2.8.0" />
+    <PackageReference Include="RazorEngine.NetCore" Version="2.2.6" />
+    <PackageReference Include="RazorLight" Version="2.0.0-beta7" />
   </ItemGroup>
 
 </Project>

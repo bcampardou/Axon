@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Axon.Business.Abstractions.Adapters.Factory;
 using Axon.Business.Abstractions.Models;
 using Axon.Data.Abstractions.Entities;
 
@@ -34,9 +35,9 @@ namespace Axon.Business.Abstractions.Adapters
         {
             if (dto == null)
                 dto = new NetworkDTO();
-            dto = new NetworkLightAdapter().Convert(entity, dto) as NetworkDTO;
+            dto = AdapterFactory.Get<NetworkLightAdapter>().Convert(entity, dto) as NetworkDTO;
 
-            var serverAdapter = new ServerLightAdapter();
+            var serverAdapter = AdapterFactory.Get<ServerLightAdapter>();
             dto.Servers = entity.Servers?.Select(s => serverAdapter.Convert(s, null)).ToList();
 
             return dto;
@@ -44,7 +45,7 @@ namespace Axon.Business.Abstractions.Adapters
 
         public override Network Bind(Network entity, NetworkDTO dto)
         {
-            entity = new NetworkLightAdapter().Bind(entity, dto);
+            entity = AdapterFactory.Get<NetworkLightAdapter>().Bind(entity, dto);
 
             return entity;
         }

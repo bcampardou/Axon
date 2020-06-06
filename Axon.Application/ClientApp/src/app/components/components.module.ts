@@ -15,6 +15,13 @@ import { ProjectListComponent } from './projects/list/project-list.component';
 import { EnvironmentEditorComponent } from './environments/environment-editor.component';
 import { EnvironmentListComponent } from './environments/list/environment-list.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { TenantEditorComponent } from './tenants/tenant-editor.component';
+import { TenantListComponent } from './tenants/list/tenant-list.component';
+import { UserEditorComponent } from './users/user-editor.component';
+import { UserListComponent } from './users/list/user-list.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { LicenseEditorComponent } from './licenses/license-editor.component';
+import { LicenseListComponent } from './licenses/list/license-list.component';
 
 @NgModule({
   imports: [
@@ -38,6 +45,13 @@ import { TranslateModule } from '@ngx-translate/core';
     ProjectListComponent,
     EnvironmentEditorComponent,
     EnvironmentListComponent,
+    TenantEditorComponent,
+    TenantListComponent,
+    UserEditorComponent,
+    UserListComponent,
+    AutocompleteComponent,
+    LicenseEditorComponent,
+    LicenseListComponent
   ],
   exports: [
     FooterComponent,
@@ -51,6 +65,13 @@ import { TranslateModule } from '@ngx-translate/core';
     ProjectListComponent,
     EnvironmentEditorComponent,
     EnvironmentListComponent,
+    TenantEditorComponent,
+    TenantListComponent,
+    UserEditorComponent,
+    UserListComponent,
+    AutocompleteComponent,
+    LicenseEditorComponent,
+    LicenseListComponent
   ]
 })
 export class ComponentsModule { }

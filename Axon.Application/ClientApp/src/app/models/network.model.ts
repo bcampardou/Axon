@@ -6,4 +6,5 @@ export class Network extends IdentifiedModel {
     public name: string;
     public description: string;
     public servers: Array<Server>;
+    public tenantId: string;
 }
