@@ -67,6 +67,16 @@ export class TenantEditorComponent implements OnInit, OnDestroy {
         this.modal = this.modalService.open(this.content, { centered: true });
     }
 
+    public createLicense() {
+        const license = new License();
+        license.tenantId = this.tenant.id;
+        license.startDate = new Date();
+        license.endDate = new Date();
+        this.tenant.licenses.push(license);
+        this.licenseService.currentLicense$.next(license);
+        this.modal = this.modalService.open(this.content, { centered: true });
+    }
+
     public closeModal(type:string) {
         this.modal.dismiss(type); 
         this.licenseService.currentLicense$.next(null);
