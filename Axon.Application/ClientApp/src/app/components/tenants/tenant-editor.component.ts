@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { TenantService } from '@app/services/tenant.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { LicenseService } from '@app/services/license.service';
 
 @Component({
     selector: 'app-tenant-editor',
@@ -36,7 +37,8 @@ export class TenantEditorComponent implements OnInit, OnDestroy {
         private translateService: TranslateService,
         private tenantService: TenantService,
         private modalService: NgbModal,
-        private networkService: NetworkService) {
+        private networkService: NetworkService,
+        private licenseService: LicenseService) {
             this.subscriptions.push(this.tenantService.currentTenant$.subscribe(ser => this.tenant = ser));
             this.subscriptions.push(this.networkService.getAll(false).subscribe(net => this.networks = net));
     }
@@ -61,12 +63,12 @@ export class TenantEditorComponent implements OnInit, OnDestroy {
     }
 
     public openLicense(license: License) {
-        this.currentLicense$.next(license);
+        this.licenseService.currentLicense$.next(license);
         this.modal = this.modalService.open(this.content, { centered: true });
     }
 
     public closeModal(type:string) {
         this.modal.dismiss(type); 
-        this.currentLicense$.next(null);
+        this.licenseService.currentLicense$.next(null);
     }
 }

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { License } from '@app/models';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { LicenseService } from '@app/services/license.service';
 
 @Component({
     selector: 'app-license-editor',
@@ -12,14 +13,15 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LicenseEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
-    @Input() public license: License;
+    public license: License;
     @Output() public canceled = new EventEmitter<boolean>();
     private subscriptions = new Array<Subscription>();
 
-    constructor() {
+    constructor(private licenseService: LicenseService) {
     }
 
     ngOnInit() {
+        this.subscriptions.push(this.licenseService.currentLicense$.subscribe(l => this.license = l));
     }
 
     ngOnDestroy() {
