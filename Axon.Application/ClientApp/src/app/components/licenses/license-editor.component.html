@@ -26,14 +26,14 @@
             <div class="form-group">
               <label class="form-control-label" for="startDate" translate>Start date</label>
               <input type="date" name="startDate" required class="form-control form-control-alternative"
-                placeholder="Start date" value="" [(ngModel)]="license.startDate">
+                placeholder="Start date" value="" [ngModel]="license.startDate | date:'yyyy-MM-dd'" (ngModelChange)="license.startDate = $event">
             </div>
           </div>
           <div class="col-12">
             <div class="form-group">
               <label class="form-control-label" for="endDate" translate>End date</label>
               <input type="date" name="endDate" required class="form-control form-control-alternative"
-                placeholder="End date" value="" [(ngModel)]="license.endDate">
+                placeholder="End date" value="" [ngModel]="license.endDate | date:'yyyy-MM-dd'" (ngModelChange)="license.endDate = $event">
             </div>
           </div>
           <div class="col-12">
