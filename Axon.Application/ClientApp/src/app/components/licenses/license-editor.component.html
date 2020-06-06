@@ -1,64 +1,64 @@
-<div class="col-12 ">
-  <div class="card bg-secondary shadow">
-    <div class="card-header bg-white border-0">
-      <div class="row align-items-center">
-        <div class="col-9">
-        </div>
-        <div class="col-3 text-right">
-          <a class="btn btn-sm btn-outline-info" (click)="cancel()">
-            <svg class="bi bi-chevron-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-          </a>
-        </div>
-        <!-- <div class="col-4 text-right">
+<div class="card bg-secondary shadow">
+  <div class="card-header bg-white border-0">
+    <div class="row align-items-center">
+      <div class="col-9">
+      </div>
+      <div class="col-3 text-right">
+        <a class="btn btn-sm btn-outline-info" (click)="cancel()">
+          <svg class="bi bi-chevron-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+          </svg>
+        </a>
+      </div>
+      <!-- <div class="col-4 text-right">
             <a href="#!" class="btn btn-sm btn-primary">Settings</a>
           </div> -->
-      </div>
     </div>
-    <div class="card-body">
-      <form name="license-form" *ngIf="!!license">
-        <h6 class="heading-small text-muted mb-4" translate>License information</h6>
-        <div class="pl-lg-4">
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label class="form-control-label" for="startDate" translate>Start date</label>
-                <input type="date" name="startDate" required class="form-control form-control-alternative" placeholder="Start date"
-                  value="" [(ngModel)]="license.startDate">
-              </div>
+  </div>
+  <div class="card-body">
+    <form name="license-form" *ngIf="!!license">
+      <h6 class="heading-small text-muted mb-4" translate>License information</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-control-label" for="startDate" translate>Start date</label>
+              <input type="date" name="startDate" required class="form-control form-control-alternative"
+                placeholder="Start date" value="" [(ngModel)]="license.startDate">
             </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="form-control-label" for="endDate" translate>End date</label>
-                <input type="date" name="endDate" required class="form-control form-control-alternative" placeholder="End date"
-                  value="" [(ngModel)]="license.endDate">
-              </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-control-label" for="endDate" translate>End date</label>
+              <input type="date" name="endDate" required class="form-control form-control-alternative"
+                placeholder="End date" value="" [(ngModel)]="license.endDate">
             </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="form-control-label" for="input-username" translate>Key</label>
-                <input type="text" name="key" readonly class="form-control form-control-alternative" placeholder="Key"
-                  value="" [(ngModel)]="license.key">
-              </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username" translate>Key</label>
+              <input type="text" name="key" readonly class="form-control form-control-alternative" placeholder="Key"
+                value="" [(ngModel)]="license.key">
             </div>
-            <div class="col-12">
-              <div class="custom-control custom-control-alternative custom-checkbox">
-                <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="isActive"
-                  [(ngModel)]="license.isActive">
-                <label class="custom-control-label" for=" customCheckLogin">
-                  <span class="text-muted" translate>Activated</span>
-                </label>
-              </div>
+          </div>
+          <div class="col-12">
+            <div class="custom-control custom-control-alternative custom-checkbox">
+              <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="isActive"
+                [(ngModel)]="license.isActive">
+              <label class="custom-control-label" for=" customCheckLogin">
+                <span class="text-muted" translate>Activated</span>
+              </label>
             </div>
           </div>
         </div>
-      </form>
-    </div>
-    <div class="card-body" (click)="save()">
-      <a class="btn btn-outline-info" translate>
-        Save
-      </a>
-    </div>
+      </div>
+    </form>
+  </div>
+  <div class="card-body" (click)="save()">
+    <a class="btn btn-outline-info" translate>
+      Save
+    </a>
   </div>
 </div>
