@@ -19,6 +19,7 @@ import { LicenseService } from '@app/services/license.service';
 export class TenantEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     @Input() public tenantId: string;
+    @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     public currentLicense$: BehaviorSubject<License> = new BehaviorSubject<License>(null);
     public get currentLicense() {

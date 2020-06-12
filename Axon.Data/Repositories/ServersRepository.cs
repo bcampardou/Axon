@@ -18,7 +18,9 @@ namespace Axon.Data.Repositories
         {
             return entities.Include(s => s.Network)
                             .Include(s => s.ProjectEnvironments)
-                            .ThenInclude(pe => pe.Project);
+                            .ThenInclude(pe => pe.Project)
+                            .Include(p => p.Team)
+                            .ThenInclude(t => t.User);
         }
     }
 }

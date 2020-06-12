@@ -17,6 +17,7 @@ import { TenantService } from '@app/services/tenant.service';
 export class UserEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     @Input() public userId: string;
+    @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     public user = new User();
     public tenants: Array<Tenant>;

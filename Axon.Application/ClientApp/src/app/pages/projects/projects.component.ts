@@ -12,6 +12,7 @@ import { Project } from '@app/models';
 export class ProjectsComponent implements OnInit, OnDestroy {
   public isCollapsed = true;
   public projects$ = new BehaviorSubject<Array<Project>>([]);
+  public edition = true;
   public mode: string = 'list';
 
   constructor(private router: Router,

@@ -11,6 +11,17 @@ namespace Axon.Data.Abstractions
     {
         private const string _currentDateSqlFunction = "getdate()"; 
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Server> Servers { get; set; }
+        public DbSet<Network> Networks { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Technology> Technologies { get; set; }
+        public DbSet<License> Licenses { get; set; }
+        public DbSet<ProjectTechnology> ProjectTechnologies { get; set; }
+        public DbSet<ProjectEnvironment> ProjectEnvironments { get; set; }
+        public DbSet<ProjectTeammate> ProjectTeammates { get; set; }
+        public DbSet<ServerTeammate> ServersTeammates { get; set; }
+        public DbSet<NetworkTeammate> NetworkTeammates { get; set; }
+
         public AxonDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -93,6 +104,18 @@ namespace Axon.Data.Abstractions
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
                 b.Property(u => u.EditedAt)
                     .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
+            });
+            modelBuilder.Entity<ProjectTeammate>(b =>
+            {
+                b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+            }); 
+            modelBuilder.Entity<ServerTeammate>(b =>
+            {
+                b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+            }); 
+            modelBuilder.Entity<NetworkTeammate>(b =>
+            {
+                b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
             });
         }
     }

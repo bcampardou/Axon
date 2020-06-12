@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { CoreModule } from './services';
 import { CustomTranslateLoader } from './services/custom-translate-loader.service';
+import { SimplemdeModule } from './components/simplemde/simplemde.module';
 
 
 @NgModule({
@@ -30,6 +31,9 @@ import { CustomTranslateLoader } from './services/custom-translate-loader.servic
         useClass: CustomTranslateLoader
       }
     }),
+    SimplemdeModule.forRoot({
+
+    }),
     ComponentsModule,
     NgbModule,
     NgbModalModule,
@@ -43,8 +47,10 @@ import { CustomTranslateLoader } from './services/custom-translate-loader.servic
     AdminLayoutComponent,
     AuthLayoutComponent
   ],
-  providers: [
-  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+  constructor() {
+  }
+}

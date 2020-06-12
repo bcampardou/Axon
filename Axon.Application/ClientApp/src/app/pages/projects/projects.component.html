@@ -26,6 +26,6 @@
         <app-project-list [projects]="projects$|async" (projectSelected)="show($event)" style="width:100%;"></app-project-list>
     </div>
     <div class="row justify-content-md-center" *ngIf="mode === 'creation' || mode === 'edition'">
-        <app-project-editor (canceled)="cancelEdition($event)" style="width:100%;"></app-project-editor>
+        <app-project-editor [edition]="edition" (canceled)="cancelEdition($event)" style="width:100%;"></app-project-editor>
     </div>
 </div>

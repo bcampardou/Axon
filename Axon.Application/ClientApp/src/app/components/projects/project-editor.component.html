@@ -31,29 +31,86 @@
                   value="" [(ngModel)]="project.name">
               </div>
             </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="description" translate>Description</label>
+                <simplemde #description [value]="project.description" (changed)="project.description = $event;"
+                  [name]="'description'"></simplemde>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="businessDocumentationUrl" translate>Business documentation
+                  URL</label>
+                <input type="text" name="businessDocumentationUrl" required
+                  class="form-control form-control-alternative" placeholder="URL" value=""
+                  [(ngModel)]="project.businessDocumentationUrl">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="technicalDocumentationUrl" translate>Technical documentation
+                  URL</label>
+                <input type="text" name="technicalDocumentationUrl" required
+                  class="form-control form-control-alternative" placeholder="URL" value=""
+                  [(ngModel)]="project.technicalDocumentationUrl">
+              </div>
+            </div>
           </div>
           <hr class="my-3">
-          <div class="row">
-            <div class="col-9">
-            </div>
-            <div class="col-3 text-right">
-              <a class="btn btn-sm btn-outline-info" (click)="createEnvironment()">
-                <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
-                  <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="row">
-            <app-environment-list class="mt-3" style="width:100%;" [environments]="project.environments" (environmentSelected)="openEnvironment($event)"></app-environment-list>
-          </div>
+          <ngb-tabset [destroyOnHide]="false">
+            <ngb-tab title="{{'Environments'|translate}}">
+              <ng-template ngbTabContent>
+                <div class="row">
+                  <div class="col-9">
+                  </div>
+                  <div class="col-3 text-right" *ngIf="edition">
+                    <a class="btn btn-sm btn-outline-info" (click)="createEnvironment()">
+                      <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                          d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+                        <path fill-rule="evenodd"
+                          d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <app-environment-list class="mt-3" style="width:100%;" [environments]="project.environments"
+                    (environmentSelected)="openEnvironment($event)"></app-environment-list>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="{{'Team'|translate}}">
+              <ng-template ngbTabContent>
+                <div class="row">
+                  <div class="col-9">
+                  </div>
+                  <div class="col-3 text-right" *ngIf="edition">
+                    <a class="btn btn-sm btn-outline-info" (click)="addUser()">
+                      <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                          d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+                        <path fill-rule="evenodd"
+                          d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <app-user-list class="mt-3" style="width:100%;" [users]="project.team"
+                    (userSelected)="openUser($event)"></app-user-list>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
         </div>
       </form>
     </div>
-    <div class="card-body" (click)="save()">
+    <div class="card-body" (click)="save()" *ngIf="edition">
       <a class="btn btn-outline-info" translate>
         Save
       </a>
@@ -63,6 +120,22 @@
 
 <ng-template #content let-modal>
   <div class="modal-body p-0">
-    <app-environment-editor style="width:100%;" (canceled)="modal.dismiss('canceled')" (saved)="modal.dismiss('saved')"></app-environment-editor>
+    <app-environment-editor style="width:100%;" [edition]="edition" (canceled)="modal.dismiss('canceled')"
+      (saved)="modal.dismiss('saved')">
+    </app-environment-editor>
+  </div>
+</ng-template>
+<ng-template #userContent let-modal>
+  <div class="modal-body p-0">
+    <app-user-editor style="width:100%;" [edition]="false" (canceled)="modal.dismiss('canceled')"
+      (saved)="modal.dismiss('saved')">
+    </app-user-editor>
+  </div>
+</ng-template>
+<ng-template #userPickerContent let-modal>
+  <div class="modal-body p-0">
+    <app-user-selector style="width:100%;" (canceled)="modal.dismiss('canceled')" [selectedList]="project.team"
+      (selectUser)="pushUser($event, modal)">
+    </app-user-selector>
   </div>
 </ng-template>

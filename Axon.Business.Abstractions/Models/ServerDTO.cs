@@ -9,6 +9,9 @@ namespace Axon.Business.Abstractions.Models
     public class ServerLightDTO : IdentifiedEntityDTO<Server>
     {
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string BusinessDocumentationUrl { get; set; }
+        public string TechnicalDocumentationUrl { get; set; }
 
         public OperatingSystems Os { get; set; }
         public string Version { get; set; }
@@ -19,5 +22,6 @@ namespace Axon.Business.Abstractions.Models
     {
         public List<ProjectLightDTO> Projects { get; set; }
         public NetworkLightDTO Network { get; set; }
+        public List<UserLightDTO> Team { get; set; }
     }
 }

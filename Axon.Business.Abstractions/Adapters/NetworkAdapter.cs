@@ -15,6 +15,9 @@ namespace Axon.Business.Abstractions.Adapters
             dto = base.Convert(entity, dto);
             dto.Name = entity.Name;
             dto.Description = entity.Description;
+            dto.BusinessDocumentationUrl = entity.BusinessDocumentationUrl;
+            dto.TechnicalDocumentationUrl = entity.TechnicalDocumentationUrl;
+            dto.Description = entity.Description;
 
             return dto;
         }
@@ -23,6 +26,9 @@ namespace Axon.Business.Abstractions.Adapters
         {
             entity = base.Bind(entity, dto);
             entity.Name = dto.Name.Trim();
+            entity.Description = dto.Description;
+            entity.BusinessDocumentationUrl = dto.BusinessDocumentationUrl;
+            entity.TechnicalDocumentationUrl = dto.TechnicalDocumentationUrl;
             entity.Description = dto.Description;
 
             return entity;
@@ -40,12 +46,25 @@ namespace Axon.Business.Abstractions.Adapters
             var serverAdapter = AdapterFactory.Get<ServerLightAdapter>();
             dto.Servers = entity.Servers?.Select(s => serverAdapter.Convert(s, null)).ToList();
 
+            var userAdapter = AdapterFactory.Get<UserLightAdapter>();
+            dto.Team = entity.Team?.Select(t => userAdapter.Convert(t.User)).ToList() ?? new List<UserLightDTO>();
+
             return dto;
         }
 
         public override Network Bind(Network entity, NetworkDTO dto)
         {
             entity = AdapterFactory.Get<NetworkLightAdapter>().Bind(entity, dto);
+
+            entity.Team.Clear();
+            entity.Team.Concat(dto.Team.Select(t =>
+            {
+                return new NetworkTeammate
+                {
+                    DataId = entity.Id,
+                    UserId = t.Id
+                };
+            }).ToList());
 
             return entity;
         }

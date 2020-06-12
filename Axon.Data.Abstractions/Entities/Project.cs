@@ -13,11 +13,17 @@ namespace Axon.Data.Abstractions.Entities
     {
         [MaxLength(150)]
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string BusinessDocumentationUrl { get; set; }
+        public string TechnicalDocumentationUrl { get; set; }
 
         [InverseProperty("Project")]
         public virtual Collection<ProjectTechnology> ProjectTechnologies { get; set; }
 
         [InverseProperty("Project")]
         public virtual Collection<ProjectEnvironment> ProjectEnvironments { get; set; }
+
+        [InverseProperty("Data")]
+        public virtual Collection<ProjectTeammate> Team { get; set; }
     }
 }

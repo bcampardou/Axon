@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +12,9 @@ namespace Axon.Data.Abstractions.Entities
     {
         [MaxLength(150)]
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string BusinessDocumentationUrl { get; set; }
+        public string TechnicalDocumentationUrl { get; set; }
 
         public OperatingSystems OS { get; set; }
         public string Version { get; set; }
@@ -22,5 +24,8 @@ namespace Axon.Data.Abstractions.Entities
 
         [InverseProperty("Server")]
         public virtual Collection<ProjectEnvironment> ProjectEnvironments { get; set; }
+
+        [InverseProperty("Data")]
+        public virtual Collection<ServerTeammate> Team { get; set; }
     }
 }

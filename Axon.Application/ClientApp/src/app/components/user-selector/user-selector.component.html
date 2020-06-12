@@ -1,0 +1,14 @@
+<div class="card bg-secondary shadow">
+    <!-- <div class="card-header bg-white border-0">
+        </div> -->
+    <div class="card-body">
+        <app-autocomplete style="width: calc(100% - 40px);" (changed)="setUser($event)" [disabled]="false" [name]="user" [model]="user"
+            [source]="users" [options]="{ filter:'userName', value: 'id' }"></app-autocomplete>
+    </div>
+
+    <div class="card-body" (click)="save()">
+        <a class="btn btn-outline-info" translate>
+            Save
+        </a>
+    </div>
+</div>

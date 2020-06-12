@@ -26,14 +26,16 @@
             <div class="form-group">
               <label class="form-control-label" for="startDate" translate>Start date</label>
               <input type="date" name="startDate" required class="form-control form-control-alternative"
-                placeholder="Start date" value="" [ngModel]="license.startDate | date:'yyyy-MM-dd'" (ngModelChange)="license.startDate = $event">
+                placeholder="Start date" value="" [ngModel]="license.startDate | date:'yyyy-MM-dd'" 
+                (ngModelChange)="license.startDate = $event" [readonly]="!edition">
             </div>
           </div>
           <div class="col-12">
             <div class="form-group">
               <label class="form-control-label" for="endDate" translate>End date</label>
               <input type="date" name="endDate" required class="form-control form-control-alternative"
-                placeholder="End date" value="" [ngModel]="license.endDate | date:'yyyy-MM-dd'" (ngModelChange)="license.endDate = $event">
+                placeholder="End date" value="" [ngModel]="license.endDate | date:'yyyy-MM-dd'" 
+                (ngModelChange)="license.endDate = $event" [readonly]="!edition">
             </div>
           </div>
           <div class="col-12">
@@ -46,7 +48,7 @@
           <div class="col-12">
             <div class="custom-control custom-control-alternative custom-checkbox">
               <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="isActive"
-                [(ngModel)]="license.isActive">
+                [(ngModel)]="license.isActive" [readonly]="!edition">
               <label class="custom-control-label" for=" customCheckLogin">
                 <span class="text-muted" translate>Activated</span>
               </label>
@@ -56,7 +58,7 @@
       </div>
     </form>
   </div>
-  <div class="card-body" (click)="save()">
+  <div class="card-body" (click)="save()" *ngIf="edition">
     <a class="btn btn-outline-info" translate>
       Save
     </a>

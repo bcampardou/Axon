@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged } from 'rxjs/operators';
 import { IdentifiedModel } from '@app/models';
@@ -10,9 +10,12 @@ import { IdentifiedModel } from '@app/models';
 })
 export class AutocompleteComponent {
     @Input() public name: string;
-    @Input() public options: { filter: string, value: string }
+    @Input() public disabled: boolean = false;
+    @Input() public options: { filter: string, value: string };
     @Input() public model: any;
-    @Input() public source: Array<any>
+    @Input() public source: Array<any>;
+    @Output() public changed: EventEmitter<any> = new EventEmitter<any>();
+
     search = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(200),
@@ -22,4 +25,8 @@ export class AutocompleteComponent {
         );
 
     formatter = (x: any) => x[this.options.filter];
+
+    notifyChange() {
+        this.changed.next(this.model);
+    }
 }

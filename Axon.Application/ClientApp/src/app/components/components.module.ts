@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { RouterModule } from '@angular/router';
-import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { NetworkEditorComponent } from './networks/network-editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkListComponent } from './networks/list/network-list.component';
@@ -22,6 +22,8 @@ import { UserListComponent } from './users/list/user-list.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { LicenseEditorComponent } from './licenses/license-editor.component';
 import { LicenseListComponent } from './licenses/list/license-list.component';
+import { UserSelectorComponent } from './user-selector/user-selector.component';
+import { SimplemdeModule } from './simplemde/simplemde.module';
 
 @NgModule({
   imports: [
@@ -29,9 +31,11 @@ import { LicenseListComponent } from './licenses/list/license-list.component';
     RouterModule,
     NgbModule,
     NgbModalModule,
+    NgbTabsetModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    SimplemdeModule
   ],
   declarations: [
     FooterComponent,
@@ -51,7 +55,8 @@ import { LicenseListComponent } from './licenses/list/license-list.component';
     UserListComponent,
     AutocompleteComponent,
     LicenseEditorComponent,
-    LicenseListComponent
+    LicenseListComponent,
+    UserSelectorComponent
   ],
   exports: [
     FooterComponent,
@@ -71,7 +76,8 @@ import { LicenseListComponent } from './licenses/list/license-list.component';
     UserListComponent,
     AutocompleteComponent,
     LicenseEditorComponent,
-    LicenseListComponent
+    LicenseListComponent,
+    UserSelectorComponent
   ]
 })
 export class ComponentsModule { }

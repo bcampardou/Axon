@@ -14,6 +14,7 @@ import { LicenseService } from '@app/services/license.service';
 export class LicenseEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     public license: License;
+    @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     @Output() public saved = new EventEmitter<boolean>();
     private subscriptions = new Array<Subscription>();

@@ -16,6 +16,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     public pageSize: number = 10;
     public osOptions = OperatingSystems;
     @Input() public users: Array<User>;
+    @Input() public edition: boolean = true;
     @Output() public userSelected = new EventEmitter<string>();
     private subscriptions = new Array<Subscription>();
 

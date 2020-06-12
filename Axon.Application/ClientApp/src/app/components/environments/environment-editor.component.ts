@@ -13,6 +13,7 @@ import { Environment, Server } from '../../models';
 export class EnvironmentEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     @Input() public environmentId: string;
+    @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     @Output() public saved = new EventEmitter<Environment>();
     public environment = new Environment();

@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkService } from '@app/services';
+import { NetworkService, AuthenticationService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators'
-import { Network } from '@app/models';
+import { Network, User } from '@app/models';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-network-editor',
@@ -15,16 +16,21 @@ import { TranslateService } from '@ngx-translate/core';
 export class NetworkEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     @Input() public networkId: string;
+    @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     public network = new Network();
     private subscriptions = new Array<Subscription>();
+    @ViewChild('userContent', { static: false }) userContent: any;
+    @ViewChild('userPickerContent', { static: false }) userPickerContent: any;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
         private translateService: TranslateService,
+        private modalService: NgbModal,
+        private authService: AuthenticationService,
         private networkService: NetworkService) {
-            this.subscriptions.push(this.networkService.currentNetwork$.subscribe(net => this.network = net));
+        this.subscriptions.push(this.networkService.currentNetwork$.subscribe(net => this.network = net));
     }
 
     ngOnInit() {
@@ -43,5 +49,22 @@ export class NetworkEditorComponent implements OnInit, OnDestroy {
 
     public cancel() {
         this.canceled.next(true);
+    }
+
+
+
+    public addUser() {
+        this.modalService.open(this.userPickerContent, { centered: true });
+    }
+
+    public openUser(user: User) {
+        this.authService.currentUser$.next(user);
+        let ref = this.modalService.open(this.userContent, { centered: true });
+    }
+
+    public pushUser(event: User, modal: any) {
+        console.log(event);
+        this.network.team.push(event);
+        modal.dismiss('saved');
     }
 }

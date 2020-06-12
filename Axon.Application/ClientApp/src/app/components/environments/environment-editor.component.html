@@ -26,20 +26,20 @@
               <div class="form-group">
                 <label class="form-control-label" for="name" translate>Name</label>
                 <input type="text" name="name" required class="form-control form-control-alternative" placeholder="Name"
-                  [(ngModel)]="environment.name" [disabled]="!!environment.projectId">
+                  [(ngModel)]="environment.name" [disabled]="!!environment.projectId" [readonly]="!edition">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label class="form-control-label" for="url" translate>URL</label>
                 <input type="text" name="url" required class="form-control form-control-alternative" placeholder="URL"
-                  [(ngModel)]="environment.url">
+                  [(ngModel)]="environment.url" [readonly]="!edition">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label class="form-control-label" for="server" translate>Server</label>
-                <select class="form-control" name="server" [(ngModel)]="environment.serverId">
+                <select class="form-control" name="server" [(ngModel)]="environment.serverId" [disabled]="!edition">
                   <option *ngFor="let server of servers" [ngValue]="server.id">{{server.name}}</option>
                 </select>
               </div>
@@ -48,8 +48,8 @@
         </div>
       </form>
     </div>
-    <div class="card-body" (click)="save()">
-      <a class="btn btn-outline-info" translate>
+    <div class="card-body" *ngIf="edition">
+      <a class="btn btn-outline-info" (click)="save()" translate>
         Save
       </a>
     </div>

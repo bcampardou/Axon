@@ -8,6 +8,7 @@ namespace Axon.Data.Abstractions.Entities
     public class License : IdentifiedEntity
     {
         public string Key { get; set; }
+        public int NumberOfAllowedUsers { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsActive { get; set; }

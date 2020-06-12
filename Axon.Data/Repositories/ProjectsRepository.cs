@@ -19,7 +19,9 @@ namespace Axon.Data.Repositories
             return entities.Include(p => p.ProjectEnvironments)
                             .ThenInclude(e => e.Server)
                             .Include(p => p.ProjectTechnologies)
-                            .ThenInclude(t => t.Technology);
+                            .ThenInclude(t => t.Technology)
+                            .Include(p => p.Team)
+                            .ThenInclude(t => t.User);
         }
     }
 }

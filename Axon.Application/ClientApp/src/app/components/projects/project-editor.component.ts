@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProjectService, EnvironmentService } from '@app/services';
+import { ProjectService, EnvironmentService, AuthenticationService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Project, Environment } from '@app/models';
+import { Project, Environment, User } from '@app/models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { SimplemdeComponent } from '../simplemde/simplemde.component';
 
 @Component({
     selector: 'app-project-editor',
@@ -15,10 +16,15 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProjectEditorComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     @Input() public projectId: string;
+    @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     public project = new Project();
     private subscriptions = new Array<Subscription>();
-    @ViewChild('content', {static: false}) content: any;
+    @ViewChild('description', { static: true }) private readonly description: SimplemdeComponent;
+
+    @ViewChild('content', { static: false }) content: any;
+    @ViewChild('userContent', { static: false }) userContent: any;
+    @ViewChild('userPickerContent', { static: false }) userPickerContent: any;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -26,10 +32,11 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         private translateService: TranslateService,
         private modalService: NgbModal,
         private projectService: ProjectService,
+        private authService: AuthenticationService,
         private environmentService: EnvironmentService) {
-            this.subscriptions.push(this.projectService.currentProject$.subscribe(net => {
-                this.project = net;
-            }));
+        this.subscriptions.push(this.projectService.currentProject$.subscribe(net => {
+            this.project = net;
+        }));
     }
 
     ngOnInit() {
@@ -62,5 +69,20 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
 
     public cancel() {
         this.canceled.next(true);
+    }
+
+    public addUser() {
+        this.modalService.open(this.userPickerContent, { centered: true });
+    }
+
+    public openUser(user: User) {
+        this.authService.currentUser$.next(user);
+        let ref = this.modalService.open(this.userContent, { centered: true });
+    }
+
+    public pushUser(event:User, modal: any) {
+        console.log(event);
+        this.project.team.push(event); 
+        modal.dismiss('saved');
     }
 }

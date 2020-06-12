@@ -2,4 +2,4 @@
     <ngb-highlight [result]="r[options.filter]" [term]="t"></ngb-highlight>
 </ng-template>
 <input type="text" [name]="name" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"  [resultTemplate]="rt" 
-[inputFormatter]="formatter" />
+[inputFormatter]="formatter"  [readonly]="disabled" (ngModelChange)="notifyChange()" />
