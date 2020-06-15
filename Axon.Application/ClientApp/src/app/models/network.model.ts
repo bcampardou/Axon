@@ -11,4 +11,5 @@ export class Network extends IdentifiedModel {
     public servers: Array<Server>;
     public tenantId: string;
     public team: Array<User>;
+    public isCollapsed = true;
 }

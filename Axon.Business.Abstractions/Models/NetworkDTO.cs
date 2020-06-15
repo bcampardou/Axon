@@ -15,7 +15,7 @@ namespace Axon.Business.Abstractions.Models
 
     public class NetworkDTO : NetworkLightDTO
     {
-        public List<ServerLightDTO> Servers { get; set; }
+        public List<ServerDTO> Servers { get; set; }
         public List<UserLightDTO> Team { get; set; }
     }
 }

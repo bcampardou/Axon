@@ -21,7 +21,6 @@
     </div>
     <div class="card-body">
       <form name="project-form">
-        <h6 class="heading-small text-muted mb-4" translate>Project information</h6>
         <div class="pl-lg-4">
           <div class="row">
             <div class="col-12">
@@ -31,35 +30,40 @@
                   value="" [(ngModel)]="project.name">
               </div>
             </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="form-control-label" for="description" translate>Description</label>
-                <simplemde #description [value]="project.description" (changed)="project.description = $event;"
-                  [name]="'description'"></simplemde>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="form-control-label" for="businessDocumentationUrl" translate>Business documentation
-                  URL</label>
-                <input type="text" name="businessDocumentationUrl" required
-                  class="form-control form-control-alternative" placeholder="URL" value=""
-                  [(ngModel)]="project.businessDocumentationUrl">
-              </div>
-            </div>
-
-            <div class="col-12">
-              <div class="form-group">
-                <label class="form-control-label" for="technicalDocumentationUrl" translate>Technical documentation
-                  URL</label>
-                <input type="text" name="technicalDocumentationUrl" required
-                  class="form-control form-control-alternative" placeholder="URL" value=""
-                  [(ngModel)]="project.technicalDocumentationUrl">
-              </div>
-            </div>
           </div>
-          <hr class="my-3">
           <ngb-tabset [destroyOnHide]="false">
+            <ngb-tab title="{{'Project information'|translate}}">
+              <ng-template ngbTabContent>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="description" translate>Description</label>
+                      <simplemde #description [value]="project.description" (changed)="project.description = $event;"
+                        [name]="'description'"></simplemde>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="businessDocumentationUrl" translate>Business documentation
+                        URL</label>
+                      <input type="text" name="businessDocumentationUrl" required
+                        class="form-control form-control-alternative" placeholder="URL" value=""
+                        [(ngModel)]="project.businessDocumentationUrl">
+                    </div>
+                  </div>
+      
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="technicalDocumentationUrl" translate>Technical documentation
+                        URL</label>
+                      <input type="text" name="technicalDocumentationUrl" required
+                        class="form-control form-control-alternative" placeholder="URL" value=""
+                        [(ngModel)]="project.technicalDocumentationUrl">
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
             <ngb-tab title="{{'Environments'|translate}}">
               <ng-template ngbTabContent>
                 <div class="row">
@@ -67,7 +71,7 @@
                   </div>
                   <div class="col-3 text-right" *ngIf="edition">
                     <a class="btn btn-sm btn-outline-info" (click)="createEnvironment()">
-                      <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor"
+                      <svg class="bi bi-plus" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                           d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
@@ -90,7 +94,7 @@
                   </div>
                   <div class="col-3 text-right" *ngIf="edition">
                     <a class="btn btn-sm btn-outline-info" (click)="addUser()">
-                      <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor"
+                      <svg class="bi bi-plus" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                           d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />

@@ -4,7 +4,7 @@
 
 
 .icon-shape {
-	padding: 12px;
+	padding: 0px;
 	text-align: center;
 	display: inline-flex;
 	align-items: center;
@@ -14,6 +14,7 @@
 
 	i, svg {
 		font-size: 1.25rem;
+		margin-left: 7px;
 	}
 
 	&.icon-lg {

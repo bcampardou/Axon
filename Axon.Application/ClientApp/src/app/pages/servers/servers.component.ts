@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ServerService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Server } from '@app/models';
@@ -14,13 +14,20 @@ export class ServersComponent implements OnInit, OnDestroy {
   public servers$ = new BehaviorSubject<Array<Server>>([]);
   public mode: string = 'list';
 
-  constructor(private router: Router,
+  constructor(private route: ActivatedRoute,
+    private router: Router,
     private serverService: ServerService) { 
       this.servers$ = this.serverService.servers$;
       this.serverService.getAll(true).subscribe();
     }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const id = params['id'];
+      if(!!id) {
+        this.show(id);
+      }
+    });
   }
 
   ngOnDestroy() {

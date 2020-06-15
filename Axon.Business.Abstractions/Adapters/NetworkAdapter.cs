@@ -43,7 +43,7 @@ namespace Axon.Business.Abstractions.Adapters
                 dto = new NetworkDTO();
             dto = AdapterFactory.Get<NetworkLightAdapter>().Convert(entity, dto) as NetworkDTO;
 
-            var serverAdapter = AdapterFactory.Get<ServerLightAdapter>();
+            var serverAdapter = AdapterFactory.Get<ServerAdapter>();
             dto.Servers = entity.Servers?.Select(s => serverAdapter.Convert(s, null)).ToList();
 
             var userAdapter = AdapterFactory.Get<UserLightAdapter>();

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NetworkService, AuthenticationService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '@app/models';
@@ -14,7 +14,8 @@ export class NetworksComponent implements OnInit, OnDestroy {
   public networks$ = new BehaviorSubject<Array<Network>>([]);
   public mode: string = 'list';
 
-  constructor(private router: Router,
+  constructor(private route: ActivatedRoute,
+    private router: Router,
     private networkService: NetworkService,
     private authService: AuthenticationService) { 
       this.networks$ = this.networkService.networks$;
@@ -22,6 +23,12 @@ export class NetworksComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const id = params['id'];
+      if(!!id) {
+        this.show(id);
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -4,11 +4,21 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-9">
-                    <h1 translate>Networks</h1>
+                    <h1 translate>
+                        <svg class="bi bi-bullseye mr-2" width="1.5em" height="1.5em" viewBox="0 0 16 16"
+                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path fill-rule="evenodd"
+                                d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+                            <path fill-rule="evenodd"
+                                d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
+                            <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                        </svg> Networks</h1>
                 </div>
                 <div class="col-3 text-right">
                     <a class="btn btn-sm btn-outline-info" (click)="create()">
-                        <svg class="bi bi-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor"
+                        <svg class="bi bi-plus" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                 d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
@@ -23,7 +33,8 @@
 </div>
 <div class="container-fluid mt--7">
     <div class="row justify-content-md-center" *ngIf="mode === 'list'">
-        <app-network-list [networks]="networks$|async" (networkSelected)="show($event)" style="width:100%;"></app-network-list>
+        <app-network-list [networks]="networks$|async" (networkSelected)="show($event)" style="width:100%;">
+        </app-network-list>
     </div>
     <div class="row justify-content-md-center" *ngIf="mode === 'creation' || mode === 'edition'">
         <app-network-editor (canceled)="cancelEdition($event)" style="width:100%;"></app-network-editor>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Project } from '@app/models';
@@ -15,13 +15,20 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   public edition = true;
   public mode: string = 'list';
 
-  constructor(private router: Router,
+  constructor(private route: ActivatedRoute,
+    private router: Router,
     private projectService: ProjectService) { 
       this.projects$ = this.projectService.projects$;
       this.projectService.getAll(true).subscribe();
     }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const id = params['id'];
+      if(!!id) {
+        this.show(id);
+      }
+    });
   }
 
   ngOnDestroy() {
