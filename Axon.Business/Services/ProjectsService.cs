@@ -36,6 +36,17 @@ namespace Axon.Business.Services
             envRepository.Update(entity.ProjectEnvironments.Where(ne => environments.Any(e => e.Name == ne.Name)).ToList());
             envRepository.SaveChanges();
 
+            var teamRepository = _serviceProvider.GetRequiredService<IProjectTeammatesRepository>();
+            var team = teamRepository.FindByPredicateAsync(e => e.DataId == entity.Id).Result;
+            var teamToDelete = team.Where(e => !entity.Team.Any(ne => ne.UserId == e.UserId)).ToList();
+            if (teamToDelete.Any())
+            {
+                teamRepository.Delete(teamToDelete);
+            }
+            teamRepository.Create(entity.Team.Where(ne => !team.Any(e => e.UserId == ne.UserId)));
+            teamRepository.Update(entity.Team.Where(ne => team.Any(e => e.UserId == ne.UserId)));
+            teamRepository.SaveChanges();
+
             return result;
         }
     }

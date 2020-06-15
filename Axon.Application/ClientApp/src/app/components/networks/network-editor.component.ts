@@ -57,8 +57,8 @@ export class NetworkEditorComponent implements OnInit, OnDestroy {
         this.modalService.open(this.userPickerContent, { centered: true });
     }
 
-    public openUser(user: User) {
-        this.authService.currentUser$.next(user);
+    public openUser(userId: string) {
+        this.authService.getUser(userId).subscribe(u => this.authService.currentUser$.next(u));
         let ref = this.modalService.open(this.userContent, { centered: true });
     }
 

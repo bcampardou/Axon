@@ -64,14 +64,18 @@ namespace Axon.Business.Abstractions.Adapters
             entity = AdapterFactory.Get<ServerLightAdapter>().Bind(entity, dto);
 
             entity.Team.Clear();
-            entity.Team.Concat(dto.Team.Select(t =>
+            var team = dto.Team.Select(t =>
             {
                 return new ServerTeammate
                 {
                     DataId = entity.Id,
                     UserId = t.Id
                 };
-            }).ToList());
+            });
+            foreach (var member in team)
+            {
+                entity.Team.Add(member);
+            }
 
             return entity;
         }

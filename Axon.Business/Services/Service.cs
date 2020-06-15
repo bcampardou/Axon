@@ -136,13 +136,13 @@ namespace Axon.Business.Services
                 if (!await Repository.SaveChangesAsync())
                     throw new AxonException("CREATE_NOK", Errors);
 
-                results = await FindAsync(entities.Select(e => e.Id).ToList());
-                _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(ENTITY)));
                 foreach (var entity in entities)
                 {
                     if (!_onAfterCreateOrUpdate(entity, ActionType.Creation))
                         throw new AxonException("CREATE_NOK", Errors);
                 }
+                results = await FindAsync(entities.Select(e => e.Id).ToList());
+                _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(ENTITY)));
                 return results;
             }
             catch (Exception e)
@@ -179,7 +179,7 @@ namespace Axon.Business.Services
             _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(ENTITY)));
             _cachingProvider.Remove(BusinessRules.CacheObjectKey(entity));
 
-            return entity;
+            return await Repository.FindAsync(entity.Id);
         }
 
         internal virtual async Task<DTO> _createAsync(ENTITY entity)
@@ -294,7 +294,8 @@ namespace Axon.Business.Services
                 if (!_onAfterCreateOrUpdate(entity, ActionType.Update))
                     throw new AxonException("SAVE_NOK", Errors);
             }
-            return entities.Select(e => _ToDTO(e)).ToList();
+            var results = await FindAsync(entities.Select(e => e.Id));
+            return results;
         }
 
         public virtual async Task<DTO> UpdateAsync(DTO dto)
@@ -350,7 +351,7 @@ namespace Axon.Business.Services
                 if (!_onAfterCreateOrUpdate(entity, ActionType.Update))
                     return null;
             }
-            return entities;
+            return await Repository.FindAsync(entities.Select(e => e.Id));
         }
 
         /// <summary>

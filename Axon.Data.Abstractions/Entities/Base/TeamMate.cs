@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Axon.Data.Abstractions.Entities.Base
 {
-    public abstract class TeamMate<T>
+    public class TeamMate<T> : Entity
         where T: IdentifiedEntity
     {
         public string DataId { get; set; }

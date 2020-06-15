@@ -58,10 +58,15 @@ namespace Axon.Business.Abstractions.Adapters
             var envAdapter = AdapterFactory.Get<ProjectEnvironmentAdapter>();
             if (entity.ProjectEnvironments == null) entity.ProjectEnvironments = new Collection<ProjectEnvironment>();
             entity.ProjectEnvironments.Clear();
-            entity.ProjectEnvironments.Concat(dto.Environments.Select(env => envAdapter.Bind(new ProjectEnvironment
+            var environments = dto.Environments.Select(env => envAdapter.Bind(new ProjectEnvironment
             {
                 ProjectId = entity.Id
-            }, env)));
+            }, env));
+
+            foreach(var env in environments)
+            {
+                entity.ProjectEnvironments.Add(env);
+            }
             //foreach (var env in dto.Environments)
             //{
             //    var existingEnv = entity.ProjectEnvironments.FirstOrDefault(e => e.Name == e.Name);
@@ -78,14 +83,18 @@ namespace Axon.Business.Abstractions.Adapters
             //}
 
             entity.Team.Clear();
-            entity.Team.Concat(dto.Team.Select(t =>
+            var team = dto.Team.Select(t =>
             {
                 return new ProjectTeammate
                 {
                     DataId = entity.Id,
                     UserId = t.Id
                 };
-            }).ToList());
+            });
+            foreach(var member in team)
+            {
+                entity.Team.Add(member);
+            }
 
             return entity;
         }

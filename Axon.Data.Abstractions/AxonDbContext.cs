@@ -108,14 +108,26 @@ namespace Axon.Data.Abstractions
             modelBuilder.Entity<ProjectTeammate>(b =>
             {
                 b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+                b.Property(u => u.CreatedAt)
+                    .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
             }); 
             modelBuilder.Entity<ServerTeammate>(b =>
             {
                 b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+                b.Property(u => u.CreatedAt)
+                    .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
             }); 
             modelBuilder.Entity<NetworkTeammate>(b =>
             {
                 b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+                b.Property(u => u.CreatedAt)
+                    .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
             });
         }
     }

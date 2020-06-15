@@ -33,6 +33,9 @@ namespace Axon.Data.Abstractions.Extensions
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ITenantsRepository, TenantsRepository>();
             services.AddScoped<ILicensesRepository, LicensesRepository>();
+            services.AddScoped<IProjectTeammatesRepository, ProjectTeammatesRepository>();
+            services.AddScoped<INetworkTeammatesRepository, NetworkTeammatesRepository>();
+            services.AddScoped<IServerTeammatesRepository, ServerTeammatesRepository>();
             return services;
         }
     }
