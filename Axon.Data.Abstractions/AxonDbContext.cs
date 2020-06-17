@@ -129,6 +129,27 @@ namespace Axon.Data.Abstractions
                 b.Property(u => u.EditedAt)
                     .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
             });
+            modelBuilder.Entity<NetworkIntervention>(b =>
+            {
+                b.Property(u => u.CreatedAt)
+                    .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
+            });
+            modelBuilder.Entity<ServerIntervention>(b =>
+            {
+                b.Property(u => u.CreatedAt)
+                    .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
+            });
+            modelBuilder.Entity<ProjectIntervention>(b =>
+            {
+                b.Property(u => u.CreatedAt)
+                    .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
+            });
         }
     }
 }
