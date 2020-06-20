@@ -4,6 +4,7 @@ import { LoginContext, AuthenticationService, RegisterContext } from '@app/servi
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private toastr: ToastrService,
+    private router: Router,
     private translateService: TranslateService,
     private authenticationService: AuthenticationService) { }
 
@@ -39,15 +41,18 @@ export class RegisterComponent implements OnInit {
         this.isLoading = false;
       }))
       .subscribe(credentials => {
-        this.toastr.success(this.translateService.instant('You will receive an email when your request will be treated'), this.translateService.instant('Your request has been sent'));
+
+        this.router.navigateByUrl('/login').then(() => {
+          this.toastr.success(this.translateService.instant('You will receive an email when your request will be treated'), this.translateService.instant('Your request has been sent'));
+        });
       }, res => {
         // log.debug(`Register error: ${res}`);
-        for(let i in res.error.details) {
+        for (let i in res.error.details) {
           this.toastr.error(
             this.translateService.instant(res.error.details[i]), this.translateService.instant(res.error.message)
           )
         }
-        
+
       });
   }
 

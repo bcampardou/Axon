@@ -83,7 +83,7 @@ namespace Axon.Application.Controllers
         }
 
         [HttpGet("confirm")]
-        public async Task<IActionResult> ConfirmEmail([FromQuery]string userId, [FromQuery]string token, [FromServices]IUsersService serv)
+        public async Task<IActionResult> ConfirmEmail([FromQuery]Guid userId, [FromQuery]string token, [FromServices]IUsersService serv)
         {
             var result = await serv.ConfirmEmail(userId, token);
 
@@ -98,31 +98,36 @@ namespace Axon.Application.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<object> RegisterAsync([FromBody] RegisterDTO model)
+        public async Task<object> RegisterAsync([FromBody] RegisterDTO model, [FromServices]ITenantsService tenantService)
         {
             if (!ModelState.IsValid) throw new AxonException("Invalid registration", ModelState.SelectMany(e => e.Value.Errors.Select(es => es.ErrorMessage)));
+
+            var tenant = await tenantService.FindOneByName(model.Tenant);
+            Ensure.Arguments.ThrowIfNull(tenant, nameof(tenant));
+
             var user = new UserDTO
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
+                TenantId = tenant.Id,
             };
             var result = await _userService.CreateAsync(user, model.Password, $"{configuration.GetValue<string>("Application:URL")}/api/users/confirm");
 
-            if (result.Succeeded)
+            if (Ensure.Arguments.IsValidGuid(result.Id))
             {
                 return await _userService.FindByEmailAsync(model.Email);
             }
-
-            throw new AxonException("Invalid registration", result.Errors.Select(e => e.Description));
+            return Ok();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<UserLightDTO> Get(string id, [FromServices]IUsersService usersService)
+        public async Task<UserLightDTO> Get(Guid id, [FromServices]IUsersService usersService)
         {
             return await usersService.FindAsync(id) as UserLightDTO;
         }
 
+        [Authorize]
         [HttpGet("")]
         public async Task<List<UserDTO>> Get([FromServices]IUsersService usersService)
         {
@@ -135,9 +140,9 @@ namespace Axon.Application.Controllers
         public async Task<UserDTO> Post(UserDTO user, [FromServices]IUsersService usersService)
         {
             Ensure.Arguments.ThrowIfNull(user, nameof(user));
-            Ensure.Arguments.ThrowIfNotValidGuid(user.Id, nameof(user.Id));
-            await usersService.UpdateAsync(user);
-            return await usersService.FindAsync(user.Id);
+            //Ensure.Arguments.ThrowIfNotValidGuid(user.Id, nameof(user.Id));
+            var result = await usersService.CreateOrUpdateAsync(user);
+            return result;
         }
 
         private object GenerateJwtToken(UserDTO user)
@@ -146,7 +151,7 @@ namespace Axon.Application.Controllers
 
             var claims = new Claim[]
             {
-                        new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                         new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, utcNow.ToString())
@@ -194,7 +199,7 @@ namespace Axon.Application.Controllers
             public string ConfirmPassword { get; set; }
 
 
-            public string PhoneNumber { get; set; }
+            public string Tenant { get; set; }
         }
 
         public class BooleanResponseModel

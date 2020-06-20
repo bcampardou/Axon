@@ -12,8 +12,8 @@ export class Server extends IdentifiedModel {
     public os: string;
     public version: string;
     public networkId: string;
-    public projects: Array<Project>;
+    public projects: Array<Project> = new Array<Project>();
     public network: Network;
-    public team: Array<User>;
+    public team: Array<User> = new Array<User>();
     public isCollapsed = false;
 }

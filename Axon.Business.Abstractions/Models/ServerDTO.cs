@@ -15,7 +15,7 @@ namespace Axon.Business.Abstractions.Models
 
         public OperatingSystems Os { get; set; }
         public string Version { get; set; }
-        public string NetworkId { get; set; }
+        public Guid NetworkId { get; set; }
     }
 
     public class ServerDTO : ServerLightDTO

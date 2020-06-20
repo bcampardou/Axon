@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  login() {
+  onSubmit() {
     this.isLoading = true;
     this.authenticationService.login(this.context)
       .pipe(

@@ -32,7 +32,6 @@ import { SimplemdeModule } from './components/simplemde/simplemde.module';
       }
     }),
     SimplemdeModule.forRoot({
-
     }),
     ComponentsModule,
     NgbModule,

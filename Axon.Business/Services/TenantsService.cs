@@ -25,7 +25,7 @@ namespace Axon.Business.Services
 
         public async Task<Tenant> FindOneByName(string name)
         {
-            return await Repository.FindOneByPredicateAsync(t => t.Name == name);
+            return await Repository.FindOneByPredicateAsync(t => t.Name == name.ToUpper());
         }
 
         protected override bool _onAfterCreateOrUpdate(Tenant entity, ActionType action)

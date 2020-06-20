@@ -10,9 +10,9 @@ namespace Axon.Data.Abstractions.Entities.Base
         public string Description { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public string InChargeUserId { get; set; }
+        public Guid InChargeUserId { get; set; }
         public virtual User InChargeUser { get; set; }
-        public string DataId { get; set; }
+        public Guid DataId { get; set; }
         public virtual T Data { get; set; }
     }
 }

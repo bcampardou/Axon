@@ -28,14 +28,14 @@ namespace Axon.Business.Abstractions.Services
         /// <returns></returns>
         Task<List<DTO>> FindAllAsync(bool useCache = true, int? maximumRows = null, int skipRows = 0);
 
-        Task<List<DTO>> FindAsync(IEnumerable<string> ids);
+        Task<List<DTO>> FindAsync(IEnumerable<Guid> ids);
 
         /// <summary>
         /// Return the entity with the given primary key
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<DTO> FindAsync(string id, bool forceReloadCache = false);
+        Task<DTO> FindAsync(Guid id, bool forceReloadCache = false);
 
         /// <summary>
         /// Async: Create the new entity in database
@@ -60,12 +60,12 @@ namespace Axon.Business.Abstractions.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(string id);
+        Task<bool> DeleteAsync(Guid id);
 
         Task<bool> DeleteAsync(DTO entity);
 
         Task<bool> DeleteAsync(IEnumerable<DTO> elementsToRemove);
 
-        Task<bool> DeleteAsync(IEnumerable<string> ids);
+        Task<bool> DeleteAsync(IEnumerable<Guid> ids);
     }
 }

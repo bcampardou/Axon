@@ -92,7 +92,7 @@ namespace Axon.Business.Services
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<IdentityResult> CreateAsync(UserDTO user, string password, string url)
+        public async Task<UserDTO> CreateAsync(UserDTO user, string password, string url)
         {
             var entity = _ApplyChanges(user, new User()
             {
@@ -101,6 +101,7 @@ namespace Axon.Business.Services
             entity.IsActive = false;
 
             var result = await _userManager.CreateAsync(entity, password);
+            _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(User)));
 
             if (result.Succeeded)
             {
@@ -112,7 +113,11 @@ namespace Axon.Business.Services
                 throw new AxonException("Invalid registration", result.Errors.Select(e => e.Description));
             }
 
-            return result;
+            user = _ToDTO(entity);
+            _cachingProvider.Set<UserDTO>(BusinessRules.CacheObjectKey(entity.GetType(), entity.Id), user, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            _cachingProvider.Set<UserDTO>($"{typeof(User)}-Email-{user.NormalizedEmail}", user, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            _cachingProvider.Set<UserDTO>($"{typeof(User)}-UserName-{user.NormalizedUserName}", user, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return user;
         }
 
         public async Task GenerateAndSendConfirmationEmail(string email, string url = "")
@@ -124,57 +129,91 @@ namespace Axon.Business.Services
             await _emailService.SendMailWithData(user.UserName, user.Email, "Axon - Email confirmation", "ActivateAccount.cshtml", new ActivateAccountModel { Username = user.UserName, CallbackUrl = callbackUrl });
         }
 
-        public async Task<IdentityResult> ConfirmEmail(string userId, string token)
+        public async Task<IdentityResult> ConfirmEmail(Guid userId, string token)
         {
             var user = await _repository.FindAsync(userId);
             var result = await _userManager.ConfirmEmailAsync(user, token);
+            _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(User)));
+            _cachingProvider.Remove(BusinessRules.CacheObjectKey(typeof(User), user.Id));
             return result;
         }
 
-        public async Task<IdentityResult> CreateOrUpdateAsync(UserDTO user, string password = null)
+        public async Task<UserDTO> CreateOrUpdateAsync(UserDTO user, string password = null)
         {
+            IdentityResult result;
             var entity = _ApplyChanges(user, new User());
-            if (Ensure.Arguments.IsValidGuid(user.Id))
+            if (!Ensure.Arguments.IsValidGuid(user.Id))
             {
                 password = Ensure.Arguments.IsStringEmpty(password) ? BusinessRules.Users.GenerateRandomPassword(IdentityConfiguration.PasswordOpts) : password;
 
-                return await _userManager.CreateAsync(entity, password);
+                result = await _userManager.CreateAsync(entity, password);
+                _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(User)));
             }
-            return await _userManager.UpdateAsync(entity);
+            else
+            {
+                result = await _userManager.UpdateAsync(entity);
+                _cachingProvider.Remove(BusinessRules.CacheObjectKey(entity.GetType(), entity.Id));
+            }
+            user = _ToDTO(entity);
+            if (user.IsActive && !user.EmailConfirmed)
+            {
+                await GenerateAndSendConfirmationEmail(user.Email, $"{_configuration.GetValue<string>("Application:URL")}/api/users/confirm");
+            }
+            _cachingProvider.Set<UserDTO>(BusinessRules.CacheObjectKey(entity.GetType(), entity.Id), user, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            _cachingProvider.Set<UserDTO>($"{typeof(User)}-Email-{user.NormalizedEmail}", user, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            _cachingProvider.Set<UserDTO>($"{typeof(User)}-UserName-{user.NormalizedUserName}", user, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return user;
         }
 
-        public async Task<IdentityResult> UpdateAsync(UserDTO dto)
+        public async Task<UserDTO> UpdateAsync(UserDTO dto)
         {
-            var entity = await _userManager.FindByIdAsync(dto.Id);
+            var entity = await _userManager.FindByIdAsync(dto.Id.ToString());
             entity = _ApplyChanges(dto, entity);
             var result = await _userManager.UpdateAsync(entity);
             await _repository.SaveChangesAsync();
-            return result;
+
+            dto = _ToDTO(entity);
+            _cachingProvider.Set<UserDTO>(BusinessRules.CacheObjectKey(entity.GetType(), entity.Id), dto, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return dto;
         }
 
-        public async Task<IdentityResult> DeleteAsync(string id)
+        public async Task<IdentityResult> DeleteAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(User)));
+            _cachingProvider.Remove(BusinessRules.CacheObjectKey(typeof(User), id));
+            _cachingProvider.Remove($"{typeof(User)}-Email-{user.NormalizedEmail}");
+            _cachingProvider.Remove($"{typeof(User)}-UserName-{user.NormalizedUserName}");
             return await _userManager.DeleteAsync(user);
         }
 
-        public async Task<UserDTO> FindAsync(string id)
+        public async Task<UserDTO> FindAsync(Guid id)
         {
-            return _ToDTO(await _repository.FindAsync(id));
+            var cachedValue = await _cachingProvider.GetAsync<UserDTO>(BusinessRules.CacheObjectKey(typeof(User), id), async () =>
+            {
+                return _ToDTO(await _repository.FindAsync(id));
+            }, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return cachedValue.HasValue ? cachedValue.Value : null;
         }
 
         public async Task<UserDTO> FindByEmailAsync(string email)
         {
             email = email.Trim().ToUpper();
-            return _ToDTO(await _repository.FindOneByPredicateAsync(u => u.NormalizedEmail == email));
-            //await _userManager.FindByEmailAsync(email)
+            var cachedValue = await _cachingProvider.GetAsync<UserDTO>($"{typeof(User)}-Email-{email}", async () =>
+            {
+                return _ToDTO(await _repository.FindOneByPredicateAsync(u => u.NormalizedEmail == email));
+            }, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return cachedValue.HasValue ? cachedValue.Value : null;
         }
 
         public async Task<UserDTO> FindByUserNameAsync(string name)
         {
             name = name.Trim().ToUpper();
-            return _ToDTO(await _repository.FindOneByPredicateAsync(u => u.NormalizedUserName == name));
-            //await _userManager.FindByNameAsync(name)
+            var cachedValue = await _cachingProvider.GetAsync<UserDTO>($"{typeof(User)}-UserName-{name}", async () =>
+            {
+                return _ToDTO(await _repository.FindOneByPredicateAsync(u => u.NormalizedUserName == name));
+            }, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return cachedValue.HasValue ? cachedValue.Value : null;
         }
 
         protected UserDTO _ToDTO(User User)

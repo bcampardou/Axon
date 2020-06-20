@@ -164,14 +164,14 @@ namespace Axon.Data.Repositories
             }
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             Delete(_dbSet.Find(id));
         }
 
 
 
-        public virtual async Task<User> FindAsync(string id, bool preloadProperties = true)
+        public virtual async Task<User> FindAsync(Guid id, bool preloadProperties = true)
         {
             Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
 
@@ -180,7 +180,7 @@ namespace Axon.Data.Repositories
             return await set.SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public virtual async Task<List<User>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true)
+        public virtual async Task<List<User>> FindAsync(IEnumerable<Guid> ids, bool preloadProperties = true)
         {
             var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
             IQueryable<User> results = set.Where(e => ids.Contains(e.Id));

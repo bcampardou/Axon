@@ -16,10 +16,10 @@ namespace Axon.Data.Abstractions.Entities
         public string URL { get; set; }
 
 
-        public string ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
-        public string ServerId { get; set; }
+        public Guid ServerId { get; set; }
         public virtual Server Server { get; set; }
     }
 }

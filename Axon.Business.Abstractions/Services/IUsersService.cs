@@ -14,14 +14,14 @@ namespace Axon.Business.Abstractions.Services
         Task GenerateAndSendConfirmationEmail(string email, string url = "");
         Task<List<UserDTO>> FindAllAsync(bool useCache = true, int? maximumRows = null, int skipRows = 0);
         Task SignOutAsync();
-        Task<IdentityResult> CreateAsync(UserDTO user, string password, string callbackUrl);
-        Task<IdentityResult> ConfirmEmail(string userId, string token);
-        Task<IdentityResult> DeleteAsync(string id);
-        Task<UserDTO> FindAsync(string id);
+        Task<UserDTO> CreateAsync(UserDTO user, string password, string callbackUrl);
+        Task<IdentityResult> ConfirmEmail(Guid userId, string token);
+        Task<IdentityResult> DeleteAsync(Guid id);
+        Task<UserDTO> FindAsync(Guid id);
         Task<UserDTO> FindByEmailAsync(string email);
         Task<UserDTO> FindByUserNameAsync(string name);
-        Task<IdentityResult> CreateOrUpdateAsync(UserDTO user, string password = null);
+        Task<UserDTO> CreateOrUpdateAsync(UserDTO user, string password = null);
         bool IsSignedIn();
-        Task<IdentityResult> UpdateAsync(UserDTO dto);
+        Task<UserDTO> UpdateAsync(UserDTO dto);
     }
 }

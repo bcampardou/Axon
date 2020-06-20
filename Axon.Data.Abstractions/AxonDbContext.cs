@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Axon.Data.Abstractions
 {
-    public class AxonDbContext : IdentityDbContext<User, Role, string>
+    public class AxonDbContext : IdentityDbContext<User, Role, Guid>
     {
-        private const string _currentDateSqlFunction = "getdate()"; 
+        private const string _currentDateSqlFunction = "now()"; 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Server> Servers { get; set; }
         public DbSet<Network> Networks { get; set; }
@@ -27,7 +27,7 @@ namespace Axon.Data.Abstractions
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.UseIdentityColumns().UseHiLo();
+            modelBuilder.UseHiLo();
             modelBuilder.Entity<User>(b =>
             {
                 b.Property(u => u.CreatedAt)
@@ -90,7 +90,7 @@ namespace Axon.Data.Abstractions
             });
             modelBuilder.Entity<ProjectEnvironment>(b =>
             {
-                b.HasKey(e => new { e.ProjectId, e.ServerId, e.Name }).IsClustered(true);
+                b.HasKey(e => new { e.ProjectId, e.ServerId, e.Name });
                 b.HasIndex(e => e.Name).IsUnique(true);
                 b.Property(u => u.CreatedAt)
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
@@ -99,7 +99,7 @@ namespace Axon.Data.Abstractions
             });
             modelBuilder.Entity<ProjectTechnology>(b =>
             {
-                b.HasKey(e => new { e.ProjectId, e.TechnologyId }).IsClustered(true);
+                b.HasKey(e => new { e.ProjectId, e.TechnologyId });
                 b.Property(u => u.CreatedAt)
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
                 b.Property(u => u.EditedAt)
@@ -107,7 +107,7 @@ namespace Axon.Data.Abstractions
             });
             modelBuilder.Entity<ProjectTeammate>(b =>
             {
-                b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+                b.HasKey(t => new { t.DataId, t.UserId });
                 b.Property(u => u.CreatedAt)
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
                 b.Property(u => u.EditedAt)
@@ -115,7 +115,7 @@ namespace Axon.Data.Abstractions
             }); 
             modelBuilder.Entity<ServerTeammate>(b =>
             {
-                b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+                b.HasKey(t => new { t.DataId, t.UserId });
                 b.Property(u => u.CreatedAt)
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
                 b.Property(u => u.EditedAt)
@@ -123,7 +123,7 @@ namespace Axon.Data.Abstractions
             }); 
             modelBuilder.Entity<NetworkTeammate>(b =>
             {
-                b.HasKey(t => new { t.DataId, t.UserId }).IsClustered(true);
+                b.HasKey(t => new { t.DataId, t.UserId });
                 b.Property(u => u.CreatedAt)
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
                 b.Property(u => u.EditedAt)

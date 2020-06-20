@@ -7,7 +7,7 @@ namespace Axon.Business.Abstractions.Models
 {
     public class ProjectTechnologyDTO : EntityDTO<ProjectTechnology>
     {
-        public string ProjectId { get; set; }
-        public string TechnologyId { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid TechnologyId { get; set; }
     }
 }

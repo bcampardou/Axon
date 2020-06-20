@@ -7,7 +7,7 @@ namespace Axon.Business.Abstractions.Models
 {
     public class UserLightDTO
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? EditedAt { get; set; }
         public string FirstName { get; set; }
@@ -28,7 +28,7 @@ namespace Axon.Business.Abstractions.Models
         public string UserName { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
     }
 
     public class UserDTO : UserLightDTO

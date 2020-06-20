@@ -28,7 +28,7 @@ declare const SimpleMDE: any;
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SimplemdeComponent),
+            useClass: forwardRef(() => SimplemdeComponent),
             multi: true,
         },
     ],

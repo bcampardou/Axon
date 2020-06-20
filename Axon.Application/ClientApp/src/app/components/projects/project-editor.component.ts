@@ -46,7 +46,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
-    public save() {
+    public onSubmit() {
         this.projectService.post(this.project).subscribe(res => {
             this.project = res;
             this.toastr.success(this.translateService.instant('Successfully saved', 'Success'));

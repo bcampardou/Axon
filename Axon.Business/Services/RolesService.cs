@@ -29,15 +29,15 @@ namespace Axon.Business.Services
             return await _roleManager.CreateAsync(_ApplyChanges(role, new Role()));
         }
 
-        public async Task<IdentityResult> DeleteAsync(string id)
+        public async Task<IdentityResult> DeleteAsync(Guid id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id.ToString());
             return await _roleManager.DeleteAsync(role);
         }
 
-        public async Task<RoleDTO> FindAsync(string id)
+        public async Task<RoleDTO> FindAsync(Guid id)
         {
-            return _ToDTO(await _roleManager.FindByIdAsync(id));
+            return _ToDTO(await _roleManager.FindByIdAsync(id.ToString()));
         }
 
         public async Task<RoleDTO> FindByNameAsync(string name)
@@ -47,7 +47,7 @@ namespace Axon.Business.Services
 
         public async Task<IdentityResult> UpdateAsync(RoleDTO dto)
         {
-            var role = await _roleManager.FindByIdAsync(dto.Id);
+            var role = await _roleManager.FindByIdAsync(dto.Id.ToString());
             return await _roleManager.UpdateAsync(_ApplyChanges(dto, role));
         }
 

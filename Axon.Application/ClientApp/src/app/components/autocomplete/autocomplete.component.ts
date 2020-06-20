@@ -11,6 +11,7 @@ import { IdentifiedModel } from '@app/models';
 export class AutocompleteComponent {
     @Input() public name: string;
     @Input() public disabled: boolean = false;
+    @Input() public required: boolean = false;
     @Input() public options: { filter: string, value: string };
     @Input() public model: any;
     @Input() public source: Array<any>;

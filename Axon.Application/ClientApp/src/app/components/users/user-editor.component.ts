@@ -39,7 +39,12 @@ export class UserEditorComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
-    public save() {
+    setTenant(tenant: Tenant) {
+        this.user.tenant = tenant;
+        this.user.tenantId = tenant.id;
+    }
+
+    public onSubmit() {
         this.authService.post(this.user).subscribe(res => 
             {
                 this.user = res;

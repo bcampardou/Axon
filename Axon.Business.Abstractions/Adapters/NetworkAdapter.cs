@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Axon.Business.Abstractions.Adapters.Factory;
@@ -14,6 +15,7 @@ namespace Axon.Business.Abstractions.Adapters
         {
             dto = base.Convert(entity, dto);
             dto.Name = entity.Name;
+            dto.TenantId = entity.TenantId;
             dto.Description = entity.Description;
             dto.BusinessDocumentationUrl = entity.BusinessDocumentationUrl;
             dto.TechnicalDocumentationUrl = entity.TechnicalDocumentationUrl;
@@ -26,6 +28,7 @@ namespace Axon.Business.Abstractions.Adapters
         {
             entity = base.Bind(entity, dto);
             entity.Name = dto.Name.Trim();
+            entity.TenantId = dto.TenantId;
             entity.Description = dto.Description;
             entity.BusinessDocumentationUrl = dto.BusinessDocumentationUrl;
             entity.TechnicalDocumentationUrl = dto.TechnicalDocumentationUrl;
@@ -56,7 +59,9 @@ namespace Axon.Business.Abstractions.Adapters
         {
             entity = AdapterFactory.Get<NetworkLightAdapter>().Bind(entity, dto);
 
-            entity.Team.Clear();
+            if (entity.Team == null)
+                entity.Team = new Collection<NetworkTeammate>();
+            else entity.Team.Clear();
 
             var team = dto.Team.Select(t =>
             {

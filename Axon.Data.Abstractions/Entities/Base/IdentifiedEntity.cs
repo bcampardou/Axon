@@ -9,6 +9,6 @@ namespace Axon.Data.Abstractions.Entities.Base
     {
         [Key]
         [MaxLength(36)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -123,8 +123,8 @@
 </div>
 
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col-xl-8 mb-5 mb-xl-0">
+  <div class="row px-5">
+    <div class="col-12 mb-5">
       <div class="card bg-gradient-default shadow">
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
@@ -155,7 +155,7 @@
           </div>
         </div>
         <div class="card-body">
-          <ul class="networks list-group" style="margin: -1.5rem;">
+          <ul class="networks list-group" style="margin: -1rem -4.5rem 0 -4.5rem;">
             <li class="list-group-item list-group-item" *ngFor="let network of networks">
               <div class="network d-flex justify-content-between" (click)="server.isCollapsed = !server.isCollapsed">
                 <div class="title d-flex align-items-center" (click)="network.isCollapsed = !network.isCollapsed">
@@ -173,7 +173,7 @@
                   </div> {{ network.name }}
                 </div>
                 <div class="actions">
-                  <button class="btn btn-sm btn-outline-info rounded-circle p-2" [routerLink]="['/networks']" [queryParams]="{id: network.id}">
+                  <button class="btn btn-sm bg-gradient-success text-white rounded-circle p-2" [routerLink]="['/networks']" [queryParams]="{id: network.id}">
                     <svg class="bi bi-eye" width="1.4em" height="1.4em" viewBox="0 0 16 16" fill="currentColor"
                       xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd"
@@ -203,7 +203,7 @@
                       </div> {{ server.name }}
                     </div>
                     <div class="actions">
-                      <button class="btn btn-sm btn-outline-info p-2 rounded-circle" [routerLink]="['/servers']" [queryParams]="{id: server.id}">
+                      <button class="btn btn-sm bg-gradient-success text-white p-2 rounded-circle" [routerLink]="['/servers']" [queryParams]="{id: server.id}">
                         <svg class="bi bi-eye" width="1.4em" height="1.4em" viewBox="0 0 16 16" fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd"
@@ -230,7 +230,7 @@
                         </div>
 
                         <div class="actions">
-                          <button class="btn btn-sm btn-outline-info p-2 rounded-circle" [routerLink]="['/projects']" [queryParams]="{id: project.id}">
+                          <button class="btn btn-sm bg-gradient-success text-white p-2 rounded-circle" [routerLink]="['/projects']" [queryParams]="{id: project.id}">
                             <svg class="bi bi-eye" width="1.4em" height="1.4em" viewBox="0 0 16 16" fill="currentColor"
                               xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd"

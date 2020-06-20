@@ -9,5 +9,5 @@ export class Project extends IdentifiedModel {
     public businessDocumentationUrl: string;
     public technicalDocumentationUrl: string;
     public environments: Array<Environment> = [];
-    public team: Array<User>;
+    public team: Array<User> = new Array<User>();
 }

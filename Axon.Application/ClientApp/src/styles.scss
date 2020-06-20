@@ -37,3 +37,9 @@
     border-bottom-left-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
 }
+
+.CodeMirror {
+    &.CodeMirror-wrap {
+        height:300px;
+    }
+}

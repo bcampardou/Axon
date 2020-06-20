@@ -12,7 +12,7 @@ namespace Axon.Data.Abstractions.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsActive { get; set; }
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }
     }
 }

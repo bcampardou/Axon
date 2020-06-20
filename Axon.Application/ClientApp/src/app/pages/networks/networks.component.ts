@@ -20,6 +20,7 @@ export class NetworksComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService) { 
       this.networks$ = this.networkService.networks$;
       this.networkService.getAll(true).subscribe();
+      this.authService.getAll(false).subscribe();
     }
 
   ngOnInit() {

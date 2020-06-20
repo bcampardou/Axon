@@ -1,7 +1,21 @@
 //
 // Forms
 //
-
+@import "../custom/variables";
 @import "../core/forms/form";
 @import "../core/forms/form-validation";
 @import "../core/forms/input-group";
+
+
+.ng-valid[required],
+.ng-valid.required {
+    @extend .is-valid;
+    border-color: $success !important;
+    border: 1px solid;
+}
+
+.ng-invalid:not(form) {
+    @extend .is-invalid;
+    border-color: $danger !important;
+    border: 1px solid;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProjectService } from '@app/services';
+import { ProjectService, AuthenticationService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Project } from '@app/models';
 
@@ -17,9 +17,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthenticationService,
     private projectService: ProjectService) { 
       this.projects$ = this.projectService.projects$;
       this.projectService.getAll(true).subscribe();
+      this.authService.getAll(false).subscribe();
     }
 
   ngOnInit() {

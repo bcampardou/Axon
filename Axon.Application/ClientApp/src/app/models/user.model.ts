@@ -6,4 +6,5 @@ export class User {
     public email: string;
     public tenantId: string;
     public tenant: Tenant;
+    public isActive: boolean;
 }

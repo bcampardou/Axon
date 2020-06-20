@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Axon.Business.Abstractions.Models;
 using Axon.Business.Abstractions.Services;
 using Axon.Core.Guards;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Axon.Application.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProjectsController : ControllerBase
@@ -22,7 +24,7 @@ namespace Axon.Application.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<ProjectDTO> Get(string id, [FromServices]IProjectsService service)
+        public async Task<ProjectDTO> Get(Guid id, [FromServices]IProjectsService service)
         {
             return await service.FindAsync(id);
         }
@@ -35,7 +37,7 @@ namespace Axon.Application.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<object> Delete(string id, [FromServices]IProjectsService service)
+        public async Task<object> Delete(Guid id, [FromServices]IProjectsService service)
         {
             Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkService } from '@app/services';
+import { NetworkService, AuthenticationService } from '@app/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Network } from '@app/models';
 
@@ -13,11 +13,14 @@ export class NetworkListComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     public page: number = 0;
     public pageSize: number = 10;
+    public get isAxonUser() {
+        return this.authService.isAxonUser;
+    }
     @Input() public networks: Array<Network>;
     @Output() public networkSelected = new EventEmitter<string>();
     private subscriptions = new Array<Subscription>();
 
-    constructor(
+    constructor(private authService: AuthenticationService,
         private networkService: NetworkService) {
     }
 

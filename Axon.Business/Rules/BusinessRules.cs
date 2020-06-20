@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Axon.Core.Configurations;
+using Axon.Data.Abstractions.Entities;
 using Axon.Data.Abstractions.Entities.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -14,18 +15,19 @@ namespace Axon.Business.Rules
         public static IConfiguration Configuration;
         public const int SRID = 4326;
 
-        public static string GenerateIdentifier()
+        public static Guid GenerateIdentifier()
         {
-            return Guid.NewGuid().ToString();
+            return Guid.NewGuid();
         }
         public static string CacheObjectKey(IdentifiedEntity obj)
         {
             return CacheObjectKey(obj.GetType(), obj.Id);
         }
 
-        public static string CacheObjectKey(Type type, string id)
+
+        public static string CacheObjectKey(Type type, Guid id)
         {
-            return $"{type.Name}-{id}";
+            return $"{type.Name}-{id.ToString()}";
         }
 
         public static string CacheListKey(Type type)

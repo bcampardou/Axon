@@ -36,6 +36,10 @@ namespace Axon.Core.Guards
 
                 if (!IsValidGuid(argument)) throw new ArgumentException(name);
             }
+            public static void ThrowIfNotValidGuid(Guid argument, string name)
+            {
+                if (!IsValidGuid(argument)) throw new ArgumentException(name);
+            }
 
             public static bool IsValidGuid(string argument)
             {
@@ -45,6 +49,11 @@ namespace Axon.Core.Guards
 #else
                 return IsNotNull(argument) && _isGuidRegex.IsMatch(argument);
 #endif
+            }
+
+            public static bool IsValidGuid(Guid argument)
+            {
+                return argument != null && argument != default(Guid);
             }
 
             public static void ThrowIfStringEmpty(string argument, string name)

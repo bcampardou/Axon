@@ -45,7 +45,7 @@ export class ServerEditorComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
-    public save() {
+    public onSubmit() {
         this.serverService.post(this.server).subscribe(res => 
             {
                 this.server = res;

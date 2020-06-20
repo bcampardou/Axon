@@ -72,9 +72,9 @@ namespace Axon.Data.Abstractions.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<ENTITY> FindAsync(string id, bool preloadProperties = true);
+        Task<ENTITY> FindAsync(Guid id, bool preloadProperties = true);
 
-        Task<List<ENTITY>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true);
+        Task<List<ENTITY>> FindAsync(IEnumerable<Guid> ids, bool preloadProperties = true);
         /// <summary>
         /// Async: delete the entity with the given id from the database
         /// </summary>

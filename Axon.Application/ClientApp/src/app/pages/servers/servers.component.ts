@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ServerService } from '@app/services';
+import { ServerService, AuthenticationService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Server } from '@app/models';
 
@@ -16,9 +16,11 @@ export class ServersComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthenticationService,
     private serverService: ServerService) { 
       this.servers$ = this.serverService.servers$;
       this.serverService.getAll(true).subscribe();
+      this.authService.getAll(false).subscribe();
     }
 
   ngOnInit() {

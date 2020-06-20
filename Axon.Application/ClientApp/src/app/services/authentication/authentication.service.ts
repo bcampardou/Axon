@@ -48,6 +48,10 @@ export class AuthenticationService {
     return this.tenant$.getValue();
   }
 
+  public get isAxonUser() {
+    return this.tenant.name === 'AXON';
+  }
+
   public get isCookiesEnabled() {
     const isCookiesEnabled = localStorage.getItem('cookies_enabled');
     return isCookiesEnabled === 'true';
@@ -58,15 +62,16 @@ export class AuthenticationService {
   private _credentials: Credentials | null;
 
   constructor(private http: HttpClient) {
+    this.authenticatedUser$.subscribe(user => {
+        this.tenant$.next(user ? user.tenant : null);
+    });
     let savedCredentials = sessionStorage.getItem(credentialsKey);
     if (!savedCredentials) { savedCredentials = localStorage.getItem(credentialsKey); }
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
       this.getUser(this._credentials.user.id).subscribe((res: User) => {
-        this.authenticatedUser$.next(res);
-        this.tenant$.next(res.tenant);
         this._credentials.user = res;
-        this.setCredentials(this._credentials);
+        this.setCredentials(this._credentials, true);
       });
     }
   }
@@ -88,7 +93,6 @@ export class AuthenticationService {
     return this.http.post<Credentials>(`/users/signin`, context)
       .pipe(map(credentials => {
         // login successful if there's a jwt token in the response
-        this.authenticatedUser$.next(credentials.user);
         this.setCredentials(credentials, context.remember);
         return credentials;
       }));
@@ -101,8 +105,9 @@ export class AuthenticationService {
   logout() {
     return this.http.get(`/users/signout`).pipe(
       map(res => {
+        this.setCredentials(null);
         // login successful if there's a jwt token in the responsez
-        return this.setCredentials(null);
+        return res;
       }));
   }
 
@@ -156,7 +161,7 @@ export class AuthenticationService {
    */
   private setCredentials(credentials?: Credentials, remember?: boolean) {
     this._credentials = credentials || null;
-    this.authenticatedUser$.next(credentials ? credentials.user : null);
+    this.authenticatedUser$.next(this._credentials ? this._credentials.user : null);
 
     if (!!credentials) {
       const storage = remember ? localStorage : sessionStorage;
@@ -167,7 +172,7 @@ export class AuthenticationService {
     }
   }
 
-  
+
   public get(payload: string) {
     return this.http.get<User>(`${this.url}/${payload}`).pipe(
       map(res => this.currentUser$.next(res))
@@ -175,12 +180,12 @@ export class AuthenticationService {
   }
 
   public getAll(force: boolean) {
-    if(force || this.users$.getValue().length == 0) {
+    if (force || this.users$.getValue().length == 0) {
       return this.http.get<Array<User>>(`${this.url}`).pipe(
-          map(res => {
-            this.users$.next(res);
-            return res;
-          })
+        map(res => {
+          this.users$.next(res);
+          return res;
+        })
       );
     }
     return this.users$.asObservable();

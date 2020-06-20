@@ -6,7 +6,7 @@ namespace Axon.Business.Abstractions.Models
 {
     public class RoleDTO
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? EditedAt { get; set; }
         public string Name { get; set; }

@@ -13,10 +13,11 @@ namespace Axon.Data.Abstractions.Extensions
     {
         public static IServiceCollection RegisterDataLayerServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DbContext, AxonDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            services.AddDbContext<DbContext, AxonDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
                     .ConfigureWarnings(warnings =>
                           warnings.Default(WarningBehavior.Throw))
-                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                    );
 
             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders()

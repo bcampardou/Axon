@@ -19,7 +19,7 @@ namespace Axon.Data.Abstractions.Entities
         public OperatingSystems OS { get; set; }
         public string Version { get; set; }
 
-        public string NetworkId { get; set; }
+        public Guid NetworkId { get; set; }
         public virtual Network Network { get; set; }
 
         [InverseProperty("Server")]

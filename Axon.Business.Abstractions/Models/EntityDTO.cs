@@ -14,6 +14,6 @@ namespace Axon.Business.Abstractions.Models
     public class IdentifiedEntityDTO<T> : EntityDTO<T>
        where T: IdentifiedEntity
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

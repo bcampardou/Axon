@@ -208,7 +208,7 @@ namespace Axon.Business.Services
             return await Repository.SaveChangesAsync(); ;
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var entity = await Repository.FindAsync(id);
             return await _deleteAsync(entity);
@@ -219,7 +219,7 @@ namespace Axon.Business.Services
             return await DeleteAsync(elementsToRemove.Select(e => e.Id));
         }
 
-        public async Task<bool> DeleteAsync(IEnumerable<string> ids)
+        public async Task<bool> DeleteAsync(IEnumerable<Guid> ids)
         {
             var entities = await Repository.FindAsync(ids);
             return await _deleteListAsync(entities);
@@ -248,13 +248,13 @@ namespace Axon.Business.Services
             return results;
         }
 
-        public async Task<List<DTO>> FindAsync(IEnumerable<string> ids)
+        public async Task<List<DTO>> FindAsync(IEnumerable<Guid> ids)
         {
             var results = await Repository.FindAsync(ids);
             return results.Select(e => _ToDTO(e)).ToList();
         }
 
-        public async Task<DTO> FindAsync(string id, bool forceReloadCache = false)
+        public async Task<DTO> FindAsync(Guid id, bool forceReloadCache = false)
         {
             var cacheKey = BusinessRules.CacheObjectKey(typeof(ENTITY), id);
             var cached = await _cachingProvider.GetAsync<DTO>(cacheKey);
@@ -269,7 +269,7 @@ namespace Axon.Business.Services
 
         public virtual async Task<List<DTO>> UpdateAsync(IEnumerable<DTO> dtos)
         {
-            Dictionary<string, ENTITY> dicoSavedEntities = (await Repository.FindAsync(dtos.Select(e => e.Id), true)).ToDictionary(savedEntity => savedEntity.Id);
+            Dictionary<Guid, ENTITY> dicoSavedEntities = (await Repository.FindAsync(dtos.Select(e => e.Id), true)).ToDictionary(savedEntity => savedEntity.Id);
             var entities = new List<ENTITY>();
             foreach (var dto in dtos)
             {
@@ -372,10 +372,10 @@ namespace Axon.Business.Services
         /// <returns></returns>
         protected virtual bool _onBeforeCreateOrUpdate(ENTITY entity, ENTITY savedEntity)
         {
-            if(savedEntity == null && !Ensure.Arguments.IsValidGuid(entity.Id))
-            {
-                entity.Id = BusinessRules.GenerateIdentifier();
-            }
+            //if(savedEntity == null && !Ensure.Arguments.IsValidGuid(entity.Id))
+            //{
+            //    entity.Id = BusinessRules.GenerateIdentifier();
+            //}
             return true;
         }
 

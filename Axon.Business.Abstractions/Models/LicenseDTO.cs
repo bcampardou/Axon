@@ -11,6 +11,6 @@ namespace Axon.Business.Abstractions.Models
         public DateTime EndDate { get; set; }
         public string Key { get; set; }
         public bool IsActive { get; set; }
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
     }
 }

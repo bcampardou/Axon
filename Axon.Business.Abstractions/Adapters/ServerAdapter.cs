@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Axon.Business.Abstractions.Adapters.Factory;
@@ -62,8 +63,10 @@ namespace Axon.Business.Abstractions.Adapters
         public override Server Bind(Server entity, ServerDTO dto)
         {
             entity = AdapterFactory.Get<ServerLightAdapter>().Bind(entity, dto);
+            if (entity.Team == null)
+                entity.Team = new Collection<ServerTeammate>();
+            else entity.Team.Clear();
 
-            entity.Team.Clear();
             var team = dto.Team.Select(t =>
             {
                 return new ServerTeammate

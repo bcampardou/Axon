@@ -10,8 +10,8 @@ namespace Axon.Business.Abstractions.Services
     public interface IRolesService : IService
     {
         Task<IdentityResult> CreateAsync(RoleDTO role);
-        Task<IdentityResult> DeleteAsync(string id);
-        Task<RoleDTO> FindAsync(string id);
+        Task<IdentityResult> DeleteAsync(Guid id);
+        Task<RoleDTO> FindAsync(Guid id);
         Task<RoleDTO> FindByNameAsync(string name);
         Task<IdentityResult> UpdateAsync(RoleDTO dto);
     }

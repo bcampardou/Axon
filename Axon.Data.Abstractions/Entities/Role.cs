@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Axon.Data.Abstractions.Entities
 {
-    public class Role : IdentityRole<string>
+    public class Role : IdentityRole<Guid>
     {
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

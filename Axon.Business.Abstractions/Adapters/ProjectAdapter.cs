@@ -82,7 +82,10 @@ namespace Axon.Business.Abstractions.Adapters
             //    }
             //}
 
-            entity.Team.Clear();
+            if (entity.Team == null)
+                entity.Team = new Collection<ProjectTeammate>();
+            else entity.Team.Clear();
+
             var team = dto.Team.Select(t =>
             {
                 return new ProjectTeammate

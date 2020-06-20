@@ -199,16 +199,16 @@ namespace Axon.Data.Repositories
 
 
 
-        public virtual async Task<ENTITY> FindAsync(string id, bool preloadProperties = true)
+        public virtual async Task<ENTITY> FindAsync(Guid id, bool preloadProperties = true)
         {
-            Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
+            //Ensure.Arguments.ThrowIfNotValidGuid(id, nameof(id));
 
             var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
 
             return await set.SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public virtual async Task<List<ENTITY>> FindAsync(IEnumerable<string> ids, bool preloadProperties = true)
+        public virtual async Task<List<ENTITY>> FindAsync(IEnumerable<Guid> ids, bool preloadProperties = true)
         {
             var set = preloadProperties ? _loadProperties(_dbSet) : _dbSet;
             IQueryable<ENTITY> results = set.Where(e => ids.Contains(e.Id));
