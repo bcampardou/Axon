@@ -23,5 +23,6 @@ namespace Axon.Business.Abstractions.Models
         public List<ProjectLightDTO> Projects { get; set; }
         public NetworkLightDTO Network { get; set; }
         public List<UserLightDTO> Team { get; set; }
+        public List<ServerInterventionDTO> Interventions { get; set; }
     }
 }

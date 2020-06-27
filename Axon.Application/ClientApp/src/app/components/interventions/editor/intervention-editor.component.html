@@ -38,22 +38,22 @@
                   placeholder="End" [(ngModel)]="intervention.end" [readonly]="!edition">
               </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 col-lg-6" *ngIf="canChangeData">
               <div class="form-group">
                 <label class="form-control-label" for="type" translate>Type</label>
-                <select class="form-control" name="type" [(ngModel)]="type">
+                <select class="form-control" name="type" [(ngModel)]="type" [disabled]="!edition || !canChangeData">
                   <option value="network" translate>Network</option>
                   <option value="server" translate>Server</option>
                   <option value="project" translate>Project</option>
                 </select>
               </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 col-lg-6" *ngIf="canChangeData">
               <div class="form-group">
                 <label class="form-control-label" for="data" translate *ngIf="type === 'server'">Server</label>
                 <label class="form-control-label" for="data" translate *ngIf="type === 'network'">Network</label>
                 <label class="form-control-label" for="data" translate *ngIf="type === 'project'">Project</label>
-                <select class="form-control" name="data" [(ngModel)]="intervention.dataId" [disabled]="!edition"
+                <select class="form-control" name="data" [(ngModel)]="dataId" [disabled]="!edition || !canChangeData"
                   required>
                   <option *ngFor="let data of datas" [ngValue]="data.id">{{data.name}}</option>
                 </select>
@@ -63,7 +63,8 @@
               <div class="form-group">
                 <label class="form-control-label" for="userInCharge" translate>User in charge</label>
                 <app-autocomplete style="width: calc(100% - 40px);" (changed)="setUser($event)" [disabled]="!edition"
-                  [name]="userInCharge" [model]="intervention.userInCharge" [source]="users" [options]="{ filter:'userName', value: 'id' }">
+                  [name]="userInCharge" [model]="intervention.userInCharge" [source]="users" 
+                  [required]="true" [options]="{ filter:'userName', value: 'id' }">
                 </app-autocomplete>
               </div>
             </div>

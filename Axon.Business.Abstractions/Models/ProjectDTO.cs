@@ -12,6 +12,7 @@ namespace Axon.Business.Abstractions.Models
         public string BusinessDocumentationUrl { get; set; }
         public string TechnicalDocumentationUrl { get; set; }
         public List<TechnologyDTO> Technologies { get; set; }
+        public List<ProjectInterventionDTO> Interventions { get; set; }
     }
 
     public class ProjectDTO : ProjectLightDTO

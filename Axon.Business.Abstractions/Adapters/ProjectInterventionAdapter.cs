@@ -17,7 +17,7 @@ namespace Axon.Business.Abstractions.Adapters
         public override ProjectInterventionDTO Convert(ProjectIntervention entity, ProjectInterventionDTO dto = null)
         {
             dto = base.Convert(entity, dto);
-            dto.Data = AdapterFactory.Get<ProjectLightAdapter>().Convert(entity.Data, null);
+            //dto.Data = AdapterFactory.Get<ProjectLightAdapter>().Convert(entity.Data, null);
 
             return dto;
         }

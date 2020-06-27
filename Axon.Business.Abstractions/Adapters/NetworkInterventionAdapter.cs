@@ -17,7 +17,7 @@ namespace Axon.Business.Abstractions.Adapters
         public override NetworkInterventionDTO Convert(NetworkIntervention entity, NetworkInterventionDTO dto = null)
         {
             dto = base.Convert(entity, dto);
-            dto.Data = AdapterFactory.Get<NetworkLightAdapter>().Convert(entity.Data, null);
+            //dto.Data = AdapterFactory.Get<NetworkLightAdapter>().Convert(entity.Data, null);
 
             return dto;
         }

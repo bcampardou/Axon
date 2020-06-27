@@ -25,6 +25,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     @ViewChild('content', { static: false }) content: any;
     @ViewChild('userContent', { static: false }) userContent: any;
     @ViewChild('userPickerContent', { static: false }) userPickerContent: any;
+    @ViewChild('interventionModal', { static: false }) interventionModal: any;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -84,5 +85,9 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         console.log(event);
         this.project.team.push(event); 
         modal.dismiss('saved');
+    }
+
+    public openInterventionModal() {
+        const ref = this.modalService.open(this.interventionModal, { centered: true, size: 'lg', backdrop: 'static' });
     }
 }

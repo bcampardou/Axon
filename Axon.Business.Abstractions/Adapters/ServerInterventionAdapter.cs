@@ -17,7 +17,7 @@ namespace Axon.Business.Abstractions.Adapters
         public override ServerInterventionDTO Convert(ServerIntervention entity, ServerInterventionDTO dto = null)
         {
             dto = base.Convert(entity, dto);
-            dto.Data = AdapterFactory.Get<ServerLightAdapter>().Convert(entity.Data, null);
+            //dto.Data = AdapterFactory.Get<ServerLightAdapter>().Convert(entity.Data, null);
 
             return dto;
         }

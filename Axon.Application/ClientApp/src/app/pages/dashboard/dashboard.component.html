@@ -173,7 +173,15 @@
                   </div> {{ network.name }}
                 </div>
                 <div class="actions">
-                  <button class="btn btn-sm bg-gradient-success text-white rounded-circle p-2" [routerLink]="['/networks']" [queryParams]="{id: network.id}">
+                  <span class="badge badge-pill badge-warning p-2 mr-1"
+                    *ngIf="network.interventions.length > 0">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-event" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+                      <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+                      <rect width="2" height="2" x="11" y="6" rx=".5"/>
+                    </svg> {{network.interventions.length}}</span>
+                  <button class="btn btn-sm bg-gradient-success text-white rounded-circle p-2"
+                    [routerLink]="['/networks']" [queryParams]="{id: network.id}">
                     <svg class="bi bi-eye" width="1.4em" height="1.4em" viewBox="0 0 16 16" fill="currentColor"
                       xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd"
@@ -185,7 +193,8 @@
                 </div>
               </div>
 
-              <ul class="servers list-group mt-3  list-group-flush" [ngbCollapse]="network.isCollapsed" style="margin-right: -1rem;">
+              <ul class="servers list-group mt-3  list-group-flush" [ngbCollapse]="network.isCollapsed"
+                style="margin-right: -1rem;">
                 <li class="list-group-item list-group-item-secondary" *ngFor="let server of network.servers">
                   <div class="server d-flex justify-content-between" (click)="server.isCollapsed = !server.isCollapsed">
                     <div class="title d-flex align-items-center">
@@ -203,7 +212,15 @@
                       </div> {{ server.name }}
                     </div>
                     <div class="actions">
-                      <button class="btn btn-sm bg-gradient-success text-white p-2 rounded-circle" [routerLink]="['/servers']" [queryParams]="{id: server.id}">
+                      <span class="badge badge-pill badge-warning p-2 mr-1"
+                        *ngIf="server.interventions.length > 0">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-event" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+                          <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+                          <rect width="2" height="2" x="11" y="6" rx=".5"/>
+                        </svg> {{server.interventions.length}}</span>
+                      <button class="btn btn-sm bg-gradient-success text-white p-2 rounded-circle"
+                        [routerLink]="['/servers']" [queryParams]="{id: server.id}">
                         <svg class="bi bi-eye" width="1.4em" height="1.4em" viewBox="0 0 16 16" fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd"
@@ -215,7 +232,8 @@
                     </div>
                   </div>
 
-                  <ul class="projects list-group mt-3 list-group-flush" [ngbCollapse]="server.isCollapsed" style="margin-right: -1rem;">
+                  <ul class="projects list-group mt-3 list-group-flush" [ngbCollapse]="server.isCollapsed"
+                    style="margin-right: -1rem;">
                     <li class="list-group-item" *ngFor="let project of server.projects">
 
                       <div class="project d-flex justify-content-between">
@@ -230,7 +248,15 @@
                         </div>
 
                         <div class="actions">
-                          <button class="btn btn-sm bg-gradient-success text-white p-2 rounded-circle" [routerLink]="['/projects']" [queryParams]="{id: project.id}">
+                          <span class="badge badge-pill badge-warning p-2 mr-1"
+                            *ngIf="project.interventions.length > 0">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-event" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+                              <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+                              <rect width="2" height="2" x="11" y="6" rx=".5"/>
+                            </svg> {{project.interventions.length}}</span>
+                          <button class="btn btn-sm bg-gradient-success text-white p-2 rounded-circle"
+                            [routerLink]="['/projects']" [queryParams]="{id: project.id}">
                             <svg class="bi bi-eye" width="1.4em" height="1.4em" viewBox="0 0 16 16" fill="currentColor"
                               xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd"

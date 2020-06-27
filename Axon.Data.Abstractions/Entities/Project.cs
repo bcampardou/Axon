@@ -25,5 +25,8 @@ namespace Axon.Data.Abstractions.Entities
 
         [InverseProperty("Data")]
         public virtual Collection<ProjectTeammate> Team { get; set; }
+
+        [InverseProperty("Data")]
+        public virtual Collection<ProjectIntervention> Interventions { get; set; }
     }
 }

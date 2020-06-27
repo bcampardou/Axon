@@ -2,10 +2,12 @@
   <div class="card bg-secondary shadow">
     <div class="card-header bg-white border-0">
       <div class="row align-items-center">
-        <div class="col-9">
+        <div class="col-12 col-lg-6">
           <h3 class="mb-0" translate>{{ !!network.id ? network.name : 'New network' }}</h3>
         </div>
-        <div class="col-3 text-right">
+        <div class="col-12 col-lg-6 text-right">
+          <a class="btn btn-sm bg-gradient-success" (click)="openInterventionModal()" translate>New intervention
+          </a>
           <a class="btn btn-sm bg-gradient-primary text-white" (click)="cancel()">
             <svg class="bi bi-chevron-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +48,7 @@
                     <div class="form-group">
                       <label class="form-control-label" for="businessDocumentationUrl" translate>Business documentation
                         URL</label>
-                      <input type="text" name="businessDocumentationUrl" required
+                      <input type="text" name="businessDocumentationUrl"
                         class="form-control form-control-alternative" placeholder="URL" value=""
                         [(ngModel)]="network.businessDocumentationUrl">
                     </div>
@@ -56,7 +58,7 @@
                     <div class="form-group">
                       <label class="form-control-label" for="technicalDocumentationUrl" translate>Technical documentation
                         URL</label>
-                      <input type="text" name="technicalDocumentationUrl" required
+                      <input type="text" name="technicalDocumentationUrl"
                         class="form-control form-control-alternative" placeholder="URL" value=""
                         [(ngModel)]="network.technicalDocumentationUrl">
                     </div>
@@ -110,5 +112,12 @@
     <app-user-selector style="width:100%;" (canceled)="modal.dismiss('canceled')" [selectedList]="network.team"
       (selectUser)="pushUser($event, modal)">
     </app-user-selector>
+  </div>
+</ng-template>
+<ng-template #interventionModal let-modal>
+  <div class="modal-body p-0">
+    <app-intervention-editor style="width:100%;" (canceled)="modal.dismiss('canceled')"
+      (saved)="modal.dismiss('saved')" [type]="'network'" [dataId]="network.id" [canChangeData]="false">
+    </app-intervention-editor>
   </div>
 </ng-template>

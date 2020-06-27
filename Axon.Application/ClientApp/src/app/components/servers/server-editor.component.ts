@@ -25,6 +25,7 @@ export class ServerEditorComponent implements OnInit, OnDestroy {
     private subscriptions = new Array<Subscription>();
     @ViewChild('userContent', { static: false }) userContent: any;
     @ViewChild('userPickerContent', { static: false }) userPickerContent: any;
+    @ViewChild('interventionModal', { static: false }) interventionModal: any;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -69,5 +70,9 @@ export class ServerEditorComponent implements OnInit, OnDestroy {
         console.log(event);
         this.server.team.push(event);
         modal.dismiss('saved');
+    }
+
+    public openInterventionModal() {
+        const ref = this.modalService.open(this.interventionModal, { centered: true, size: 'lg', backdrop: 'static' });
     }
 }

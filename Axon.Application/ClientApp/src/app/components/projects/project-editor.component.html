@@ -3,10 +3,12 @@
     <form (ngSubmit)="onSubmit()">
       <div class="card-header bg-white border-0">
         <div class="row align-items-center">
-          <div class="col-9">
+          <div class="col-12 col-lg-6">
             <h3 class="mb-0" translate>{{ !!project.id ? project.name : 'New project' }}</h3>
           </div>
-          <div class="col-3 text-right">
+          <div class="col-12 col-lg-6 text-right">
+            <a class="btn btn-sm bg-gradient-success" (click)="openInterventionModal()" translate>New intervention
+            </a>
             <a class="btn btn-sm bg-gradient-primary text-white" (click)="cancel()">
               <svg class="bi bi-chevron-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg">
@@ -145,5 +147,13 @@
     <app-user-selector style="width:100%;" (canceled)="modal.dismiss('canceled')" [selectedList]="project.team"
       (selectUser)="pushUser($event, modal)">
     </app-user-selector>
+  </div>
+</ng-template>
+
+<ng-template #interventionModal let-modal>
+  <div class="modal-body p-0">
+    <app-intervention-editor style="width:100%;" (canceled)="modal.dismiss('canceled')"
+      (saved)="modal.dismiss('saved')" [type]="'project'" [dataId]="project.id" [canChangeData]="false">
+    </app-intervention-editor>
   </div>
 </ng-template>
