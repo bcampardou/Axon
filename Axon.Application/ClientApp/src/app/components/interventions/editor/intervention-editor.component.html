@@ -1,0 +1,78 @@
+<div class="col-12 p-0">
+  <div class="card bg-secondary shadow">
+    <form name="environment-form" (ngSubmit)="onSubmit()">
+      <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+          <div class="col-9">
+            <h3 class="mb-0" translate>{{ !!intervention.id ? intervention.data.name : 'New intervention' }}</h3>
+          </div>
+          <div class="col-3 text-right">
+            <a class="btn btn-sm bg-gradient-primary text-white" (click)="cancel()">
+              <svg class="bi bi-chevron-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+              </svg>
+            </a>
+          </div>
+          <!-- <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+            </div> -->
+        </div>
+      </div>
+      <div class="card-body">
+        <h6 class="heading-small text-muted mb-4" translate>Intervention information</h6>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label" for="start" translate>Start date</label>
+                <input type="datetime-local" name="start" required class="form-control form-control-alternative"
+                  placeholder="Start" [(ngModel)]="intervention.start" [readonly]="!edition">
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label" for="end" translate>End date</label>
+                <input type="datetime-local" name="end" required class="form-control form-control-alternative"
+                  placeholder="End" [(ngModel)]="intervention.end" [readonly]="!edition">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="type" translate>Type</label>
+                <select class="form-control" name="type" [(ngModel)]="type">
+                  <option value="network" translate>Network</option>
+                  <option value="server" translate>Server</option>
+                  <option value="project" translate>Project</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="data" translate *ngIf="type === 'server'">Server</label>
+                <label class="form-control-label" for="data" translate *ngIf="type === 'network'">Network</label>
+                <label class="form-control-label" for="data" translate *ngIf="type === 'project'">Project</label>
+                <select class="form-control" name="data" [(ngModel)]="intervention.dataId" [disabled]="!edition" required>
+                  <option *ngFor="let data of datas" [ngValue]="data.id">{{data.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="description" translate>Description</label>
+                <simplemde #description [value]="intervention.description"
+                  (changed)="intervention.description = $event;" [name]="'description'" required></simplemde>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body text-center" *ngIf="edition">
+        <button type="submit" class="btn bg-gradient-success text-white" translate>
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

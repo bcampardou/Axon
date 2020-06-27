@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/services/i18n.service';
 import { SearchService } from '@app/services';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare interface RouteInfo {
     path: string;
@@ -18,6 +19,7 @@ declare interface RouteInfo {
 export class SidebarComponent implements OnInit {
 
   public isCollapsed = true;
+  @ViewChild('interventionModal', { static: false }) interventionModal: any;
 
   public get language() {
     return this.i18nService.language;
@@ -29,6 +31,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(private router: Router,
     public i18nService: I18nService,
+    private modalService: NgbModal,
     public search: SearchService) { }
 
   ngOnInit() {
@@ -40,5 +43,9 @@ export class SidebarComponent implements OnInit {
 
   setLanguage(language: string) {
     this.i18nService.language = language;
+  }
+
+  openInterventionModal() {
+    const ref = this.modalService.open(this.interventionModal, { centered: true, size: 'lg', backdrop: 'static' });
   }
 }

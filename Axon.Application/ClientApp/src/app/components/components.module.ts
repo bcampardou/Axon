@@ -24,6 +24,7 @@ import { LicenseEditorComponent } from './licenses/license-editor.component';
 import { LicenseListComponent } from './licenses/list/license-list.component';
 import { UserSelectorComponent } from './user-selector/user-selector.component';
 import { SimplemdeModule } from './simplemde/simplemde.module';
+import { InterventionEditorComponent } from './interventions/editor/intervention-editor.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { SimplemdeModule } from './simplemde/simplemde.module';
     AutocompleteComponent,
     LicenseEditorComponent,
     LicenseListComponent,
-    UserSelectorComponent
+    UserSelectorComponent,
+    InterventionEditorComponent,
   ],
   exports: [
     FooterComponent,
@@ -77,7 +79,8 @@ import { SimplemdeModule } from './simplemde/simplemde.module';
     AutocompleteComponent,
     LicenseEditorComponent,
     LicenseListComponent,
-    UserSelectorComponent
+    UserSelectorComponent,
+    InterventionEditorComponent
   ]
 })
 export class ComponentsModule { }
