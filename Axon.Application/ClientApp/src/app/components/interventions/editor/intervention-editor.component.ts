@@ -1,8 +1,9 @@
 import { OnInit, OnDestroy, Component, Input, EventEmitter, Output } from "@angular/core";
 import { Intervention } from "@app/models/intervention.model";
-import { NetworkService, ServerService, ProjectService } from "@app/services";
+import { NetworkService, ServerService, ProjectService, AuthenticationService } from "@app/services";
 import { InterventionService } from "@app/services/intervention.service";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
+import { User } from "@app/models";
 
 @Component({
     selector: 'app-intervention-editor',
@@ -23,12 +24,17 @@ export class InterventionEditorComponent implements OnInit, OnDestroy {
     @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     @Output() public saved = new EventEmitter<Intervention>();
+    public users: Array<User> = [];
+
+    private _subscriptions = new Array<Subscription>();
 
     constructor(private networkService: NetworkService,
         private serverService: ServerService,
         private interventionService: InterventionService,
+        private authService: AuthenticationService,
         private projectService: ProjectService) {
-            this.type$.subscribe(type => {
+        this._subscriptions.push(this.type$.subscribe(type => {
+            this.intervention.type = type;
             switch (this.type) {
                 case 'network': this.networkService.getAll(false).subscribe(nets => this.datas = nets);
                     break;
@@ -37,15 +43,16 @@ export class InterventionEditorComponent implements OnInit, OnDestroy {
                 case 'project': this.projectService.getAll(false).subscribe(projects => this.datas = projects);
                     break;
             }
-        });
+        }));
+        this._subscriptions.push(this.authService.getAll(false).subscribe(users => this.users = users));
     }
 
     ngOnInit() {
-        
+
     }
 
     ngOnDestroy() {
-
+        this._subscriptions.forEach(sub => sub.unsubscribe());
     }
 
     cancel() {
@@ -53,6 +60,11 @@ export class InterventionEditorComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        this.interventionService.post(this.intervention);
+        this.interventionService.post(this.intervention).subscribe(res => { });
+    }
+
+    setUser(user: User) {
+        this.intervention.inChargeUser = user;
+        this.intervention.inChargeUserId = user.id;
     }
 }

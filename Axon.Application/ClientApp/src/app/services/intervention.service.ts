@@ -15,7 +15,7 @@ export class InterventionService {
     constructor(private http: HttpClient) { }
   
     public post(intervention: Intervention) : Observable<Intervention> {
-      return this.http.post<Intervention>(`${this.url}`, intervention).pipe(
+      return this.http.post<Intervention>(`${this.url}/${intervention.type}`, intervention).pipe(
         map(res => { 
           let values = this.interventions$.getValue();
           let index = values.findIndex(s => s.id === res.id);
@@ -31,15 +31,15 @@ export class InterventionService {
       );
     }
   
-    public get(payload: string) {
-      return this.http.get<Intervention>(`${this.url}/${payload}`).pipe(
+    public get(type: string, payload: string) {
+      return this.http.get<Intervention>(`${this.url}/${type}/${payload}`).pipe(
         map(res => this.currentIntervention$.next(res))
       );
     }
 
-    public getAll(force: boolean) {
+    public getAll(type: string, force: boolean) {
       if(force || this.interventions$.getValue().length == 0) {
-        return this.http.get<Array<Intervention>>(`${this.url}`).pipe(
+        return this.http.get<Array<Intervention>>(`${this.url}/${type}`).pipe(
             map(res => {
               this.interventions$.next(res);
               return res;
@@ -49,8 +49,8 @@ export class InterventionService {
       return this.interventions$.asObservable();
     }
 
-    public delete(payload: string) {
-      return this.http.delete(`${this.url}/${payload}`).pipe(
+    public delete(type: string, payload: string) {
+      return this.http.delete(`${this.url}/${type}/${payload}`).pipe(
         map(res => {
           let values = this.interventions$.getValue();
           values.splice(values.findIndex(v => v.id === payload), 1);

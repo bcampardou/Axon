@@ -1,6 +1,6 @@
 <div class="col-12 p-0">
   <div class="card bg-secondary shadow">
-    <form name="environment-form" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()">
       <div class="card-header bg-white border-0">
         <div class="row align-items-center">
           <div class="col-9">
@@ -53,9 +53,18 @@
                 <label class="form-control-label" for="data" translate *ngIf="type === 'server'">Server</label>
                 <label class="form-control-label" for="data" translate *ngIf="type === 'network'">Network</label>
                 <label class="form-control-label" for="data" translate *ngIf="type === 'project'">Project</label>
-                <select class="form-control" name="data" [(ngModel)]="intervention.dataId" [disabled]="!edition" required>
+                <select class="form-control" name="data" [(ngModel)]="intervention.dataId" [disabled]="!edition"
+                  required>
                   <option *ngFor="let data of datas" [ngValue]="data.id">{{data.name}}</option>
                 </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-control-label" for="userInCharge" translate>User in charge</label>
+                <app-autocomplete style="width: calc(100% - 40px);" (changed)="setUser($event)" [disabled]="!edition"
+                  [name]="userInCharge" [model]="intervention.userInCharge" [source]="users" [options]="{ filter:'userName', value: 'id' }">
+                </app-autocomplete>
               </div>
             </div>
             <div class="col-12">
