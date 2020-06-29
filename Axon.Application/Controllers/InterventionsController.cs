@@ -100,5 +100,15 @@ namespace Axon.Application.Controllers
 
             return await service.DeleteAsync(await service.FindAsync(id));
         }
+
+        [HttpGet("all")]
+        public async Task<IEnumerable<object>> Get([FromServices]IServerInterventionsService serverService, [FromServices]INetworkInterventionsService networkService, [FromServices]IProjectInterventionsService projectService)
+        {
+            IEnumerable<object> results = await serverService.FindAllAsync();
+            results = results.Concat(await networkService.FindAllAsync());
+            results = results.Concat(await projectService.FindAllAsync());
+
+            return results;
+        }
     }
 }

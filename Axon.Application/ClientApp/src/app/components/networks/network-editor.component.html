@@ -40,15 +40,16 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label class="form-control-label" for="description" translate>Description</label>
-                      <simplemde #description [value]="network.description" (changed)="network.description = $event;"
-                        [name]="'description'"></simplemde>
+                      <div markdown ngPreserveWhitespaces *ngIf="!edition">{{network.description}}</div>
+                      <simplemde #description [value]="network.description" *ngIf="edition" (changed)="network.description = $event;"
+                        [name]="'description'"  [disabled]="!edition"></simplemde>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
                       <label class="form-control-label" for="businessDocumentationUrl" translate>Business documentation
                         URL</label>
-                      <input type="text" name="businessDocumentationUrl"
+                      <input type="text" name="businessDocumentationUrl" [readonly]="!edition"
                         class="form-control form-control-alternative" placeholder="URL" value=""
                         [(ngModel)]="network.businessDocumentationUrl">
                     </div>
@@ -58,7 +59,7 @@
                     <div class="form-group">
                       <label class="form-control-label" for="technicalDocumentationUrl" translate>Technical documentation
                         URL</label>
-                      <input type="text" name="technicalDocumentationUrl"
+                      <input type="text" name="technicalDocumentationUrl" [readonly]="!edition"
                         class="form-control form-control-alternative" placeholder="URL" value=""
                         [(ngModel)]="network.technicalDocumentationUrl">
                     </div>

@@ -19,6 +19,7 @@ import { ProjectsComponent } from '@app/pages/projects/projects.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UsersComponent } from '@app/pages/users/users.component';
 import { TenantsComponent } from '@app/pages/tenants/tenants.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { TenantsComponent } from '@app/pages/tenants/tenants.component';
     NgbModule,
     NgbModalModule,
     ComponentsModule,
-    ClipboardModule
+    ClipboardModule,
+    MarkdownModule
   ],
   declarations: [
     DashboardComponent,

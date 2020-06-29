@@ -18,7 +18,7 @@ namespace Axon.Business.Abstractions.Adapters
             dto.Description = entity.Description;
             dto.BusinessDocumentationUrl = entity.BusinessDocumentationUrl;
             dto.TechnicalDocumentationUrl = entity.TechnicalDocumentationUrl;
-            var interventionsAdapter = AdapterFactory.Get<ProjectInterventionAdapter>();
+            var interventionsAdapter = AdapterFactory.Get<ProjectInterventionLightAdapter>();
             dto.Interventions = entity.Interventions?.Where(i => i.End > DateTime.Today).Select(i => interventionsAdapter.Convert(i, null)).ToList() ?? new List<ProjectInterventionDTO>();
             var technologyAdapter = AdapterFactory.Get<TechnologyAdapter>();
             dto.Technologies = entity.ProjectTechnologies?.Select(t => technologyAdapter.Convert(t.Technology, null)).ToList() ?? new List<TechnologyDTO>();

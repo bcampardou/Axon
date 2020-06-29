@@ -1,0 +1,16 @@
+<full-calendar defaultView="dayGridMonth" 
+[plugins]="calendarPlugins" 
+[themeSystem]="'bootstrap'"
+[weekends]="true" 
+[events]="events"
+(eventClick)="selectEvent($event)"></full-calendar>
+
+
+
+<ng-template #interventionModal let-modal>
+    <div class="modal-body p-0">
+      <app-intervention-editor [intervention]="selectedIntervention" [canChangeData]="true" [edition]="false" style="width:100%;" (canceled)="modal.dismiss('canceled')"
+        (saved)="modal.dismiss('saved')">
+      </app-intervention-editor>
+    </div>
+  </ng-template>

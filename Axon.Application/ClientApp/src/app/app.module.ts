@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -17,10 +18,12 @@ import { ComponentsModule } from './components/components.module';
 import { CoreModule } from './services';
 import { CustomTranslateLoader } from './services/custom-translate-loader.service';
 import { SimplemdeModule } from './components/simplemde/simplemde.module';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 @NgModule({
   imports: [
+    MarkdownModule.forRoot(),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -39,7 +42,8 @@ import { SimplemdeModule } from './components/simplemde/simplemde.module';
     ToastrModule.forRoot(),
     RouterModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FullCalendarModule
   ],
   declarations: [
     AppComponent,

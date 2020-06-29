@@ -52,7 +52,7 @@ namespace Axon.Business.Abstractions.Adapters
             var userAdapter = AdapterFactory.Get<UserLightAdapter>();
             dto.Team = entity.Team?.Select(t => userAdapter.Convert(t.User)).ToList() ?? new List<UserLightDTO>();
 
-            var interventionsAdapter = AdapterFactory.Get<NetworkInterventionAdapter>();
+            var interventionsAdapter = AdapterFactory.Get<NetworkInterventionLightAdapter>();
             dto.Interventions = entity.Interventions?.Where(i => i.End > DateTime.Today).Select(i => interventionsAdapter.Convert(i, null)).ToList() ?? new List<NetworkInterventionDTO>();
 
             return dto;

@@ -7,7 +7,7 @@ using Axon.Data.Abstractions.Entities;
 
 namespace Axon.Business.Abstractions.Adapters
 {
-    public class ProjectInterventionAdapter : InterventionAdapter<ProjectIntervention, Project, ProjectInterventionDTO>
+    public class ProjectInterventionLightAdapter : InterventionAdapter<ProjectIntervention, Project, ProjectInterventionDTO>
     {
         public override ProjectIntervention Bind(ProjectIntervention entity, ProjectInterventionDTO dto)
         {
@@ -17,7 +17,18 @@ namespace Axon.Business.Abstractions.Adapters
         public override ProjectInterventionDTO Convert(ProjectIntervention entity, ProjectInterventionDTO dto = null)
         {
             dto = base.Convert(entity, dto);
-            //dto.Data = AdapterFactory.Get<ProjectLightAdapter>().Convert(entity.Data, null);
+            dto.Type = "project";
+
+            return dto;
+        }
+    }
+
+    public class ProjectInterventionAdapter : ProjectInterventionLightAdapter
+    {
+        public override ProjectInterventionDTO Convert(ProjectIntervention entity, ProjectInterventionDTO dto = null)
+        {
+            dto = base.Convert(entity, dto);
+            dto.Data = AdapterFactory.Get<ProjectLightAdapter>().Convert(entity.Data, null);
 
             return dto;
         }

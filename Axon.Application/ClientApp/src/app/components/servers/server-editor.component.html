@@ -42,8 +42,9 @@
                     <div class="col-12">
                       <div class="form-group">
                         <label class="form-control-label" for="description" translate>Description</label>
-                        <simplemde #description [value]="server.description" (changed)="server.description = $event;"
-                          [name]="'description'"></simplemde>
+                        <div markdown ngPreserveWhitespaces *ngIf="!edition">{{server.description}}</div>
+                        <simplemde #description *ngIf="edition" [value]="server.description" (changed)="server.description = $event;"
+                          [name]="'description'" [disabled]="!edition"></simplemde>
                       </div>
                     </div>
                     <div class="col-12">

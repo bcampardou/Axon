@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~ngx-toastr/toastr';
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/bootstrap/main.css';
+@import '~@fullcalendar/daygrid/main.css';
 
 .ngx-toastr {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5) !important;
@@ -40,6 +43,51 @@
 
 .CodeMirror {
     &.CodeMirror-wrap {
-        height:300px;
+        height: 300px;
+    }
+}
+
+.fc {
+    .btn {
+        text-transform: uppercase;
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+
+    .fc-day-header {
+        text-align: left;
+        font-size: .75rem;
+        font-weight: 600;
+        padding: .75rem 1rem;
+        text-transform: uppercase;
+        color: #8898aa;
+    }
+
+    .fc-dayGrid-view {
+        .fc-day-number {
+            font-size: .875rem;
+            font-weight: 600;
+            color: #67779d;
+            box-sizing: border-box;
+            width: 100%;
+            padding: .5rem 1rem;
+        }
+        .alert-info {
+            background-color: var(--primary);
+    
+            .fc-day-number {
+                color: white;
+            }
+        }
+    }
+
+    .fc-event {
+
+        box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.7);
+        border: 0;
+
+        .fc-content {
+            padding: 4px 2px;
+        }
     }
 }

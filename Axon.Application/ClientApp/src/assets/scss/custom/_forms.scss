@@ -7,14 +7,14 @@
 @import "../core/forms/input-group";
 
 
-.ng-valid[required],
-.ng-valid.required {
+.ng-valid[required]:not(:read-only):not(:disabled),
+.ng-valid.required:not(:read-only):not(:disabled) {
     @extend .is-valid;
     border-color: $success !important;
     border: 1px solid;
 }
 
-.ng-invalid:not(form) {
+.ng-invalid:not(form):not(:read-only):not(:disabled) {
     @extend .is-invalid;
     border-color: $danger !important;
     border: 1px solid;

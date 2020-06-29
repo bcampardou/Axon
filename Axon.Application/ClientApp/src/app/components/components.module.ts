@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -25,6 +26,8 @@ import { LicenseListComponent } from './licenses/list/license-list.component';
 import { UserSelectorComponent } from './user-selector/user-selector.component';
 import { SimplemdeModule } from './simplemde/simplemde.module';
 import { InterventionEditorComponent } from './interventions/editor/intervention-editor.component';
+import { InterventionCalendarComponent } from './interventions/calendar/intervention-calendar.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   imports: [
@@ -36,7 +39,9 @@ import { InterventionEditorComponent } from './interventions/editor/intervention
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    SimplemdeModule
+    SimplemdeModule,
+    FullCalendarModule,
+    MarkdownModule
   ],
   declarations: [
     FooterComponent,
@@ -59,6 +64,7 @@ import { InterventionEditorComponent } from './interventions/editor/intervention
     LicenseListComponent,
     UserSelectorComponent,
     InterventionEditorComponent,
+    InterventionCalendarComponent
   ],
   exports: [
     FooterComponent,
@@ -80,7 +86,8 @@ import { InterventionEditorComponent } from './interventions/editor/intervention
     LicenseEditorComponent,
     LicenseListComponent,
     UserSelectorComponent,
-    InterventionEditorComponent
+    InterventionEditorComponent,
+    InterventionCalendarComponent
   ]
 })
 export class ComponentsModule { }
