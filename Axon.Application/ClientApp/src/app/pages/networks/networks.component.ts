@@ -4,11 +4,16 @@ import { NetworkService, AuthenticationService, SearchService } from '@app/servi
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '@app/models';
 import { map } from 'rxjs/operators';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-networks',
   templateUrl: './networks.component.html',
-  styleUrls: ['./networks.component.scss']
+  styleUrls: ['./networks.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000, delay: 100 }),
+    fadeOutOnLeaveAnimation({ anchor: 'leave', duration: 500 })
+  ]
 })
 export class NetworksComponent implements OnInit, OnDestroy {
   public isCollapsed = true;

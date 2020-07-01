@@ -4,11 +4,16 @@ import { AuthenticationService, SearchService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '@app/models';
 import { map } from 'rxjs/operators';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000, delay: 100 }),
+    fadeOutOnLeaveAnimation({ anchor: 'leave', duration: 500 })
+  ]
 })
 export class UsersComponent implements OnInit, OnDestroy {
   public isCollapsed = true;

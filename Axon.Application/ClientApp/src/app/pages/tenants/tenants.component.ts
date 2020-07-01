@@ -3,11 +3,16 @@ import { Router } from '@angular/router';
 import { TenantService } from '@app/services/tenant.service';
 import { BehaviorSubject } from 'rxjs';
 import { Tenant } from '@app/models';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-tenants',
   templateUrl: './tenants.component.html',
-  styleUrls: ['./tenants.component.scss']
+  styleUrls: ['./tenants.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000, delay: 100 }),
+    fadeOutOnLeaveAnimation({ anchor: 'leave', duration: 500 })
+  ]
 })
 export class TenantsComponent implements OnInit, OnDestroy {
   public isCollapsed = true;

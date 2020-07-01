@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--6" [@enter] [@leave]>
     <div class="row justify-content-md-center" *ngIf="mode === 'list'">
         <app-user-list [users]="filteredData$|async" (userSelected)="show($event)" style="width:100%;"></app-user-list>
     </div>

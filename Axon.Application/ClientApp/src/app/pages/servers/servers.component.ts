@@ -4,11 +4,16 @@ import { ServerService, AuthenticationService, SearchService } from '@app/servic
 import { BehaviorSubject } from 'rxjs';
 import { Server } from '@app/models';
 import { filter, map } from 'rxjs/operators';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-servers',
   templateUrl: './servers.component.html',
-  styleUrls: ['./servers.component.scss']
+  styleUrls: ['./servers.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000, delay: 100 }),
+    fadeOutOnLeaveAnimation({ anchor: 'leave', duration: 500 })
+  ]
 })
 export class ServersComponent implements OnInit, OnDestroy {
   public isCollapsed = true;

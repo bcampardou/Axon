@@ -7,11 +7,16 @@ import { AuthenticationService, NetworkService, ServerService, ProjectService } 
 import { Intervention } from '@app/models/intervention.model';
 import { InterventionService } from '@app/services/intervention.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000, delay: 100 }),
+    fadeOutOnLeaveAnimation({ anchor: 'leave', duration: 500 })
+  ]
 })
 export class DashboardComponent implements OnInit {
   public users: Array<User> = [];

@@ -121,7 +121,7 @@
     </div>
   </div>
 </div>
-<div class="container-fluid mt--8">
+<div class="container-fluid mt--8" [@enter] [@leave]>
   <div class="row px-5">
     <div class="mb-5">
       <div class="card bg-gradient-default shadow">
@@ -140,7 +140,7 @@
     </div>
   </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" [@enter] [@leave]>
   <div class="row px-5">
     <div class="col-12 mb-5">
       <div class="card bg-gradient-default shadow">
@@ -175,8 +175,8 @@
         <div class="card-body">
           <ul class="networks list-group" style="margin: -1rem -4.5rem 0 -4.5rem;">
             <li class="list-group-item list-group-item" *ngFor="let network of networks">
-              <div class="network d-flex justify-content-between" (click)="server.isCollapsed = !server.isCollapsed">
-                <div class="title d-flex align-items-center" (click)="network.isCollapsed = !network.isCollapsed">
+              <div class="network d-flex justify-content-between" (click)="network.isCollapsed = !network.isCollapsed">
+                <div class="title d-flex align-items-center">
                   <div class="icon icon-sm icon-shape bg-danger text-white rounded-circle shadow mr-2">
                     <svg class="bi bi-bullseye mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16"
                       fill="currentColor" xmlns="http://www.w3.org/2000/svg">

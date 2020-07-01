@@ -4,11 +4,16 @@ import { ProjectService, AuthenticationService, SearchService } from '@app/servi
 import { BehaviorSubject } from 'rxjs';
 import { Project } from '@app/models';
 import { map } from 'rxjs/operators';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  styleUrls: ['./projects.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000, delay: 100 }),
+    fadeOutOnLeaveAnimation({ anchor: 'leave', duration: 500 })
+  ]
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
   public isCollapsed = true;
