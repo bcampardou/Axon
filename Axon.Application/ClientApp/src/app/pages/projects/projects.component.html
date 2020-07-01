@@ -28,7 +28,7 @@
 </div>
 <div class="container-fluid mt--7">
     <div class="row justify-content-md-center" *ngIf="mode === 'list'">
-        <app-project-list [projects]="projects$|async" (projectSelected)="show($event)" style="width:100%;">
+        <app-project-list [projects]="filteredData$|async" (projectSelected)="show($event)" style="width:100%;">
         </app-project-list>
     </div>
     <div class="row justify-content-md-center" *ngIf="mode === 'creation' || mode === 'edition'">

@@ -44,4 +44,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authService.logout().subscribe(res => this.router.navigate(['/login'], { replaceUrl: true }));
     
   }
+
+  performSearch() {
+    this.search.search();
+  }
 }

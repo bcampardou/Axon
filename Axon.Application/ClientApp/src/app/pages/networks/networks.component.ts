@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkService, AuthenticationService } from '@app/services';
+import { NetworkService, AuthenticationService, SearchService } from '@app/services';
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '@app/models';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-networks',
@@ -13,11 +14,30 @@ export class NetworksComponent implements OnInit, OnDestroy {
   public isCollapsed = true;
   public networks$ = new BehaviorSubject<Array<Network>>([]);
   public mode: string = 'list';
+  public filteredData$ = new BehaviorSubject<Array<Network>>([]);
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
+    private search: SearchService,
     private networkService: NetworkService,
     private authService: AuthenticationService) { 
+      this.search.searchTerm$.subscribe(value => {
+        this.networkService.networks$.pipe(
+          map(networks => {
+            return networks.filter(network => {
+              return value.length === 0 || network.name.toLowerCase().indexOf(value) > -1;
+            });
+          })
+        ).subscribe(res => this.filteredData$.next(res));
+      });
+      this.networkService.networks$.subscribe(networks => {
+        this.search.searchTerm$.pipe(
+          map(value => {
+            return networks.filter(network => {
+              return value.length === 0 || network.name.toLowerCase().indexOf(value) > -1;
+            });
+          })
+        ).subscribe(res => this.filteredData$.next(res));
+      });
       this.networks$ = this.networkService.networks$;
       this.networkService.getAll(true).subscribe();
       this.authService.getAll(false).subscribe();

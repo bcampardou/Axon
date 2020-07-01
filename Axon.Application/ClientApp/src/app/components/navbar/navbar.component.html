@@ -11,7 +11,7 @@
             <div class="input-group-text">{{ search.label }}</div>
           </div>
           <input class="form-control" name="search" type="text" [(ngModel)]="search.term" (focus)="focus = true"
-            (blur)="focus = false">
+            (blur)="focus = false" (keyup.enter)="performSearch()">
         </div>
       </div>
     </form>

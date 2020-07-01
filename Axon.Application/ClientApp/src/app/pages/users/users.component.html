@@ -28,7 +28,7 @@
 </div>
 <div class="container-fluid mt--7">
     <div class="row justify-content-md-center" *ngIf="mode === 'list'">
-        <app-user-list [users]="users$|async" (userSelected)="show($event)" style="width:100%;"></app-user-list>
+        <app-user-list [users]="filteredData$|async" (userSelected)="show($event)" style="width:100%;"></app-user-list>
     </div>
     <div class="row justify-content-md-center" *ngIf="mode === 'creation' || mode === 'edition'">
         <app-user-editor (canceled)="cancelEdition($event)" style="width:100%;"></app-user-editor>
