@@ -48,4 +48,8 @@ export class SidebarComponent implements OnInit {
   openInterventionModal() {
     const ref = this.modalService.open(this.interventionModal, { centered: true, size: 'lg', backdrop: 'static' });
   }
+
+  performSearch() {
+    this.search.search();
+  }
 }

@@ -91,7 +91,7 @@
             <div class="input-group-text">{{ search.label }}</div>
           </div>
           <input class="form-control" name="search" type="text" [(ngModel)]="search.term" (focus)="focus = true"
-            (blur)="focus = false">
+            (blur)="focus = false" (keyup.enter)="performSearch()">
         </div>
       </form>
       <a class="btn bg-gradient-success mt-3" (click)="openInterventionModal()" translate>New intervention
@@ -99,7 +99,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav mt-md-3">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/dashboard'" translate>
+          <a class="nav-link" routerLinkActive="active" (click)="search.term = ''" [routerLink]="'/dashboard'" translate>
             <svg class="bi bi-display mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -117,7 +117,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/networks'" translate>
+          <a class="nav-link" routerLinkActive="active" (click)="search.term = ''" [routerLink]="'/networks'" translate>
             <svg class="bi bi-bullseye mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -128,7 +128,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/servers'" translate>
+          <a class="nav-link" routerLinkActive="active" (click)="search.term = ''" [routerLink]="'/servers'" translate>
             <svg class="bi bi-server mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path d="M13 2c0-1.105-2.239-2-5-2S3 .895 3 2s2.239 2 5 2 5-.895 5-2z" />
@@ -142,7 +142,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/projects'" translate>
+          <a class="nav-link" routerLinkActive="active" (click)="search.term = ''" [routerLink]="'/projects'" translate>
             <svg class="bi bi-box-seam mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -151,7 +151,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/tenants'" translate>
+          <a class="nav-link" routerLinkActive="active" (click)="search.term = ''" [routerLink]="'/tenants'" translate>
             <svg class="bi bi-building mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -163,7 +163,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="'/users'" translate>
+          <a class="nav-link" routerLinkActive="active" (click)="search.term = ''" [routerLink]="'/users'" translate>
             <svg class="bi bi-people mr-2" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
