@@ -23,5 +23,6 @@ namespace Axon.Business.Abstractions.Services
         Task<UserDTO> CreateOrUpdateAsync(UserDTO user, string password = null);
         bool IsSignedIn();
         Task<UserDTO> UpdateAsync(UserDTO dto);
+        Task<UserDTO> Activate(Guid id, bool isActive);
     }
 }

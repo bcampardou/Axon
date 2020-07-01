@@ -138,6 +138,24 @@ namespace Axon.Business.Services
             return result;
         }
 
+        public async Task<UserDTO> Activate(Guid id, bool isActive)
+        {
+            var user = await _repository.FindAsync(id);
+            Ensure.Arguments.ThrowIfNull(user, nameof(user));
+            user.IsActive = isActive;
+            _repository.Update(user);
+            await _repository.SaveChangesAsync();
+            _cachingProvider.Remove(BusinessRules.CacheObjectKey(typeof(User), user.Id));
+            _cachingProvider.Remove($"{typeof(User)}-Email-{user.NormalizedEmail}");
+            _cachingProvider.Remove($"{typeof(User)}-UserName-{user.NormalizedUserName}");
+            await GenerateAndSendConfirmationEmail(user.NormalizedEmail);
+            var result = _ToDTO(user);
+            await _cachingProvider.SetAsync(BusinessRules.CacheObjectKey(typeof(User), user.Id), result, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            await _cachingProvider.SetAsync<UserDTO>($"{typeof(User)}-Email-{user.NormalizedEmail}", result, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            await _cachingProvider.SetAsync<UserDTO>($"{typeof(User)}-UserName-{user.NormalizedUserName}", result, TimeSpan.FromSeconds(_configuration.GetValue<int>(ConfigurationConstants.CacheInSeconds)));
+            return result;
+        }
+
         public async Task<UserDTO> CreateOrUpdateAsync(UserDTO user, string password = null)
         {
             IdentityResult result;

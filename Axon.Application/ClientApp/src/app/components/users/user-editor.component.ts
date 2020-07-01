@@ -47,12 +47,17 @@ export class UserEditorComponent implements OnInit, OnDestroy {
     public onSubmit() {
         this.authService.post(this.user).subscribe(res => 
             {
-                this.user = res;
                 this.toastr.success(this.translateService.instant('Successfully saved', 'Success'));
             });
     }
 
     public cancel() {
         this.canceled.next(true);
+    }
+
+    public activateAccount(value: boolean) {
+        this.authService.activate(this.user.id, value).subscribe(() => {
+            this.toastr.success(this.translateService.instant('Successfully saved', 'Success'));
+        });
     }
 }

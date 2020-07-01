@@ -9,13 +9,18 @@
 
 .ng-valid[required]:not(:read-only):not(:disabled),
 .ng-valid.required:not(:read-only):not(:disabled) {
-    @extend .is-valid;
-    border-color: $success !important;
-    border: 1px solid;
+    @extend .has-success;
+    border-color: $form-feedback-valid-bg !important;
+    border-right: 3px solid;
+    color: $form-feedback-valid-bg;
 }
 
 .ng-invalid:not(form):not(:read-only):not(:disabled) {
-    @extend .is-invalid;
-    border-color: $danger !important;
-    border: 1px solid;
+    @extend .has-danger;
+    border-color: $form-feedback-invalid-bg !important;
+    border-right: 3px solid;
+
+    &::placeholder {
+        color: $form-feedback-invalid-bg;
+    }
 }

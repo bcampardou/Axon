@@ -63,7 +63,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
     this.authenticatedUser$.subscribe(user => {
-        this.tenant$.next(user ? user.tenant : null);
+      this.tenant$.next(user ? user.tenant : null);
     });
     let savedCredentials = sessionStorage.getItem(credentialsKey);
     if (!savedCredentials) { savedCredentials = localStorage.getItem(credentialsKey); }
@@ -81,7 +81,18 @@ export class AuthenticationService {
   }
 
   post(user: User) {
-    return this.http.post<User>(`/users`, user);
+    return this.http.post<User>(`/users`, user).pipe(
+      map(res => {
+        this.updateUserList(res, user.id.length > 0);
+        return res;
+      })
+    );
+  }
+
+  activate(payload: string, value: boolean) {
+    return this.http.get<User>(`${this.url}/activate/${payload}/${value}`).pipe(
+      map(res => this.updateUserList(res, false))
+    );
   }
 
   /**
@@ -201,6 +212,17 @@ export class AuthenticationService {
     );
   }
 
+  private updateUserList(res: User, isNew: boolean) {
+    const users = this.users$.getValue();
+    if (isNew) {
+      const userIndex = users.findIndex(u => u.id === res.id);
+      users[userIndex] = res;
+    } else {
+      users.push(res);
+    }
+    this.users$.next(users);
+    this.currentUser$.next(res);
+  }
 
 
 }

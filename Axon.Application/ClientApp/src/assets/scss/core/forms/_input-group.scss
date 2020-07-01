@@ -11,12 +11,14 @@
 		box-shadow: none;
 
 		&:not(:first-child) {
-		    border-left: 0;
-		    padding-left: 0;
+			border-left: 0;
+			border-top-left-radius: $input-border-radius;
+			border-bottom-left-radius: $input-border-radius;
 		}
 		&:not(:last-child) {
 			border-right: 0;
-			padding-right: 0;
+			border-top-right-radius: $input-border-radius;
+			border-bottom-right-radius: $input-border-radius;
 		}
 		&:focus {
 			box-shadow: none;

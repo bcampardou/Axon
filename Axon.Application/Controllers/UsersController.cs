@@ -134,7 +134,16 @@ namespace Axon.Application.Controllers
             return await usersService.FindAllAsync();
         }
 
+        [Authorize]
+        [HttpGet("activate/{id}/{isActive}")]
+        public async Task<UserDTO> Activate(Guid id, bool isActive, [FromServices]IUsersService usersService)
+        {
+            Ensure.Arguments.IsValidGuid(id);
 
+            var result = await usersService.Activate(id, isActive);
+
+            return result;
+        }
 
         [HttpPost()]
         public async Task<UserDTO> Post(UserDTO user, [FromServices]IUsersService usersService)

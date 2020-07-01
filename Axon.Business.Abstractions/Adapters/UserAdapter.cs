@@ -33,7 +33,7 @@ namespace Axon.Business.Abstractions.Adapters
             Ensure.Arguments.ThrowIfNull(entity, nameof(entity));
             entity.UserName = dto.UserName;
             entity.Email = dto.Email;
-            entity.IsActive = dto.IsActive;
+            //entity.IsActive = dto.IsActive;
             entity.PhoneNumber = dto.PhoneNumber;
             entity.SecurityStamp = dto.SecurityStamp ?? "";
             entity.ConcurrencyStamp = dto.ConcurrencyStamp;
