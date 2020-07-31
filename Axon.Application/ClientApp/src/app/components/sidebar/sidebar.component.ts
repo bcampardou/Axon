@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/services/i18n.service';
-import { SearchService } from '@app/services';
+import { SearchService, KnowledgeSheetService } from '@app/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject } from 'rxjs';
+import { KnowledgeSheet } from '@app/models';
 
 declare interface RouteInfo {
     path: string;
@@ -19,7 +21,9 @@ declare interface RouteInfo {
 export class SidebarComponent implements OnInit {
 
   public isCollapsed = true;
+  public knowledgeBase$: BehaviorSubject<Array<KnowledgeSheet>>;
   @ViewChild('interventionModal', { static: false }) interventionModal: any;
+  @ViewChild('newSheetModal', { static: false }) newSheetModal: any;
 
   public get language() {
     return this.i18nService.language;
@@ -31,8 +35,12 @@ export class SidebarComponent implements OnInit {
 
   constructor(private router: Router,
     public i18nService: I18nService,
+    private ksService: KnowledgeSheetService,
     private modalService: NgbModal,
-    public search: SearchService) { }
+    public search: SearchService) {
+      this.knowledgeBase$ = this.ksService.knowledgeBase$;
+      this.ksService.getBase(false).subscribe();
+     }
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -51,5 +59,9 @@ export class SidebarComponent implements OnInit {
 
   performSearch() {
     this.search.search();
+  }
+
+  newSheet() {
+    const ref = this.modalService.open(this.newSheetModal, { centered: true, size: 'lg', backdrop: 'static' });
   }
 }

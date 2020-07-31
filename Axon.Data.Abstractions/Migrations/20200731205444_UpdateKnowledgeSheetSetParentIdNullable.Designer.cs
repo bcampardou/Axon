@@ -3,15 +3,17 @@ using System;
 using Axon.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Axon.Data.Abstractions.Migrations
 {
     [DbContext(typeof(AxonDbContext))]
-    partial class AxonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200731205444_UpdateKnowledgeSheetSetParentIdNullable")]
+    partial class UpdateKnowledgeSheetSetParentIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

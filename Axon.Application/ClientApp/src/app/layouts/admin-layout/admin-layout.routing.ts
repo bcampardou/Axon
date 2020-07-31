@@ -10,6 +10,7 @@ import { ServersComponent } from '@app/pages/servers/servers.component';
 import { ProjectsComponent } from '@app/pages/projects/projects.component';
 import { UsersComponent } from '@app/pages/users/users.component';
 import { TenantsComponent } from '@app/pages/tenants/tenants.component';
+import { KnowledgeSheetComponent } from '@app/pages/knowledge-sheet/knowledge-sheet.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -21,5 +22,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'servers',       component: ServersComponent },
     { path: 'projects',       component: ProjectsComponent },
     { path: 'users',       component: UsersComponent },
-    { path: 'tenants',       component: TenantsComponent }
+    { path: 'tenants',       component: TenantsComponent },
+    { path: 'knowledge/:id',     component: KnowledgeSheetComponent }
 ];

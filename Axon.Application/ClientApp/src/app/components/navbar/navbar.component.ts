@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (titlee.charAt(0) === '#') {
       titlee = titlee.slice(1);
     }
-    return 'Dashboard';
+    return 'Axon';
   }
 
   logout() {

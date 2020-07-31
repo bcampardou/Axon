@@ -1,0 +1,14 @@
+
+<div class="container-fluid" [@enter] [@leave]>
+    <div class="row justify-content-md-center">
+        <markdown [data]="sheet.document"></markdown>
+    </div>
+</div>
+
+<ng-template #newSheetModal let-modal>
+    <div class="modal-body p-0">
+      <app-knowledge-sheet-editor [sheet]="{}" style="width:100%;" (canceled)="modal.dismiss('canceled')"
+        (saved)="modal.dismiss('saved')">
+      </app-knowledge-sheet-editor>
+    </div>
+  </ng-template>

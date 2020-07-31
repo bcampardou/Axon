@@ -172,15 +172,35 @@
           </a>
         </li>
       </ul>
+
+      <!-- Divider -->
+      <hr class="my-3">
+      <!-- Heading -->
+      <h6 class="navbar-heading text-muted" translate>Knowledge base</h6>
+      
+      <a class="btn bg-gradient-success mb-3" (click)="newSheet()" translate>New sheet
+      </a>
+      <!-- Navigation -->
+      <ul class="navbar-nav mb-md-3">
+        <app-submenu-knowledge-base class="nav-item" [sheet]="sheet" *ngFor="let sheet of knowledgeBase$|async">
+        </app-submenu-knowledge-base>
+      </ul>
     </div>
   </div>
 </nav>
-
 
 <ng-template #interventionModal let-modal>
   <div class="modal-body p-0">
     <app-intervention-editor style="width:100%;" (canceled)="modal.dismiss('canceled')"
       (saved)="modal.dismiss('saved')">
     </app-intervention-editor>
+  </div>
+</ng-template>
+
+<ng-template #newSheetModal let-modal>
+  <div class="modal-body p-0">
+    <app-knowledge-sheet-editor [sheet]="{}" style="width:100%;" (canceled)="modal.dismiss('canceled')"
+      (saved)="modal.dismiss('saved')">
+    </app-knowledge-sheet-editor>
   </div>
 </ng-template>

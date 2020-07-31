@@ -28,6 +28,9 @@ import { SimplemdeModule } from './simplemde/simplemde.module';
 import { InterventionEditorComponent } from './interventions/editor/intervention-editor.component';
 import { InterventionCalendarComponent } from './interventions/calendar/intervention-calendar.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { SubmenuKnowledgeBaseComponent } from './sidebar/submenu-knowledge-base/submenu-knowledge-base.component';
+import { KnowledgeSheetViewerComponent } from './knowledge-sheet/viewer/knowledge-sheet-viewer.component';
+import { KnowledgeSheetEditorComponent } from './knowledge-sheet/editor/knowledge-sheet-editor.component';
 
 @NgModule({
   imports: [
@@ -64,7 +67,10 @@ import { MarkdownModule } from 'ngx-markdown';
     LicenseListComponent,
     UserSelectorComponent,
     InterventionEditorComponent,
-    InterventionCalendarComponent
+    InterventionCalendarComponent,
+    SubmenuKnowledgeBaseComponent,
+    KnowledgeSheetViewerComponent,
+    KnowledgeSheetEditorComponent
   ],
   exports: [
     FooterComponent,
@@ -87,7 +93,10 @@ import { MarkdownModule } from 'ngx-markdown';
     LicenseListComponent,
     UserSelectorComponent,
     InterventionEditorComponent,
-    InterventionCalendarComponent
+    InterventionCalendarComponent,
+    SubmenuKnowledgeBaseComponent,
+    KnowledgeSheetViewerComponent,
+    KnowledgeSheetEditorComponent
   ]
 })
 export class ComponentsModule { }

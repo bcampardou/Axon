@@ -40,6 +40,7 @@ namespace Axon.Data.Abstractions.Extensions
             services.AddScoped<INetworkInterventionsRepository, NetworkInterventionsRepository>();
             services.AddScoped<IServerInterventionsRepository, ServerInterventionsRepository>();
             services.AddScoped<IProjectInterventionsRepository, ProjectInterventionsRepository>();
+            services.AddScoped<IKnowledgeSheetsRepository, KnowledgeSheetsRepository>();
             return services;
         }
     }

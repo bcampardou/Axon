@@ -21,6 +21,7 @@ namespace Axon.Data.Abstractions
         public DbSet<ProjectTeammate> ProjectTeammates { get; set; }
         public DbSet<ServerTeammate> ServersTeammates { get; set; }
         public DbSet<NetworkTeammate> NetworkTeammates { get; set; }
+        public DbSet<KnowledgeSheet> KnowledgeSheet { get; set; }
 
         public AxonDbContext(DbContextOptions options) : base(options) { }
 
@@ -149,6 +150,13 @@ namespace Axon.Data.Abstractions
                     .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
                 b.Property(u => u.EditedAt)
                     .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
+            });
+            modelBuilder.Entity<KnowledgeSheet>(b =>
+            {
+                b.Property(u => u.CreatedAt)
+                .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
+                b.Property(u => u.EditedAt)
+                   .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
             });
         }
     }

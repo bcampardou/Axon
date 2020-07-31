@@ -27,6 +27,7 @@ namespace Axon.Business.Abstractions.Extensions
             services.AddScoped<INetworkInterventionsService, NetworkInterventionsService>();
             services.AddScoped<IProjectInterventionsService, ProjectInterventionsService>();
             services.AddScoped<IServerInterventionsService, ServerInterventionsService>();
+            services.AddScoped<IKnowledgeSheetsService, KnowledgeSheetsService>();
             services.AddSingleton<RazorLightEngine>((opts) =>
             {
                 return new RazorLightEngineBuilder()

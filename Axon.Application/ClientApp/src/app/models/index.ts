@@ -8,3 +8,4 @@ export * from './server.model';
 export * from './user.model';
 export * from './tenant.model';
 export * from './license.model';
+export * from './knowledge-sheet.model';

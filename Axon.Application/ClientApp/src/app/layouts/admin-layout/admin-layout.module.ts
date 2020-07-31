@@ -20,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UsersComponent } from '@app/pages/users/users.component';
 import { TenantsComponent } from '@app/pages/tenants/tenants.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { KnowledgeSheetComponent } from '@app/pages/knowledge-sheet/knowledge-sheet.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { MarkdownModule } from 'ngx-markdown';
     ServersComponent,
     ProjectsComponent,
     UsersComponent,
-    TenantsComponent
+    TenantsComponent,
+    KnowledgeSheetComponent
   ]
 })
 
