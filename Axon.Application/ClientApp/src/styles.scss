@@ -91,3 +91,21 @@
         }
     }
 }
+
+::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+    background-color: #F5F5F5;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--warning);
+    background-image: -webkit-linear-gradient(90deg, var(--warning), var(--danger));
+    border-radius: 0;
+}
