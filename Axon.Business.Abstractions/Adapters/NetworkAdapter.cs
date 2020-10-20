@@ -15,7 +15,6 @@ namespace Axon.Business.Abstractions.Adapters
         {
             dto = base.Convert(entity, dto);
             dto.Name = entity.Name;
-            dto.TenantId = entity.TenantId;
             dto.Description = entity.Description;
             dto.BusinessDocumentationUrl = entity.BusinessDocumentationUrl;
             dto.TechnicalDocumentationUrl = entity.TechnicalDocumentationUrl;
@@ -28,7 +27,6 @@ namespace Axon.Business.Abstractions.Adapters
         {
             entity = base.Bind(entity, dto);
             entity.Name = dto.Name.Trim();
-            entity.TenantId = dto.TenantId;
             entity.Description = dto.Description;
             entity.BusinessDocumentationUrl = dto.BusinessDocumentationUrl;
             entity.TechnicalDocumentationUrl = dto.TechnicalDocumentationUrl;

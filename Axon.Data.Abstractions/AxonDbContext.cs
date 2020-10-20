@@ -13,9 +13,7 @@ namespace Axon.Data.Abstractions
         public DbSet<Project> Projects { get; set; }
         public DbSet<Server> Servers { get; set; }
         public DbSet<Network> Networks { get; set; }
-        public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Technology> Technologies { get; set; }
-        public DbSet<License> Licenses { get; set; }
         public DbSet<ProjectTechnology> ProjectTechnologies { get; set; }
         public DbSet<ProjectEnvironment> ProjectEnvironments { get; set; }
         public DbSet<ProjectTeammate> ProjectTeammates { get; set; }
@@ -37,20 +35,6 @@ namespace Axon.Data.Abstractions
                    .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
             });
             modelBuilder.Entity<Role>(b =>
-            {
-                b.Property(u => u.CreatedAt)
-                .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
-                b.Property(u => u.EditedAt)
-                   .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
-            });
-            modelBuilder.Entity<Tenant>(b =>
-            {
-                b.Property(u => u.CreatedAt)
-                .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);
-                b.Property(u => u.EditedAt)
-                   .ValueGeneratedOnAddOrUpdate().HasDefaultValueSql(_currentDateSqlFunction);
-            });
-            modelBuilder.Entity<License>(b =>
             {
                 b.Property(u => u.CreatedAt)
                 .ValueGeneratedOnAdd().HasDefaultValueSql(_currentDateSqlFunction);

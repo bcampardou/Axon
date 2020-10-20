@@ -16,13 +16,9 @@ import { ProjectListComponent } from './projects/list/project-list.component';
 import { EnvironmentEditorComponent } from './environments/environment-editor.component';
 import { EnvironmentListComponent } from './environments/list/environment-list.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { TenantEditorComponent } from './tenants/tenant-editor.component';
-import { TenantListComponent } from './tenants/list/tenant-list.component';
 import { UserEditorComponent } from './users/user-editor.component';
 import { UserListComponent } from './users/list/user-list.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { LicenseEditorComponent } from './licenses/license-editor.component';
-import { LicenseListComponent } from './licenses/list/license-list.component';
 import { UserSelectorComponent } from './user-selector/user-selector.component';
 import { SimplemdeModule } from './simplemde/simplemde.module';
 import { InterventionEditorComponent } from './interventions/editor/intervention-editor.component';
@@ -58,13 +54,9 @@ import { KnowledgeSheetEditorComponent } from './knowledge-sheet/editor/knowledg
     ProjectListComponent,
     EnvironmentEditorComponent,
     EnvironmentListComponent,
-    TenantEditorComponent,
-    TenantListComponent,
     UserEditorComponent,
     UserListComponent,
     AutocompleteComponent,
-    LicenseEditorComponent,
-    LicenseListComponent,
     UserSelectorComponent,
     InterventionEditorComponent,
     InterventionCalendarComponent,
@@ -84,13 +76,9 @@ import { KnowledgeSheetEditorComponent } from './knowledge-sheet/editor/knowledg
     ProjectListComponent,
     EnvironmentEditorComponent,
     EnvironmentListComponent,
-    TenantEditorComponent,
-    TenantListComponent,
     UserEditorComponent,
     UserListComponent,
     AutocompleteComponent,
-    LicenseEditorComponent,
-    LicenseListComponent,
     UserSelectorComponent,
     InterventionEditorComponent,
     InterventionCalendarComponent,

@@ -9,8 +9,6 @@ namespace Axon.Data.Abstractions.Entities
 {
     public class User : IdentityUser<Guid>
     {
-        public Guid TenantId { get; set; }
-        public virtual Tenant Tenant { get; set; }
         public bool IsActive { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

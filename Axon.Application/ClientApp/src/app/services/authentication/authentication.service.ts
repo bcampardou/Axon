@@ -3,7 +3,6 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { map } from 'rxjs/operators';
-import { Tenant } from '@app/models';
 import { User } from '@app/models/user.model';
 
 export interface Credentials {
@@ -13,14 +12,12 @@ export interface Credentials {
 }
 
 export interface LoginContext {
-  tenant: string;
   login: string;
   password: string;
   remember?: boolean;
 }
 
 export interface RegisterContext {
-  tenant: string;
   userName: string;
   email: string;
   password: string;
@@ -39,18 +36,9 @@ export class AuthenticationService {
   private url = '/users';
 
   public authenticatedUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
-  public tenant$: BehaviorSubject<Tenant> = new BehaviorSubject<Tenant>(null);
 
   public currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
   public users$: BehaviorSubject<Array<User>> = new BehaviorSubject<Array<User>>([]);
-
-  public get tenant() {
-    return this.tenant$.getValue();
-  }
-
-  public get isAxonUser() {
-    return this.tenant.name === 'AXON';
-  }
 
   public get isCookiesEnabled() {
     const isCookiesEnabled = localStorage.getItem('cookies_enabled');
@@ -63,7 +51,6 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
     this.authenticatedUser$.subscribe(user => {
-      this.tenant$.next(user ? user.tenant : null);
     });
     let savedCredentials = sessionStorage.getItem(credentialsKey);
     if (!savedCredentials) { savedCredentials = localStorage.getItem(credentialsKey); }

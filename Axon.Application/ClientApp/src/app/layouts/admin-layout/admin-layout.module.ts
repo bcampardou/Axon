@@ -18,7 +18,6 @@ import { ServersComponent } from '@app/pages/servers/servers.component';
 import { ProjectsComponent } from '@app/pages/projects/projects.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UsersComponent } from '@app/pages/users/users.component';
-import { TenantsComponent } from '@app/pages/tenants/tenants.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { KnowledgeSheetComponent } from '@app/pages/knowledge-sheet/knowledge-sheet.component';
 
@@ -45,7 +44,6 @@ import { KnowledgeSheetComponent } from '@app/pages/knowledge-sheet/knowledge-sh
     ServersComponent,
     ProjectsComponent,
     UsersComponent,
-    TenantsComponent,
     KnowledgeSheetComponent
   ]
 })

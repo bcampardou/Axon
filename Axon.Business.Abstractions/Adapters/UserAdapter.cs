@@ -23,7 +23,6 @@ namespace Axon.Business.Abstractions.Adapters
             dto.PhoneNumber = entity.PhoneNumber;
             dto.SecurityStamp = entity.SecurityStamp ?? "";
             dto.ConcurrencyStamp = entity.ConcurrencyStamp;
-            dto.TenantId = entity.TenantId;
 
             return dto;
         }
@@ -37,7 +36,6 @@ namespace Axon.Business.Abstractions.Adapters
             entity.PhoneNumber = dto.PhoneNumber;
             entity.SecurityStamp = dto.SecurityStamp ?? "";
             entity.ConcurrencyStamp = dto.ConcurrencyStamp;
-            entity.TenantId = Ensure.Arguments.IsValidGuid(entity.TenantId) ? entity.TenantId : dto.TenantId;
 
             return entity;
         }
@@ -58,7 +56,6 @@ namespace Axon.Business.Abstractions.Adapters
 
             dto = dto != null ? dto : new UserDTO();
             dto = base.Convert(entity, dto) as UserDTO;
-            dto.Tenant = entity.Tenant != null ? AdapterFactory.Get<TenantAdapter>().Convert(entity.Tenant) : null; 
 
             return dto;
         }

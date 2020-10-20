@@ -18,7 +18,6 @@ import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animati
 })
 export class RegisterComponent implements OnInit {
   context: RegisterContext = {
-    tenant: '',
     userName: '',
     email: '',
     password: '',

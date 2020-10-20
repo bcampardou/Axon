@@ -28,11 +28,9 @@ namespace Axon.Business.Abstractions.Models
         public string UserName { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-        public Guid TenantId { get; set; }
     }
 
     public class UserDTO : UserLightDTO
     {
-        public TenantDTO Tenant { get; set; }
     }
 }

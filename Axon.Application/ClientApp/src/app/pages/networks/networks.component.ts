@@ -62,7 +62,6 @@ export class NetworksComponent implements OnInit, OnDestroy {
 
   public create() {
     const network = new Network();
-    network.tenantId = this.authService.tenant.id;
     this.networkService.currentNetwork$.next(network);
     this.mode = 'creation';
   }

@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkService, AuthenticationService } from '@app/services';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators'
-import { User, Network, Tenant } from '@app/models';
-import { OperatingSystems } from '@app/models/operating-systems.model';
+import { AuthenticationService } from '@app/services';
+import { Subscription } from 'rxjs';
+import { User } from '@app/models';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { TenantService } from '@app/services/tenant.service';
 
 @Component({
     selector: 'app-user-editor',
@@ -20,16 +16,13 @@ export class UserEditorComponent implements OnInit, OnDestroy {
     @Input() public edition: boolean = true;
     @Output() public canceled = new EventEmitter<boolean>();
     public user = new User();
-    public tenants: Array<Tenant>;
     private subscriptions = new Array<Subscription>();
 
     constructor(
         private toastr: ToastrService,
         private translateService: TranslateService,
-        private authService: AuthenticationService,
-        private tenantService: TenantService) {
+        private authService: AuthenticationService) {
             this.subscriptions.push(this.authService.currentUser$.subscribe(ser => this.user = ser));
-            this.subscriptions.push(this.tenantService.getAll(false).subscribe(res => this.tenants = res));
     }
 
     ngOnInit() {
@@ -37,11 +30,6 @@ export class UserEditorComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscriptions.forEach(sub => sub.unsubscribe());
-    }
-
-    setTenant(tenant: Tenant) {
-        this.user.tenant = tenant;
-        this.user.tenantId = tenant.id;
     }
 
     public onSubmit() {

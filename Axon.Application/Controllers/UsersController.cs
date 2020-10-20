@@ -98,18 +98,14 @@ namespace Axon.Application.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<object> RegisterAsync([FromBody] RegisterDTO model, [FromServices]ITenantsService tenantService)
+        public async Task<object> RegisterAsync([FromBody] RegisterDTO model)
         {
             if (!ModelState.IsValid) throw new AxonException("Invalid registration", ModelState.SelectMany(e => e.Value.Errors.Select(es => es.ErrorMessage)));
-
-            var tenant = await tenantService.FindOneByName(model.Tenant);
-            Ensure.Arguments.ThrowIfNull(tenant, nameof(tenant));
-
+            
             var user = new UserDTO
             {
                 UserName = model.UserName,
-                Email = model.Email,
-                TenantId = tenant.Id,
+                Email = model.Email
             };
             var result = await _userService.CreateAsync(user, model.Password, $"{configuration.GetValue<string>("Application:URL")}/api/users/confirm");
 

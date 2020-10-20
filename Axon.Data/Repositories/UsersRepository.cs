@@ -195,7 +195,7 @@ namespace Axon.Data.Repositories
 
         protected IQueryable<User> _loadProperties(IQueryable<User> entities)
         {
-            return entities.Include(u => u.Tenant).ThenInclude(t => t.Licenses);
+            return entities;
         }
     }
 }

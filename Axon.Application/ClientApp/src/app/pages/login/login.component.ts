@@ -18,7 +18,6 @@ import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animati
 })
 export class LoginComponent implements OnInit, OnDestroy {
   context: LoginContext = {
-    tenant: '',
     login: '',
     password: '',
     remember: true

@@ -32,10 +32,6 @@
                     </svg>
                   </span>
                 </div>
-                <app-autocomplete style="width: calc(100% - 40px);" [disabled]="!edition" [name]="tenant"
-                  [model]="user.tenant" [required]="true" [source]="tenants" (changed)="setTenant($event)"
-                  [options]="{ filter:'name', value: 'id' }">
-                </app-autocomplete>
               </div>
             </div>
           </div>

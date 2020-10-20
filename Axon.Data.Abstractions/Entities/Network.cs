@@ -16,8 +16,6 @@ namespace Axon.Data.Abstractions.Entities
         public string BusinessDocumentationUrl { get; set; }
         public string TechnicalDocumentationUrl { get; set; }
 
-        public Guid TenantId { get; set; }
-        public virtual Tenant Tenant { get; set; }
 
         [InverseProperty("Network")]
         public virtual Collection<Server> Servers { get; set; }
