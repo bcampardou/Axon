@@ -1,11 +1,13 @@
-<h1 align="center">Welcome to Axon 👋</h1>
+<p align="center">
+  <img src="https://github.com/bcampardou/Axon/blob/master/Axon.Application/ClientApp/src/assets/img/brand/logo-800.png" height="128">
+  <h1 align="center">Axon</h3>
+  <p align="center">Web application to reduce the gap between teams (ie. System administrators and developers) and avoid side effects when an operation is made<p>
+</p>
 <p>
   <a href="https://github.com/bcampardou/Axon/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
 </p>
-
-> Web application to reduce the gap between teams (ie. System administrators and developers) and avoid side effects when an operation is made.
 
 ### 🏠 [Homepage](https://axon.link)
 
