@@ -4,13 +4,96 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Axon.Data.Abstractions.Migrations
 {
-    public partial class InitialPostgreSQLMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateSequence(
                 name: "EntityFrameworkHiLoSequence",
                 incrementBy: 10);
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KnowledgeSheet",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
+                    Title = table.Column<string>(nullable: true),
+                    Document = table.Column<string>(nullable: true),
+                    ParentId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KnowledgeSheet", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KnowledgeSheet_KnowledgeSheet_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "KnowledgeSheet",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Networks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
+                    Name = table.Column<string>(maxLength: 150, nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    BusinessDocumentationUrl = table.Column<string>(nullable: true),
+                    TechnicalDocumentationUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Networks", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Projects",
@@ -42,154 +125,6 @@ namespace Axon.Data.Abstractions.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Technologies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tenants",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
-                    Name = table.Column<string>(nullable: true),
-                    SecretKey = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tenants", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectTechnologies",
-                columns: table => new
-                {
-                    ProjectId = table.Column<Guid>(nullable: false),
-                    TechnologyId = table.Column<Guid>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectTechnologies", x => new { x.ProjectId, x.TechnologyId });
-                    table.ForeignKey(
-                        name: "FK_ProjectTechnologies_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectTechnologies_Technologies_TechnologyId",
-                        column: x => x.TechnologyId,
-                        principalTable: "Technologies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    TenantId = table.Column<Guid>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoles_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    TenantId = table.Column<Guid>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Licenses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
-                    Key = table.Column<string>(nullable: true),
-                    NumberOfAllowedUsers = table.Column<int>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
-                    TenantId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Licenses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Licenses_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Networks",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
-                    Name = table.Column<string>(maxLength: 150, nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    BusinessDocumentationUrl = table.Column<string>(nullable: true),
-                    TechnicalDocumentationUrl = table.Column<string>(nullable: true),
-                    TenantId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Networks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Networks_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -299,62 +234,6 @@ namespace Axon.Data.Abstractions.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectIntervention",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
-                    Description = table.Column<string>(nullable: true),
-                    Start = table.Column<DateTime>(nullable: false),
-                    End = table.Column<DateTime>(nullable: false),
-                    InChargeUserId = table.Column<Guid>(nullable: false),
-                    DataId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectIntervention", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProjectIntervention_Projects_DataId",
-                        column: x => x.DataId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectIntervention_AspNetUsers_InChargeUserId",
-                        column: x => x.InChargeUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectTeammates",
-                columns: table => new
-                {
-                    DataId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
-                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectTeammates", x => new { x.DataId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_ProjectTeammates_Projects_DataId",
-                        column: x => x.DataId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectTeammates_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NetworkIntervention",
                 columns: table => new
                 {
@@ -432,6 +311,88 @@ namespace Axon.Data.Abstractions.Migrations
                         name: "FK_Servers_Networks_NetworkId",
                         column: x => x.NetworkId,
                         principalTable: "Networks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectIntervention",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(maxLength: 36, nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()"),
+                    Description = table.Column<string>(nullable: true),
+                    Start = table.Column<DateTime>(nullable: false),
+                    End = table.Column<DateTime>(nullable: false),
+                    InChargeUserId = table.Column<Guid>(nullable: false),
+                    DataId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectIntervention", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProjectIntervention_Projects_DataId",
+                        column: x => x.DataId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectIntervention_AspNetUsers_InChargeUserId",
+                        column: x => x.InChargeUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectTeammates",
+                columns: table => new
+                {
+                    DataId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectTeammates", x => new { x.DataId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_ProjectTeammates_Projects_DataId",
+                        column: x => x.DataId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectTeammates_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectTechnologies",
+                columns: table => new
+                {
+                    ProjectId = table.Column<Guid>(nullable: false),
+                    TechnologyId = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "now()"),
+                    EditedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "now()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectTechnologies", x => new { x.ProjectId, x.TechnologyId });
+                    table.ForeignKey(
+                        name: "FK_ProjectTechnologies_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectTechnologies_Technologies_TechnologyId",
+                        column: x => x.TechnologyId,
+                        principalTable: "Technologies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -532,11 +493,6 @@ namespace Axon.Data.Abstractions.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoles_TenantId",
-                table: "AspNetRoles",
-                column: "TenantId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
                 column: "UserId");
@@ -563,14 +519,9 @@ namespace Axon.Data.Abstractions.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_TenantId",
-                table: "AspNetUsers",
-                column: "TenantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Licenses_TenantId",
-                table: "Licenses",
-                column: "TenantId");
+                name: "IX_KnowledgeSheet_ParentId",
+                table: "KnowledgeSheet",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NetworkIntervention_DataId",
@@ -587,11 +538,6 @@ namespace Axon.Data.Abstractions.Migrations
                 table: "Networks",
                 column: "Name",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Networks_TenantId",
-                table: "Networks",
-                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NetworkTeammates_UserId",
@@ -686,7 +632,7 @@ namespace Axon.Data.Abstractions.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Licenses");
+                name: "KnowledgeSheet");
 
             migrationBuilder.DropTable(
                 name: "NetworkIntervention");
@@ -729,9 +675,6 @@ namespace Axon.Data.Abstractions.Migrations
 
             migrationBuilder.DropTable(
                 name: "Networks");
-
-            migrationBuilder.DropTable(
-                name: "Tenants");
 
             migrationBuilder.DropSequence(
                 name: "EntityFrameworkHiLoSequence");

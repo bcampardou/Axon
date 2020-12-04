@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Axon.Data.Abstractions.Migrations
 {
     [DbContext(typeof(AxonDbContext))]
-    [Migration("20200731205444_UpdateKnowledgeSheetSetParentIdNullable")]
-    partial class UpdateKnowledgeSheetSetParentIdNullable
+    [Migration("20201020200104_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,48 +56,6 @@ namespace Axon.Data.Abstractions.Migrations
                     b.ToTable("KnowledgeSheet");
                 });
 
-            modelBuilder.Entity("Axon.Data.Abstractions.Entities.License", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasMaxLength(36);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<DateTime?>("EditedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("text");
-
-                    b.Property<int>("NumberOfAllowedUsers")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Licenses");
-                });
-
             modelBuilder.Entity("Axon.Data.Abstractions.Entities.Network", b =>
                 {
                     b.Property<Guid>("Id")
@@ -128,15 +86,10 @@ namespace Axon.Data.Abstractions.Migrations
                     b.Property<string>("TechnicalDocumentationUrl")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
-
-                    b.HasIndex("TenantId");
 
                     b.ToTable("Networks");
                 });
@@ -400,16 +353,11 @@ namespace Axon.Data.Abstractions.Migrations
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasName("RoleNameIndex");
-
-                    b.HasIndex("TenantId");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -562,34 +510,6 @@ namespace Axon.Data.Abstractions.Migrations
                     b.ToTable("Technologies");
                 });
 
-            modelBuilder.Entity("Axon.Data.Abstractions.Entities.Tenant", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasMaxLength(36);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<DateTime?>("EditedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("now()");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SecretKey")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tenants");
-                });
-
             modelBuilder.Entity("Axon.Data.Abstractions.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -649,9 +569,6 @@ namespace Axon.Data.Abstractions.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
@@ -667,8 +584,6 @@ namespace Axon.Data.Abstractions.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
-
-                    b.HasIndex("TenantId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -781,24 +696,6 @@ namespace Axon.Data.Abstractions.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("Axon.Data.Abstractions.Entities.License", b =>
-                {
-                    b.HasOne("Axon.Data.Abstractions.Entities.Tenant", "Tenant")
-                        .WithMany("Licenses")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Axon.Data.Abstractions.Entities.Network", b =>
-                {
-                    b.HasOne("Axon.Data.Abstractions.Entities.Tenant", "Tenant")
-                        .WithMany("Networks")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Axon.Data.Abstractions.Entities.NetworkIntervention", b =>
                 {
                     b.HasOne("Axon.Data.Abstractions.Entities.Network", "Data")
@@ -889,15 +786,6 @@ namespace Axon.Data.Abstractions.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Axon.Data.Abstractions.Entities.Role", b =>
-                {
-                    b.HasOne("Axon.Data.Abstractions.Entities.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Axon.Data.Abstractions.Entities.Server", b =>
                 {
                     b.HasOne("Axon.Data.Abstractions.Entities.Network", "Network")
@@ -933,15 +821,6 @@ namespace Axon.Data.Abstractions.Migrations
                     b.HasOne("Axon.Data.Abstractions.Entities.User", "User")
                         .WithMany("ServerTeams")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Axon.Data.Abstractions.Entities.User", b =>
-                {
-                    b.HasOne("Axon.Data.Abstractions.Entities.Tenant", "Tenant")
-                        .WithMany("Users")
-                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

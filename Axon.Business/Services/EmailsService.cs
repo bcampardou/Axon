@@ -67,7 +67,7 @@ namespace Axon.Business.Services
         protected void _ConnectSmtp()
         {
 
-            _smtpClient.Connect(_configuration["SMTP:Server"], int.Parse(_configuration["SMTP:Port"]), false);
+            _smtpClient.Connect(_configuration["SMTP:Server"], int.Parse(_configuration["SMTP:Port"]), bool.Parse(_configuration["SMTP:UseSSL"]));
 
             // Note: only needed if the SMTP server requires authentication
             _smtpClient.Authenticate(_configuration["SMTP:Credentials:Login"], _configuration["SMTP:Credentials:Password"]);

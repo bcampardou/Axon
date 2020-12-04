@@ -99,13 +99,19 @@ namespace Axon.Business.Services
                 SecurityStamp = ""
             });
             entity.IsActive = false;
+            var firstUser = !_userManager.Users.Any();
+
+            if(firstUser)
+            {
+                entity.IsActive = true;
+            }
 
             var result = await _userManager.CreateAsync(entity, password);
             _cachingProvider.Remove(BusinessRules.CacheListKey(typeof(User)));
 
-            if (result.Succeeded)
+            if (result.Succeeded && firstUser)
             {
-                //await GenerateAndSendConfirmationEmail(entity.NormalizedEmail, url);
+                await GenerateAndSendConfirmationEmail(entity.NormalizedEmail, url);
             }
             else if (result.Errors.Any())
             {
